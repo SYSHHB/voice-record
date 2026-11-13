@@ -18,7 +18,7 @@ window.MVR_CONFIG = {
   folderId: "01O26XY4WLBP3NTAIYAVE32C6P5LC3JDPE",
 
   // The first sign-in by one of these people creates the user list and makes them Admin
-  initialAdmins: ["it.helpdesk@syayasan.edu.bn"],
+  initialAdmins: ["it.helpdesk@syayasan.edu.bn", "zulfa.zaini@syayasan.edu.bn"],
 
   // Only email addresses ending with this can be added as users ("" = any)
   allowedDomain: "syayasan.edu.bn",

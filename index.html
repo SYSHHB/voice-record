@@ -1524,6 +1524,12 @@ async function startSession(){
           CFG.initialAdmins.forEach(function(em){ var e = em.toLowerCase(); d.users.push({email: e, name: u.alts.indexOf(e) > -1 ? u.name : "", role: "admin", status: "active", addedBy: "setup", addedAt: Date.now()}); });
           return d;
         });
+        /* share the data folder with the other first admins (works when the OneDrive owner does the first sign-in) */
+        for(var ia = 0; ia < CFG.initialAdmins.length; ia++){
+          var em = CFG.initialAdmins[ia].toLowerCase();
+          if(u.alts.indexOf(em) > -1) continue;
+          try{ await Cloud.shareFolder(em, true); Audit.log("folder_share", em, "edit"); }catch(_){}
+        }
       } else { showGate("Not set up yet", "The user list has not been created. Ask the IT administrator to sign in first.", {signout: true}); return; }
     }
     var entry = findUser(data, u);

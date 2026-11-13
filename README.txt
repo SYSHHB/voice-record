@@ -14,6 +14,7 @@ ORDER OF WORK
    Open it once while online so it can work offline.
 
 LOOK AND CALENDAR
+- Loading screen: dark green with the logo, app name, progress bar and percentage, shown when the app opens or reloads.
 - Sign-in page: today's Gregorian and Hijri date, greeting, live Brunei time (BNT), English / Bahasa Melayu
   switch and the Sign in with Microsoft button.
 - Every screen has the header card: app name, Yayasan name, Gregorian date, Hijri date, clock, and buttons for

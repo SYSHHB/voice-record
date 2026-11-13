@@ -288,6 +288,7 @@ function setLang(l){
   Array.prototype.forEach.call(document.querySelectorAll("[data-lang]"), function(b){ b.classList.toggle("on", b.dataset.lang === lang); });
   Array.prototype.forEach.call(document.querySelectorAll("[data-lang-toggle]"), function(b){ b.textContent = lang === "ms" ? "EN" : "BM"; });
   try{ window.dispatchEvent(new Event("syshhb-lang")); }catch(e){}
+  try{ if(window.MVR_SPLASH) window.MVR_SPLASH.lang(lang); }catch(e){}
 }
 api.set = setLang;
 var saved = null; try{ saved = localStorage.getItem(KEY); }catch(e){}

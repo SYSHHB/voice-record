@@ -6,7 +6,7 @@
 <title>SYSHHB IT Recorder</title>
 <script>(function(){try{var t=localStorage.getItem("syshhb_theme");if(!t)t=window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t}catch(e){}})()</script>
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#4a934e">
+<meta name="theme-color" content="#1f4129">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="SYSHHB Recorder">
@@ -237,36 +237,49 @@ dialog p{font-size:13px;color:var(--muted);margin:8px 0}
 .toasts{position:fixed;right:18px;bottom:18px;display:flex;flex-direction:column;gap:8px;z-index:90}
 .toast{background:#142117;color:#fff;padding:11px 15px;border-radius:14px;box-shadow:var(--shadow-lg);font-size:13.5px;border-left:4px solid var(--gold);animation:fade .2s ease}
 
-/* ---------- login (photo 1) ---------- */
-.auth-overlay{position:fixed;inset:0;z-index:100;overflow:auto;background:var(--green);color:#fff;display:flex;justify-content:center}
-.login{width:min(600px,100%);padding:clamp(22px,5vw,44px) clamp(22px,6vw,44px) 34px;display:flex;flex-direction:column;min-height:100%}
+/* ---------- login: one screen, dark green ---------- */
+.auth-overlay{position:fixed;inset:0;z-index:100;overflow:auto;color:#fff;display:flex;background:radial-gradient(70% 50% at 50% 32%,#2a5a33 0,#1f4129 50%,#182c20 100%)}
+.login{width:min(560px,100%);min-height:min(100vh,860px);min-height:min(100dvh,860px);margin:auto;padding:max(18px,3.2vh) clamp(20px,6vw,40px) max(18px,3vh);display:flex;flex-direction:column;justify-content:space-between;gap:12px}
 .lg-brand{display:flex;align-items:center;gap:14px}
-.lg-logo{width:72px;height:72px;border-radius:50%;background:#ffffff26;display:grid;place-items:center;flex:none}
-.lg-logo img{width:52px;height:52px;border-radius:50%;background:#fff;border:2px solid var(--gold);object-fit:contain}
-.lg-brand b{font-size:clamp(20px,5.4vw,27px);font-weight:800;line-height:1.2}
-.lg-dates{display:grid;grid-template-columns:1fr 1px 1fr;gap:clamp(14px,5vw,30px);margin-top:clamp(34px,9vh,96px)}
+.lg-logo{width:clamp(48px,8vh,68px);height:clamp(48px,8vh,68px);border-radius:50%;background:#ffffff26;display:grid;place-items:center;flex:none}
+.lg-logo img{width:76%;height:76%;border-radius:50%;background:#fff;border:2px solid var(--gold);object-fit:contain}
+.lg-brand b{font-size:clamp(19px,min(5.4vw,3.4vh),27px);font-weight:800;line-height:1.2}
+.lg-dates{display:grid;grid-template-columns:1fr 1px 1.3fr;gap:clamp(12px,4vw,26px)}
 .lg-sep{background:#ffffff59}
-.lg-num{font-size:clamp(60px,17vw,92px);font-weight:900;line-height:1}
+.lg-num{font-size:clamp(44px,min(16vw,10vh),88px);font-weight:900;line-height:1}
 .lg-num.gold{color:#fff25c}
-.lg-mon{font-size:clamp(17px,4.6vw,23px);font-weight:800;margin-top:12px}
-.lg-lbl{font-size:clamp(15px,4vw,19px);color:#d9ecd6;margin-top:6px}
-.lg-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-top:clamp(34px,8vh,90px);font-size:clamp(22px,6vw,30px);font-weight:800;font-variant-numeric:tabular-nums}
-.lg-desc{font-size:clamp(16px,4.3vw,20px);line-height:1.55;margin:clamp(34px,8vh,90px) 0 0}
-.lg-lang{display:flex;justify-content:flex-end;margin-top:26px}
-.lang-seg.big{background:#00000026;border-radius:26px;padding:6px}
-.lang-seg.big button{font-size:clamp(15px,4.2vw,19px);padding:11px 22px;border-radius:21px;font-weight:700}
-.lang-seg.big button.on{background:#00000059}
-.auth-card{margin-top:22px}
+.lg-mon{font-size:clamp(14px,min(4vw,2.6vh),22px);font-weight:800;margin-top:.4em;white-space:nowrap}
+.lg-lbl{font-size:clamp(13px,min(3.8vw,2.3vh),18px);color:#cfe3cb;margin-top:.2em}
+.lg-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;font-size:clamp(19px,min(5.6vw,3.4vh),29px);font-weight:800;font-variant-numeric:tabular-nums}
+.lg-desc{font-size:clamp(14px,min(4.1vw,2.4vh),19px);line-height:1.5;margin:0}
+.lg-lang{display:flex;justify-content:flex-end}
+.lang-seg.big{background:#00000040;border-radius:26px;padding:5px}
+.lang-seg.big button{font-size:clamp(14px,min(4vw,2.3vh),18px);padding:clamp(8px,1.3vh,11px) clamp(14px,5vw,22px);border-radius:21px;font-weight:700}
+.lang-seg.big button.on{background:#0000006b}
 .auth-card h2{margin:0 0 4px;font-size:20px;color:#fff25c}
-.auth-card p{font-size:clamp(15px,4.2vw,19px);line-height:1.5;margin:0 0 16px;color:#f1f8ef}
-.ms-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:14px;border:0;border-radius:26px;padding:19px 20px;font-size:clamp(18px,5vw,22px);font-weight:800;color:#fff;cursor:pointer;background:linear-gradient(180deg,#93d68f,#6dbb6c);box-shadow:0 12px 26px #0003}
+.auth-card p{font-size:clamp(14px,min(4.1vw,2.4vh),19px);line-height:1.5;margin:0 0 clamp(10px,1.8vh,16px);color:#f1f8ef}
+.ms-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:14px;border:0;border-radius:26px;padding:clamp(13px,2.2vh,19px) 20px;font-size:clamp(17px,min(5vw,2.9vh),22px);font-weight:800;color:#fff;cursor:pointer;background:linear-gradient(180deg,#93d68f,#6dbb6c);box-shadow:0 12px 26px #0004}
 .ms-btn:hover{filter:brightness(1.05)}
 .ms-logo{display:grid;grid-template-columns:13px 13px;gap:3px}.ms-logo i{width:13px;height:13px;display:block}
 .auth-card .btn{background:#ffffff24;border-color:#ffffff55;color:#fff}
-.ld{display:none;margin:0 0 14px}.auth-card.loading .ld{display:block}
-.ld-bar{height:7px;border-radius:6px;background:#ffffff40;overflow:hidden}.ld-bar i{display:block;height:100%;width:40%;border-radius:6px;background:linear-gradient(90deg,#fff25c,#fff,#fff25c);background-size:200% 100%;animation:ldflow 1.2s linear infinite}
-@keyframes ldflow{from{margin-left:-40%}to{margin-left:100%}}
-@media(prefers-reduced-motion:reduce){.ld-bar i,.live .recbtn:disabled{animation:none}}
+.ld{display:none}
+
+/* ---------- loading screen (photo 3) ---------- */
+.splash{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:24px;text-align:center;color:#fff;background:radial-gradient(70% 50% at 50% 36%,#2a5a33 0,#1f4129 50%,#182c20 100%);transition:opacity .35s}
+.splash.out{opacity:0;pointer-events:none}
+.sp-in{width:min(440px,100%);display:flex;flex-direction:column;align-items:center}
+.sp-logo{position:relative;width:min(52vw,220px);aspect-ratio:1;display:grid;place-items:center;margin-bottom:clamp(22px,5vh,44px)}
+.sp-logo img{width:80%;height:80%;border-radius:50%;background:#fff;border:6px solid #9c9056;box-shadow:0 14px 40px #0008;object-fit:contain}
+.sp-logo::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #8f8f4a66}
+.sp-logo::after{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 62%,#e7d95a 92%,transparent 100%);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px));mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px));animation:spspin 1.3s linear infinite}
+@keyframes spspin{to{transform:rotate(360deg)}}
+.splash h1{margin:0;font-size:clamp(24px,7vw,32px);font-weight:800;line-height:1.2;text-wrap:balance}
+.sp-sub{color:#f0dc5a;font-weight:700;font-size:clamp(15px,4.4vw,18px);margin-top:12px}
+.sp-bar{width:100%;height:8px;border-radius:6px;background:#ffffff26;overflow:hidden;margin-top:clamp(22px,5vh,40px)}
+.sp-bar i{display:block;height:100%;width:0;border-radius:6px;background:linear-gradient(90deg,#6fc36e,#e7d95a);transition:width .12s linear}
+.sp-pct{font-weight:800;font-size:clamp(16px,4.6vw,19px);margin-top:22px}
+.sp-note{color:#c7d3c5;font-size:clamp(14px,4.2vw,17px);margin-top:12px}
+@media(prefers-reduced-motion:reduce){.sp-logo::after,.live .recbtn:disabled{animation:none}}
 
 /* ---------- phone bottom bar ---------- */
 .bottom-nav{display:none}
@@ -314,6 +327,36 @@ dialog p{font-size:13px;color:var(--muted);margin:8px 0}
 </style>
 </head>
 <body>
+<div class="splash" id="splash" data-noi18n role="status" aria-live="polite">
+  <div class="sp-in">
+    <div class="sp-logo"><img src="logo.png" alt=""></div>
+    <h1 id="spTitle">SYSHHB IT Recorder</h1>
+    <div class="sp-sub">Yayasan Sultan Haji Hassanal Bolkiah</div>
+    <div class="sp-bar"><i id="spFill"></i></div>
+    <div class="sp-pct" id="spPct">Loading… 0%</div>
+    <div class="sp-note" id="spNote">Thank you for your patience.</div>
+  </div>
+</div>
+<script>(function(){
+  var L = "en"; try{ L = localStorage.getItem("syshhb_lang") || ((navigator.language || "").toLowerCase().indexOf("ms") === 0 ? "ms" : "en"); }catch(e){}
+  var G = function(i){ return document.getElementById(i); }, el = G("splash"), cur = 0, target = 35, fin = false, timer = null;
+  function paint(){ var v = Math.round(cur); G("spFill").style.width = v + "%"; G("spPct").textContent = (L === "ms" ? "Memuatkan… " : "Loading… ") + v + "%"; }
+  function txt(){ G("spTitle").textContent = L === "ms" ? "SYSHHB IT Perakam" : "SYSHHB IT Recorder"; G("spNote").textContent = L === "ms" ? "Terima kasih kerana bersabar." : "Thank you for your patience."; paint(); }
+  function step(){
+    if(cur < target){ cur = Math.min(target, cur + Math.max(fin ? 5 : .7, (target - cur) * (fin ? .4 : .16))); paint(); }
+    if(fin && cur >= 100){ clearInterval(timer); timer = null; el.classList.add("out"); setTimeout(function(){ if(fin) el.style.display = "none"; }, 380); }
+  }
+  function run(){ if(!timer) timer = setInterval(step, 70); }
+  window.MVR_SPLASH = {
+    to: function(p){ if(p > target) target = p; },
+    show: function(p){ if(fin){ fin = false; cur = 0; el.style.display = ""; el.classList.remove("out"); } target = Math.max(target > 99 ? 0 : target, p); run(); },
+    done: function(){ target = 100; fin = true; run(); },
+    lang: function(l){ L = l; txt(); }
+  };
+  txt(); run();
+  setTimeout(function(){ window.MVR_SPLASH.done(); }, 15000);
+  window.addEventListener("error", function(){ window.MVR_SPLASH.done(); });
+})();</script>
 <div class="auth-overlay" id="gate">
   <div class="login">
     <div class="lg-brand"><span class="lg-logo"><img src="logo.png" alt="Yayasan Sultan Haji Hassanal Bolkiah logo"></span><b>SYSHHB IT Recorder</b></div>
@@ -1508,6 +1551,7 @@ function showGate(title, msg, o){
   $("diagOut").classList.add("hidden");
   $("gateCard").classList.toggle("loading", !!o.loading);
   $("gate").classList.remove("hidden"); $("appWrap").classList.add("hidden");
+  if(window.MVR_SPLASH){ if(o.loading) window.MVR_SPLASH.show(80); else window.MVR_SPLASH.done(); }
 }
 function fmtDiag(steps){ return steps.map(function(x){ return (x.ok ? "OK    " : "FAIL  ") + x.label + (x.detail ? ": " + x.detail : ""); }).join("\n"); }
 $("btnSignIn").onclick = function(){ A.login(); };
@@ -1547,6 +1591,7 @@ async function startSession(){
       return;
     }
     var res = await Cloud.loadUsers(), data = res.data;
+    if(window.MVR_SPLASH) window.MVR_SPLASH.to(92);
     if(!data || !data.users || !data.users.length){
       if(CFG.initialAdmins && CFG.initialAdmins.map(function(x){ return x.toLowerCase(); }).some(function(x){ return u.alts.indexOf(x) > -1; })){
         await Cloud.ensureLayout();
@@ -1591,6 +1636,7 @@ function applyRole(){
 function enterApp(s, offline){
   sess = s; sess.offline = !!offline;
   $("gate").classList.add("hidden"); $("appWrap").classList.remove("hidden");
+  if(window.MVR_SPLASH) window.MVR_SPLASH.done();
   applyRole(); cLoad(); renderList(); netState(); showView(curView);
   setSync(offline ? "Offline: saved on this device" : "Connecting to OneDrive…");
   if(!offline) syncNow();
@@ -2240,6 +2286,7 @@ if(!SR) setMsg($("capMsg"), "Live speech recognition is not supported in this br
 setMode("idle"); updWc(); renderList();
 (async function(){
   try{ sample = await claude.use("sample"); }catch(_){ sample = null; }
+  if(window.MVR_SPLASH) window.MVR_SPLASH.to(55);
   var bad = !CFG.clientId || !CFG.tenantId || /PASTE/i.test(CFG.clientId + CFG.tenantId);
   if(bad){ showGate("Setup needed", "Open config.js in your GitHub repository and fill in tenantId and clientId (see SETUP-MICROSOFT.txt), then reload.", {}); return; }
   try{ await A.handleRedirect(); }
@@ -2277,7 +2324,7 @@ setMode("idle"); updWc(); renderList();
   if("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")){
     navigator.serviceWorker.register("sw.js").catch(function(){});
   }
-  function ico(){ var d = document.documentElement.dataset.theme === "dark"; var mt = document.querySelector('meta[name="theme-color"]'); if(mt) mt.setAttribute("content", d ? "#263328" : "#4a934e"); Array.prototype.forEach.call(document.querySelectorAll("[data-theme-btn] .ti"), function(e){ e.textContent = d ? "☀️" : "🌙"; }); }
+  function ico(){ var d = document.documentElement.dataset.theme === "dark"; var mt = document.querySelector('meta[name="theme-color"]'); if(mt) mt.setAttribute("content", "#1f4129"); Array.prototype.forEach.call(document.querySelectorAll("[data-theme-btn] .ti"), function(e){ e.textContent = d ? "☀️" : "🌙"; }); }
   Array.prototype.forEach.call(document.querySelectorAll("[data-theme-btn]"), function(b){
     b.onclick = function(){ var t = document.documentElement.dataset.theme === "dark" ? "light" : "dark"; document.documentElement.dataset.theme = t; try{ localStorage.setItem("syshhb_theme", t); }catch(e){} ico(); };
   });

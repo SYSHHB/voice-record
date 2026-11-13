@@ -14,8 +14,8 @@ window.MVR_CONFIG = {
   folderName: "MeetingReportData",
 
   // Filled in after first-time setup (the app shows you these two values)
-  driveId: "",
-  folderId: "",
+  driveId: "b!R_lPWUdjfEuqzVrRupLxSE47Uqs5BWdEtWJhDv2jn1e619-HvmPEQrnstLIZc1T6",
+  folderId: "01O26XY4WLBP3NTAIYAVE32C6P5LC3JDPE",
 
   // The first sign-in by one of these people creates the user list and makes them Admin
   initialAdmins: ["it.helpdesk@syayasan.edu.bn"],

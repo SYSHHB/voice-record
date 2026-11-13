@@ -6,7 +6,7 @@
    ============================================================ */
 window.MVR_CONFIG = {
   // From Microsoft Entra > App registrations > your app > Overview
-  tenantId: "598ea952-e9df-4684-a109-85832dc34e59",
+  tenantId: "syayasan.edu.bn",   // your Microsoft 365 domain (works the same as the Directory (tenant) ID)
   clientId: "d3ab4c65-3ba1-4c04-98fd-66a0c7730cdf",
 
   // The OneDrive account that owns the data folder

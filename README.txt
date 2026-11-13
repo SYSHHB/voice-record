@@ -1,49 +1,66 @@
-MEETING VOICE TO REPORT  -  installable phone and computer app
-==============================================================
+SYSHHB IT RECORDER  -  meetings to minutes (installable app)
+==========================================================
+Files (upload ALL to GitHub):
+ index.html  i18n.js  logo.png  config.js  auth.js  cloud.js  whisper-worker.js  sw.js  manifest.webmanifest
+ icon-192.png  icon-512.png  icon-maskable-512.png
+Guides: SETUP-MICROSOFT.txt (do this first), README.txt (this file)
 
-FILES (keep all together, upload ALL of them):
-index.html, whisper-worker.js, sw.js, manifest.webmanifest,
-icon-192.png, icon-512.png, icon-maskable-512.png
+ORDER OF WORK
+1. GitHub Pages: new repository (e.g. recorder, Public) > upload the files > Settings > Pages >
+   Deploy from a branch > main > / (root).  Address:  https://YOURNAME.github.io/recorder/
+2. Follow SETUP-MICROSOFT.txt (Entra app, config.js, first sign-in, add users).
+   Use the new address as the SPA redirect URI, with the slash at the end.
+3. Phone (Chrome or Edge): open the address, sign in, tap "Install app" (or menu > Install app).
+   Open it once while online so it can work offline.
 
-STEP 1  PUT IT ON GITHUB PAGES
-1. github.com > New repository > name: meeting-report > Public > Create.
-2. "uploading an existing file" > drag in the files above (the files, not the folder) > Commit changes.
-3. Settings > Pages > Deploy from a branch > main > / (root) > Save.
-4. After 1-2 minutes open  https://YOURNAME.github.io/meeting-report/
+SMART FEATURES
+- Overview (home)   greeting, counts, quick buttons, open action items from all meetings (tick them off here),
+                    recent meetings.
+- Assistant         ask questions in English or Malay about this meeting or all saved meetings. Answers come only
+                    from your transcript and reports. Tap a time in an answer to jump to that line and hear it.
+- Smart analysis    on the Report screen. One tap finds a title, the people mentioned, a summary, topics, decisions,
+                    open questions and action items. Action items become a checklist with owner and deadline.
+                    Changes save to OneDrive for saved meetings.
+- Read and play     on the transcript card. Tap a time to hear that moment (when the recording is on the phone),
+                    search inside the transcript, tap a line then a tag to mark Decision / Action / Important / Question.
+- Guided steps      the row at the top shows what is done and what to do next: Record, Report, Translate, Save.
+- Shortcuts         on a computer while recording: Space pauses, D A I Q add markers.
+- Assistant and Smart analysis need internet and your Anthropic API key (Settings). Always check AI results
+  before sending minutes out.
 
-STEP 2  INSTALL ON THE PHONE (Chrome or Edge)
-1. Open the link above on the phone, while online.
-2. Tap "Install app" at the top of the page.
-   If you do not see it: Chrome menu (three dots) > Install app / Add to Home screen.
-3. Open the app once from the home screen while online. This saves it for offline use.
+LANGUAGE AND DARK MODE
+- EN / BM buttons switch the whole app between English and Bahasa Melayu. The name becomes
+  "SYSHHB IT Perakam" in Malay. Your choice is remembered on that phone.
+- The moon / sun button switches dark mode. It follows the phone setting at first, then remembers your choice
+  and is shared with your other SYSHHB systems on the same address.
+- On a phone the EN/BM and dark mode buttons are at the top right. On a computer they are at the bottom of the
+  left menu and on the sign-in screen.
+- Reports, transcripts and translations are never changed by the language switch. The report language is chosen
+  separately on the Report and Translate screens.
 
-STEP 3  ONE-TIME SETUP WHILE ONLINE
-- Offline transcription: Step 1 > Upload file, choose any short audio, tap
-  "Transcribe on this device". The speech model downloads once
-  (Fast 40 MB, Balanced 80 MB, Best 250 MB). After that it works offline.
-- Report / Translate / Fix: tap Settings and paste your Anthropic API key
-  (console.anthropic.com). These three buttons need internet. Everything else does not.
+THE SCREENS (same look as the SYSHHB IT Asset Inventory)
+- Record    big microphone button, live level meter, timer, pause/stop, language switch (Malay/English),
+            quick markers (Decision, Action, Important, Question), Upload tab for audio or transcript files,
+            "Recordings on this device" with offline transcription.
+- Report    choose the language, Generate report (summary, discussion, decisions, action table). Save, export.
+- Translate From / To (11 languages), swap, Formal or Everyday style, "keep these words" list for names
+            and titles, translate the transcript (side by side with the original, line by line) or the report.
+            Copy, save, export as Word-ready .html or .txt.
+- Saved Records, Manage Access (admins), Audit Logs (admins).
 
-HOW TO USE WITHOUT INTERNET
-1. Open the app. Untick "Live text while recording" (or just be offline) and tap Start recording.
-   Audio is recorded and saved on the phone. Keep the screen on and the app open.
-2. Tap Stop. The recording appears in "Recordings on this device".
-3. Tap Transcribe next to it. Text appears in step 2 with timestamps.
-4. When you have internet again: Fix mixed-language transcript > Generate report > Translate > Save record.
+BETTER RECORDING
+- Audio is saved on the phone while you record. If the phone restarts or the app closes, the unfinished
+  recording is recovered under "Recordings on this device".
+- Markers are time-stamped. After offline transcription the markers are merged into the transcript in time order,
+  and the report puts decisions, actions and questions in the right sections.
+- Live text needs internet. Untick "Live text" (or be offline) to record audio only and transcribe later.
+- The screen stays on while recording. Keep the app open.
 
-UPLOADING
-- Audio or video (.mp3 .m4a .wav .webm .mp4): kept on the device and transcribed on the device.
-- Transcript files (.txt .md .srt .vtt): loaded straight into the transcript.
+BETTER TRANSLATION
+- Long transcripts are translated in parts, so nothing is cut off. You see it appear as it is written.
+- Timestamps, speaker names and markers stay in place, so the original and translation line up.
+- Mixed Malay and English is understood. Names and acronyms listed in "Keep these words" are never translated.
+- Report, Translate and Fix need internet and your Anthropic API key (Settings).
 
-GOOD TO KNOW
-- Live text (words appearing while you speak) uses the browser's online speech service, so it needs internet.
-- On-device transcription is slower than real time on many phones. A 30 minute meeting can take
-  10-40 minutes. Keep the screen on. Use Fast quality for long meetings, Best for important short ones.
-  Recordings over about 45 minutes may run out of memory on a phone: transcribe them on a computer.
-- Whisper handles Malay with English words well, but names and technical terms still need checking.
-- Saved records and recordings live on that device. Clearing browser data deletes them.
-  Download important recordings and export the report.
-- The API key is stored only on that device. Use a key with a spending limit.
-- iPhone: Chrome and Edge there use Apple's browser engine, so install via Share > Add to Home Screen,
-  and live text may not work. On-device transcription may be slower. Android is recommended.
-- To publish an update: upload the new files and change VERSION in sw.js (mvr-v3, mvr-v4...).
+UPDATING
+Upload changed files to GitHub and change VERSION in sw.js (mvr-v8, mvr-v9 ...).

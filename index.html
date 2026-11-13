@@ -3,155 +3,421 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Meeting Voice to Report</title>
+<title>SYSHHB IT Recorder</title>
+<script>(function(){try{var t=localStorage.getItem("syshhb_theme");if(!t)t=window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t}catch(e){}})()</script>
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#0f766e">
+<meta name="theme-color" content="#006b45">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Meeting Report">
+<meta name="apple-mobile-web-app-title" content="SYSHHB Recorder">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>
 :root{
-  box-sizing:border-box;
-  padding-top:env(safe-area-inset-top,0px);
-  padding-bottom:env(safe-area-inset-bottom,0px);
-  --bg:#f5f6f4; --surface:#ffffff; --surface2:#eef1ee; --text:#1c2321; --muted:#5d6b66;
-  --border:#d7ddd9; --accent:#0f766e; --accent-text:#ffffff; --accent-soft:#d9efec;
-  --danger:#b42318; --danger-soft:#fde8e6; --ok:#166534; --rec:#d92d20;
-  color-scheme:light;
+  --brand:#006b45;--brand-2:#00824f;--brand-dark:#004d33;--brand-soft:#e7f5ec;--gold:#f3d83d;--gold-dark:#c9a900;
+  --bg:#f4f7f5;--panel:#ffffff;--ink:#132a22;--muted:#5f7a70;--line:#e1ebe5;--line-2:#cfdfd6;
+  --ok:#14915a;--ok-soft:#e3f6ec;--warn:#b7791f;--warn-soft:#fff5dd;--bad:#c53f4e;--bad-soft:#fdecee;--info:#3b6fd1;--info-soft:#e9f0fd;--grey-soft:#eef2f0;
+  --radius:12px;--shadow:0 1px 2px #0b2a1d0d,0 4px 14px #0b2a1d0a;--shadow-lg:0 18px 50px #0b2a1d33;
+  --side:248px;--soft:#f8fbf9;--rec:#d92d20;
+  --border:var(--line);--surface:var(--panel);--surface2:var(--grey-soft);--text:var(--ink);--accent:var(--brand);--accent-text:#fff;--accent-soft:var(--brand-soft);--danger:var(--bad);--danger-soft:var(--bad-soft)
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#121715; --surface:#1a211f; --surface2:#232c29; --text:#e8eeeb; --muted:#9aa8a2;
-    --border:#33403c; --accent:#2dd4bf; --accent-text:#06231f; --accent-soft:#16332f;
-    --danger:#f97066; --danger-soft:#3a1c19; --ok:#4ade80; --rec:#f97066; color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#121715; --surface:#1a211f; --surface2:#232c29; --text:#e8eeeb; --muted:#9aa8a2;
-  --border:#33403c; --accent:#2dd4bf; --accent-text:#06231f; --accent-soft:#16332f;
-  --danger:#f97066; --danger-soft:#3a1c19; --ok:#4ade80; --rec:#f97066; color-scheme:dark;
-}
-*,*::before,*::after{box-sizing:border-box}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
-.wrap{max-width:900px;margin:0 auto;padding:20px 16px 60px}
-header{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
-header h1{font-size:21px;margin:0;font-weight:650;letter-spacing:-.01em}
-header p{margin:2px 0 0;color:var(--muted);font-size:13.5px}
-.logo{width:42px;height:42px;border-radius:12px;background:var(--accent);color:var(--accent-text);display:grid;place-items:center;flex:none}
-.spacer{flex:1}
-.pill{font-size:12px;padding:4px 10px;border-radius:99px;background:var(--surface2);color:var(--muted);border:1px solid var(--border)}
-.pill.ok{color:var(--ok)}
-section.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px}
-.card h2{font-size:15px;margin:0 0 12px;font-weight:650;display:flex;align-items:center;gap:8px}
-.step{width:22px;height:22px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-size:12px;display:grid;place-items:center;font-weight:700;flex:none}
-.tabs{display:flex;gap:4px;background:var(--surface2);padding:4px;border-radius:10px;margin-bottom:14px;width:fit-content;max-width:100%;overflow-x:auto}
-.tab{border:0;background:transparent;color:var(--muted);padding:7px 14px;border-radius:7px;font:inherit;font-weight:550;cursor:pointer;white-space:nowrap}
-.tab[aria-selected="true"]{background:var(--surface);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+*{box-sizing:border-box}
+.hidden,[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 "Segoe UI",Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--brand)}
+.admin-only{display:none!important}
+body.admin-mode .admin-only{display:block!important}
+body.admin-mode .nav-item.admin-only{display:flex!important}
+
+/* layout */
+.app{display:grid;grid-template-columns:var(--side) 1fr;min-height:100vh}
+.sidebar{position:sticky;top:0;height:100vh;background:linear-gradient(180deg,#00583a,#004a31);color:#e3f3ea;display:flex;flex-direction:column;border-right:3px solid var(--gold);z-index:30}
+.side-brand{display:flex;align-items:center;gap:12px;padding:18px 18px 16px;border-bottom:1px solid #ffffff1c}
+.side-brand img{width:44px;height:44px;border-radius:50%;background:#fff;padding:2px;border:2px solid var(--gold);object-fit:contain}
+.side-brand b{display:block;font-size:16px;line-height:1.25;color:#fff;letter-spacing:.2px}.side-brand>div{min-width:0}
+.side-brand span{font-size:11.5px;color:#b8dcc8}
+.nav{padding:12px 10px;display:flex;flex-direction:column;gap:2px;flex:1;overflow:auto}
+.nav-label{font-size:10.5px;text-transform:uppercase;letter-spacing:1px;color:#8fc3a8;padding:12px 12px 6px}
+.nav-item{display:flex;align-items:center;gap:11px;width:100%;border:0;background:none;color:#d8efe2;padding:10px 12px;border-radius:9px;cursor:pointer;text-align:left;font-weight:550;transition:background .15s,color .15s}
+.nav-item svg{width:18px;height:18px;flex:none;opacity:.9}
+.nav-item:hover{background:#ffffff14;color:#fff}
+.nav-item.active{background:#fff;color:var(--brand);box-shadow:0 2px 8px #0003}
+.nav-item .count{margin-left:auto;font-size:11px;background:var(--gold);color:#3d3200;border-radius:20px;padding:1px 8px;font-weight:700}
+.nav-item.active .count{background:var(--brand-soft);color:var(--brand)}
+.side-foot{padding:14px;border-top:1px solid #ffffff1c;display:flex;flex-direction:column;gap:8px}
+.user-chip{display:flex;align-items:center;gap:10px;min-width:0}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--gold);color:#3d3200;display:grid;place-items:center;font-weight:800;flex:none}
+.user-chip .who{min-width:0}
+.user-chip .who b{display:block;font-size:12.5px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#roleBadge{font-size:11px;color:#b8dcc8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+#syncStatus{font-size:11.5px;display:flex;align-items:center;gap:6px;color:#cdebdc}
+#syncStatus::before{content:"";width:8px;height:8px;border-radius:50%;background:#42d392;box-shadow:0 0 0 3px #42d39233;flex:none}
+#syncStatus[data-state=saving]::before{background:var(--gold);box-shadow:0 0 0 3px #f3d83d44;animation:pulse 1s infinite}
+#syncStatus[data-state=offline]::before{background:var(--gold);box-shadow:0 0 0 3px #f3d83d44}
+#syncStatus[data-state=error]::before{background:#ff6b7a;box-shadow:0 0 0 3px #ff6b7a44}
+@keyframes pulse{50%{opacity:.35}}
+.side-foot .btn{justify-content:center}
+.prefs{display:flex;gap:6px;align-items:center}
+.theme-btn{border:1px solid #ffffff26;background:#ffffff14;border-radius:9px;width:38px;height:31px;cursor:pointer;font-size:15px;display:grid;place-items:center;flex:none}
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:20;background:#ffffffe8;backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;padding:12px 26px}
+.topbar h1{font-size:19px;margin:0;font-weight:750;letter-spacing:-.2px;white-space:nowrap}
+.topbar .sub{font-size:12px;color:var(--muted);white-space:nowrap}
+.top-search{flex:1;max-width:460px;margin-left:auto;position:relative}
+.top-search input{width:100%;border:1px solid var(--line-2);background:var(--bg);border-radius:10px;padding:9px 12px 9px 36px;outline:none}
+.top-search input:focus{background:#fff;border-color:var(--brand);box-shadow:0 0 0 3px #006b451f}
+.top-search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--muted)}
+.topbar #btnNew{margin-left:auto}
+.top-search:not(.hidden)~#btnNew{margin-left:0}
+.icon-btn{border:0;background:transparent;width:34px;height:34px;border-radius:8px;display:grid;place-items:center;cursor:pointer;color:var(--muted)}
+.icon-btn:hover{background:#00000009;color:var(--ink)}
+.icon-btn svg{width:18px;height:18px}
+.icon-btn.menu-btn{display:none}
+.content{padding:22px 26px 40px;max-width:1100px;width:100%}
+.view{animation:fade .22s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* controls */
+.btn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line-2);background:#fff;color:var(--ink);padding:8px 13px;border-radius:9px;font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap;transition:background .15s,border .15s,transform .05s}
+.btn:hover{background:var(--brand-soft);border-color:#b9d9c7}
+.btn:active{transform:translateY(1px)}
+.btn svg{width:16px;height:16px;flex:none}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn.primary:hover{background:var(--brand-dark)}
+.btn.gold{background:var(--gold);border-color:#e3c62a;color:#3d3200}
+.btn.gold:hover{background:#ecd02c}
+.btn.danger{color:var(--bad);border-color:#f0c6cb;background:#fff}
+.btn.danger:hover{background:var(--bad-soft)}
+.btn.side{background:#ffffff14;border-color:#ffffff26;color:#e3f3ea}
+.btn.side:hover{background:#ffffff26}
+.btn.sm{padding:5px 9px;font-size:12px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+input[type=text],input[type=date],input[type=search],input[type=password],select,textarea{width:100%;border:1px solid var(--line-2);border-radius:9px;padding:8px 10px;background:#fff;outline:none;min-width:0;transition:border .15s,box-shadow .15s}
+textarea{resize:vertical;min-height:240px;line-height:1.55}
+input:focus,select:focus,textarea:focus{border-color:var(--brand);box-shadow:0 0 0 3px #006b451f}
+button:focus-visible{outline:2px solid var(--brand);outline-offset:1px}
+input[type=checkbox]{accent-color:var(--brand)}
+progress{accent-color:var(--brand)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px 18px;margin-bottom:14px}
+.card>h2{margin:0 0 12px;font-size:14.5px;font-weight:700;display:flex;align-items:center;gap:9px}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
 .field{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1 1 180px}
-.field label{font-size:12px;color:var(--muted);font-weight:600}
-input[type=text],input[type=date],input[type=search],select,textarea{
-  width:100%;font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:8px 10px}
-textarea{resize:vertical;min-height:220px;line-height:1.55}
-input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
-button.btn{font:inherit;font-weight:600;border-radius:9px;padding:8px 14px;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;display:inline-flex;align-items:center;gap:7px}
-button.btn:hover{background:var(--surface2)}
-button.btn.primary{background:var(--accent);color:var(--accent-text);border-color:var(--accent)}
-button.btn.primary:hover{filter:brightness(1.07)}
-button.btn.rec{background:var(--rec);border-color:var(--rec);color:#fff}
-button.btn.danger{color:var(--danger)}
-button.btn:disabled{opacity:.45;cursor:not-allowed}
-.dot{width:10px;height:10px;border-radius:50%;background:currentColor;display:inline-block}
-.live .dot{animation:pulse 1.1s infinite}
-@keyframes pulse{50%{opacity:.25}}
-.timer{font-variant-numeric:tabular-nums;font-size:26px;font-weight:600;letter-spacing:.02em;min-width:96px}
-.interim{min-height:22px;color:var(--muted);font-style:italic;margin-top:8px;font-size:14px}
-.msg{margin-top:10px;padding:9px 12px;border-radius:9px;font-size:13.5px;background:var(--surface2);color:var(--text)}
-.msg.err{background:var(--danger-soft);color:var(--danger)}
-.msg:empty{display:none}
-.hint{font-size:12.5px;color:var(--muted);margin-top:8px}
-.drop{border:2px dashed var(--border);border-radius:12px;padding:22px;text-align:center;color:var(--muted);cursor:pointer;background:var(--bg)}
-.drop:hover,.drop.over{border-color:var(--accent);color:var(--text)}
-.drop strong{color:var(--text)}
-audio{width:100%;margin-top:10px}
+.field label{font-size:12px;font-weight:650;color:#3f5a4f}
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
-.meta{font-size:12.5px;color:var(--muted)}
-.out{border:1px solid var(--border);border-radius:10px;background:var(--bg);padding:14px 16px;min-height:120px;overflow-x:auto}
+.spacer{flex:1}
+.meta{font-size:12px;color:var(--muted)}
+.hint{font-size:12.5px;color:var(--muted);margin:8px 0 0}
+.msg{margin-top:10px;padding:9px 12px;border-radius:10px;font-size:13px;background:var(--brand-soft);color:var(--ink);border:1px solid #c5e3d1}
+.msg.err{background:var(--bad-soft);color:var(--bad);border-color:#f0c6cb}
+.msg:empty{display:none}
+.tabs{display:inline-flex;background:var(--grey-soft);padding:3px;border-radius:10px;gap:2px;margin-bottom:14px;max-width:100%;overflow-x:auto}
+.tab{border:0;background:transparent;padding:7px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:12.5px;color:var(--muted);white-space:nowrap}
+.tab[aria-selected="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 3px #0002}
+.timer{font-variant-numeric:tabular-nums;font-size:44px;font-weight:300;letter-spacing:.03em;color:var(--ink)}
+.interim{min-height:22px;color:var(--muted);font-style:italic;margin-top:10px;font-size:13.5px;text-align:center}
+.drop{border:2px dashed var(--line-2);border-radius:var(--radius);padding:26px;text-align:center;color:var(--muted);cursor:pointer;background:var(--soft)}
+.drop:hover,.drop.over{border-color:var(--brand);color:var(--ink);background:var(--brand-soft)}
+.drop strong{color:var(--ink)}
+audio{width:100%;margin-top:10px}
+
+/* record stage */
+.rec-stage{display:flex;flex-direction:column;align-items:center;padding:6px 0 2px;text-align:center}
+.meter{display:flex;align-items:center;justify-content:center;gap:3px;height:44px;margin:2px 0 14px}
+.meter i{width:5px;height:100%;border-radius:3px;background:var(--brand);transform:scaleY(.1);transform-origin:center;opacity:.8;transition:transform .08s}
+.recbtn{width:96px;height:96px;border-radius:50%;border:0;background:var(--brand);color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 24px #006b4555,0 0 0 8px #006b4518;transition:transform .1s,background .2s}
+.recbtn svg{width:40px;height:40px}
+.recbtn:hover{background:var(--brand-dark)}
+.recbtn:active{transform:scale(.96)}
+.recbtn:disabled{cursor:default;background:#9db3a8;box-shadow:none}
+.live .recbtn:disabled{background:var(--rec);animation:recpulse 1.4s infinite}
+@keyframes recpulse{0%{box-shadow:0 0 0 0 #d92d2066}70%{box-shadow:0 0 0 22px #d92d2000}100%{box-shadow:0 0 0 0 #d92d2000}}
+.rec-ctrl{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.rec-hint{font-size:12.5px;color:var(--muted);margin-top:10px}
+.marks{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center;margin:14px 0 4px}
+.chip-btn{border:1px solid var(--line-2);background:var(--soft);border-radius:20px;padding:6px 12px;font-weight:650;font-size:12.5px;cursor:pointer}
+.chip-btn:hover{background:var(--brand-soft)}
+.chip-btn:disabled{opacity:.4;cursor:not-allowed}
+
+.pill{display:inline-flex;align-items:center;gap:5px;padding:2px 9px;border-radius:20px;font-size:11.5px;font-weight:650;white-space:nowrap;background:var(--grey-soft);color:#4b5f57}
+.out{border:1px solid var(--line);border-radius:10px;background:var(--soft);padding:14px 16px;min-height:120px;overflow-x:auto}
 .out:empty::before{content:attr(data-empty);color:var(--muted)}
-.out h2,.out h3,.out h4{margin:16px 0 6px;line-height:1.3}
-.out h2{font-size:18px}.out h3{font-size:16px}.out h4{font-size:14.5px}
+.out h2,.out h3,.out h4{margin:16px 0 6px;line-height:1.3;color:var(--brand)}
+.out h2{font-size:18px}.out h3{font-size:15.5px}.out h4{font-size:14px}
 .out h2:first-child,.out h3:first-child{margin-top:0}
 .out p{margin:6px 0}.out ul,.out ol{margin:6px 0;padding-left:22px}
-.out table{border-collapse:collapse;width:100%;margin:8px 0;font-size:14px}
-.out th,.out td{border:1px solid var(--border);padding:6px 9px;text-align:left;vertical-align:top}
-.out th{background:var(--surface2)}
-.rec-list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
-.rec-item{display:flex;gap:10px;align-items:center;border:1px solid var(--border);border-radius:10px;padding:10px 12px;background:var(--bg);flex-wrap:wrap}
+.out table{border-collapse:collapse;width:100%;margin:8px 0;font-size:13px}
+.out th,.out td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+.out th{background:#f6faf8;color:#557064;font-size:11.5px;text-transform:uppercase;letter-spacing:.4px}
+.out .plain{white-space:pre-wrap;line-height:1.6}
+.out table.sbs{margin:0}
+.sbs td,.sbs th{width:50%}
+.sbs td{border-width:0 0 1px 0}
+.sbs td:first-child{color:var(--muted);border-right:1px solid var(--line)}
+.sbs tr:hover td{background:var(--brand-soft)}
+.sbs .ts{color:var(--brand);font-weight:700;font-size:11.5px;display:block}
+.rec-list{display:flex;flex-direction:column;margin-top:12px}
+.rec-item{display:flex;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding:11px 6px;flex-wrap:wrap;border-radius:8px;transition:background .12s}
+.rec-item:last-child{border-bottom:0}
+.rec-item:hover{background:var(--brand-soft)}
 .rec-item .t{flex:1 1 200px;min-width:0}
-.rec-item .t b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rec-item .t b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13.5px}
+.rec-item select{width:auto}
 .tags{display:flex;gap:6px;margin-top:3px;flex-wrap:wrap}
-.tag{font-size:11.5px;padding:1px 8px;border-radius:99px;background:var(--accent-soft);color:var(--accent)}
-.empty{color:var(--muted);text-align:center;padding:18px 0;font-size:14px}
-.hidden{display:none!important}
-@media (max-width:520px){.timer{font-size:22px}}
-dialog{border:1px solid var(--border);border-radius:14px;background:var(--surface);color:var(--text);padding:20px;max-width:460px;width:calc(100% - 32px)}
-dialog::backdrop{background:rgba(0,0,0,.45)}
-dialog h2{margin:0 0 10px;font-size:17px}
+.tag{font-size:11.5px;padding:1px 9px;border-radius:20px;background:var(--brand-soft);color:var(--brand);font-weight:650}
+.badge{font-size:11.5px;padding:1px 9px;border-radius:20px;background:var(--warn-soft);color:#94600f;font-weight:650}
+.empty{color:var(--muted);text-align:center;padding:22px 0;font-size:13px}
+.inner{border:1px solid var(--line);border-radius:10px;background:var(--soft);padding:12px;margin-bottom:12px}
+.diag{text-align:left;background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:12.5px/1.5 ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap;word-break:break-word;margin-top:14px;max-height:260px;overflow:auto}
+body.viewer #secCapture,body.viewer #secRecordings,body.viewer #btnSave,body.viewer #btnSaveT,body.viewer #btnReport,body.viewer #btnTranslate,body.viewer #btnTranslateReport,body.viewer #btnFix,body.viewer #btnClear,body.viewer #btnNew{display:none!important}
+dialog{border:0;border-radius:16px;background:var(--panel);color:var(--ink);padding:20px 22px;max-width:460px;width:calc(100% - 32px);box-shadow:var(--shadow-lg)}
+dialog::backdrop{background:#06241873}
+dialog h2{margin:0 0 10px;font-size:18px}
 dialog .field{margin-bottom:12px}
 dialog p{font-size:13px;color:var(--muted);margin:8px 0}
+
+/* sign-in */
+.auth-overlay{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:18px;overflow:auto;background:radial-gradient(1200px 600px at 20% 10%,#0a8a59,transparent),linear-gradient(135deg,#00492f,#006b45 55%,#00492f)}
+.auth-prefs{position:fixed;top:16px;right:16px;display:flex;gap:6px;z-index:101}
+.auth-card{background:#fff;color:#132a22;border-radius:20px;padding:34px 30px;width:min(420px,100%);box-shadow:0 30px 90px #0006;text-align:center;border-top:5px solid var(--gold)}
+.ld-logo{position:relative;width:104px;height:104px;margin:0 auto;display:flex;align-items:center;justify-content:center}
+.ld-logo img{position:relative;z-index:1;width:84px;height:84px;border-radius:50%;border:3px solid var(--gold);padding:3px;background:#fff;object-fit:contain}
+.auth-card.loading .ld-logo::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,var(--gold),#2fbf86,transparent 70%);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px));mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px));animation:ldspin 1.1s linear infinite}
+.auth-card.loading .ld-logo img{animation:ldpulse 1.8s ease-in-out infinite}
+@keyframes ldspin{to{transform:rotate(360deg)}}@keyframes ldpulse{50%{transform:scale(.94)}}
+.ld{display:none;margin-top:14px}.auth-card.loading .ld{display:block}
+.ld-bar{height:7px;border-radius:6px;background:#e3ece7;overflow:hidden}.ld-bar i{display:block;height:100%;width:40%;border-radius:6px;background:linear-gradient(90deg,var(--brand),#2fbf86,var(--gold));background-size:200% 100%;animation:ldflow 1.4s linear infinite}
+@keyframes ldflow{to{background-position:-200% 0}}
+.auth-card h2{margin:12px 0 4px;color:var(--brand);font-size:21px}
+.auth-card p{color:var(--muted);font-size:13px;margin:6px 0}
+.auth-card .btn{background:#fff;color:#132a22}
+.auth-card .btn.primary{background:var(--brand);color:#fff}
+.ms-btn{width:100%;justify-content:center;padding:12px;font-size:14px;margin:16px 0 6px}
+.ms-logo{display:grid;grid-template-columns:8px 8px;gap:2px}.ms-logo i{width:8px;height:8px;display:block}
+@media(prefers-reduced-motion:reduce){.auth-card.loading .ld-logo::before,.auth-card.loading .ld-logo img,.ld-bar i,.live .recbtn:disabled{animation:none}}
+.lang-seg{display:inline-flex;background:#ffffff14;border:1px solid #ffffff26;border-radius:9px;padding:2px;gap:2px;flex:none}
+.lang-seg button{border:0;background:transparent;color:#d8efe2;font-weight:700;font-size:12px;padding:5px 8px;border-radius:7px;cursor:pointer}
+.lang-seg button.on{background:#fff;color:#0b3a28}
+.lang-seg.light{background:var(--grey-soft);border-color:var(--line-2)}
+.lang-seg.light button{color:var(--muted)}
+.lang-seg.light button.on{background:var(--brand);color:#fff}
+.theme-btn.light{border-color:var(--line-2);background:var(--grey-soft);color:var(--ink)}
+.top-prefs{display:none;gap:6px;align-items:center;margin-left:auto}
+.hero-card{display:flex;gap:16px;flex-wrap:wrap;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#00583a,#00824f);color:#fff;border-radius:var(--radius);padding:18px 20px;margin-bottom:14px;border-bottom:3px solid var(--gold);box-shadow:var(--shadow)}
+.hero-card h2{margin:0;font-size:19px}.hero-card .meta{color:#cdebdc;margin:2px 0 0}
+.quick{display:flex;gap:8px;flex-wrap:wrap}
+.hero-card .btn:not(.gold){background:#ffffff1f;border-color:#ffffff40;color:#fff}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 16px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:2px}
+.kpi b{font-size:26px;color:var(--brand);font-weight:750;line-height:1.1}.kpi span{font-size:12px;color:var(--muted)}
+.kpi:hover{border-color:var(--brand)}
+.flow{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.flow button{border:1px solid var(--line-2);background:var(--panel);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:650;color:var(--muted);cursor:pointer}
+.flow button.done{color:var(--ok);border-color:#bfe5d0;background:var(--ok-soft)}
+.flow button.next{color:#3d3200;background:var(--gold);border-color:#e3c62a}
+.chat{display:flex;flex-direction:column;gap:10px;max-height:52vh;overflow:auto;padding:4px}
+.bub{max-width:88%;padding:9px 12px;border-radius:14px;font-size:13.5px;line-height:1.5;overflow-wrap:anywhere}
+.bub.me{align-self:flex-end;background:var(--brand);color:#fff;border-bottom-right-radius:4px}
+:root[data-theme=dark] .bub.me{background:#13804f}
+.bub.ai{align-self:flex-start;background:var(--soft);border:1px solid var(--line);border-bottom-left-radius:4px}
+.bub.ai p{margin:4px 0}.bub.ai ul,.bub.ai ol{margin:4px 0;padding-left:20px}.bub.ai h2,.bub.ai h3,.bub.ai h4{font-size:14px;margin:8px 0 2px}
+.bub.ai table{border-collapse:collapse;font-size:12.5px}.bub.ai td,.bub.ai th{border:1px solid var(--line);padding:4px 7px;text-align:left}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.ts-link{border:0;background:var(--brand-soft);color:var(--brand);font-weight:700;font-size:11.5px;border-radius:6px;padding:1px 6px;cursor:pointer;font-family:inherit}
+.reader{border:1px solid var(--line);border-radius:10px;background:var(--soft);max-height:60vh;overflow:auto;padding:6px}
+.ln{padding:6px 8px;border-radius:8px;cursor:pointer;line-height:1.5}
+.ln:hover{background:var(--brand-soft)}.ln.sel{background:var(--brand-soft);outline:2px solid var(--brand)}
+.ln mark{background:var(--gold);color:#3d3200;border-radius:3px}
+.mk{font-size:10.5px;font-weight:800;border-radius:20px;padding:1px 7px;margin:0 6px 0 2px;text-transform:uppercase;letter-spacing:.3px}
+.mk.DECISION{background:var(--ok-soft);color:var(--ok)}.mk.ACTION{background:var(--info-soft);color:var(--info)}.mk.IMPORTANT{background:var(--warn-soft);color:var(--warn)}.mk.QUESTION{background:var(--bad-soft);color:var(--bad)}
+.tagbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.act{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:8px 6px;border-bottom:1px solid var(--line)}
+.act:last-child{border-bottom:0}
+.act input[type=checkbox]{width:18px;height:18px;flex:none}
+.act .task{flex:2 1 200px}.act .own{flex:1 1 110px}.act .due{flex:0 1 150px}
+.act.done .task,.rec-item.done .t b{text-decoration:line-through;opacity:.6}
+.over{color:var(--bad);font-weight:700}
+.ins h4{margin:12px 0 4px;font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+.ins ul{margin:4px 0;padding-left:20px}.ins p{margin:4px 0}
+.ins .sug{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:var(--brand-soft);border-radius:10px;padding:8px 10px;margin-bottom:6px}
+.toasts{position:fixed;right:18px;bottom:18px;display:flex;flex-direction:column;gap:8px;z-index:90}
+.toast{background:#0f2a20;color:#fff;padding:10px 14px;border-radius:10px;box-shadow:var(--shadow-lg);font-size:13px;border-left:4px solid var(--gold);animation:fade .2s ease}
+body.viewer #btnAnalyse,body.viewer #btnAddAct,body.viewer #tagBar,body.viewer #qRecord,body.viewer #qUpload{display:none!important}
+@media(max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}.toasts{right:12px;left:12px;bottom:90px}.bub{max-width:96%}.kbd-hint{display:none}}
+.bottom-nav{display:none}
+
+/* dark */
+:root[data-theme=dark]{--bg:#0d1512;--panel:#141f1a;--ink:#e3eee8;--muted:#93ab9f;--line:#24342c;--line-2:#304339;--brand:#35b87f;--brand-dark:#0f6e45;--brand-soft:#173327;--ok-soft:#133a29;--warn-soft:#3b2e12;--bad-soft:#3e1b20;--info-soft:#18294a;--grey-soft:#1f2c26;--soft:#18241f;--shadow:0 1px 2px #0007,0 4px 14px #0005;--shadow-lg:0 18px 50px #000a;color-scheme:dark}
+:root[data-theme=dark] .sidebar{background:linear-gradient(180deg,#0b3a28,#082a1d)}
+:root[data-theme=dark] .topbar{background:#141f1ae8}
+:root[data-theme=dark] .btn,:root[data-theme=dark] select,:root[data-theme=dark] input,:root[data-theme=dark] textarea{background:var(--panel);color:var(--ink);border-color:var(--line-2)}
+:root[data-theme=dark] .btn:hover{background:var(--brand-soft);border-color:#2f6b52}
+:root[data-theme=dark] .btn.primary{background:#13804f;border-color:#13804f;color:#fff}
+:root[data-theme=dark] .btn.primary:hover{background:#18975e}
+:root[data-theme=dark] .btn.gold{background:var(--gold);color:#3d3200;border-color:#e3c62a}
+:root[data-theme=dark] .btn.danger{color:#ff8a96;border-color:#5a2a31}
+:root[data-theme=dark] .btn.side{background:#ffffff14;border-color:#ffffff26;color:#e3f3ea}
+:root[data-theme=dark] .recbtn{background:#13804f}
+:root[data-theme=dark] .top-search input{background:var(--bg)}
+:root[data-theme=dark] .top-search input:focus{background:var(--panel)}
+:root[data-theme=dark] .field label{color:var(--muted)}
+:root[data-theme=dark] .tab[aria-selected="true"]{background:#2a3a33;color:var(--ink)}
+:root[data-theme=dark] .out th{background:#18251f;color:var(--muted)}
+:root[data-theme=dark] .msg{border-color:#24503b}
+:root[data-theme=dark] .msg.err{border-color:#5a2a31;color:#ff8f9b}
+:root[data-theme=dark] .badge{color:#f2c46a}
+:root[data-theme=dark] .bottom-nav,:root[data-theme=dark] dialog,:root[data-theme=dark] .auth-card{background:var(--panel);color:var(--ink)}
+:root[data-theme=dark] .auth-card h2{color:#55cf96}
+:root[data-theme=dark] .auth-card .btn{background:var(--panel);color:var(--ink)}
+:root[data-theme=dark] .auth-card .btn.primary{background:#13804f;color:#fff}
+
+/* responsive */
+@media(max-width:900px){
+  .app{grid-template-columns:1fr}
+  .sidebar{position:fixed;left:0;top:0;width:var(--side);transform:translateX(-105%);transition:transform .25s}
+  body.nav-open .sidebar{transform:none;box-shadow:var(--shadow-lg)}
+  .icon-btn.menu-btn{display:grid}
+  .topbar{padding:10px 16px;flex-wrap:wrap}
+  .topbar .sub{display:none}
+  .top-search{order:3;max-width:none;flex-basis:100%}
+  .top-prefs{display:flex}
+  .topbar #btnNew{margin-left:0}
+  .content{padding:16px}
+}
+@media(max-width:700px){
+  body{font-size:14.5px}
+  input,select,textarea{font-size:16px!important}
+  .content{padding:12px 12px 96px}
+  .topbar{padding:10px 12px;gap:8px;backdrop-filter:none;background:#fff}
+  :root[data-theme=dark] .topbar{background:var(--panel)}
+  .sidebar{z-index:55}
+  body.nav-open::after{content:"";position:fixed;inset:0;background:#06241866;z-index:50}
+  .topbar h1{font-size:17px}
+  #btnNew{position:fixed;right:14px;bottom:82px;z-index:45;border-radius:40px;padding:13px 18px;box-shadow:0 8px 24px #0004;font-size:14px;margin-left:0!important}
+  .card{padding:14px 14px 16px}
+  .timer{font-size:40px}
+  .sbs td,.sbs th{display:block;width:100%;border-right:0!important}
+  .bottom-nav{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;position:fixed;left:0;right:0;bottom:0;z-index:44;background:#fff;border-top:1px solid var(--line);box-shadow:0 -4px 18px #0b2a1d14;padding:4px 4px calc(4px + env(safe-area-inset-bottom))}
+  .bottom-nav button{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 2px;font-size:10.5px;font-weight:650;color:var(--muted);border-radius:10px;cursor:pointer}
+  .bottom-nav button svg{width:21px;height:21px}
+  .bottom-nav button.active{color:var(--brand);background:var(--brand-soft)}
+}
+@media print{.sidebar,.topbar,.bottom-nav{display:none}}
 </style>
 </head>
 <body>
-<div class="wrap">
-
-<header>
-  <div class="logo" aria-hidden="true">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg>
+<div class="auth-overlay" id="gate">
+  <div class="auth-prefs"><div class="lang-seg" role="group" aria-label="Language"><button type="button" data-lang="en">EN</button><button type="button" data-lang="ms">BM</button></div><button type="button" class="theme-btn" data-theme-btn title="Dark mode"><span class="ti">🌙</span></button></div>
+  <div class="auth-card" id="gateCard">
+    <div class="ld-logo"><img src="logo.png" alt="Yayasan Sultan Haji Hassanal Bolkiah logo"></div>
+    <h2 id="gateTitle">SYSHHB IT Recorder</h2>
+    <p id="gateMsg" role="status">Loading…</p>
+    <button class="btn primary ms-btn hidden" id="btnSignIn"><span class="ms-logo"><i style="background:#f25022"></i><i style="background:#7fba00"></i><i style="background:#00a4ef"></i><i style="background:#ffb900"></i></span>Sign in with Microsoft</button>
+    <div class="ld"><div class="ld-bar"><i></i></div></div>
+    <div class="actions" style="justify-content:center">
+      <button class="btn hidden" id="btnDiag">Connection check</button>
+      <button class="btn hidden" id="btnGateOut">Sign out</button>
+    </div>
+    <pre class="diag hidden" id="diagOut"></pre>
   </div>
-  <div>
-    <h1>Meeting Voice to Report</h1>
-    <p>Record or upload, get a transcript, translate it, write the minutes, save the record.</p>
-  </div>
-  <div class="spacer"></div>
-  <span class="pill" id="storePill">Storage: checking…</span>
-  <span class="pill" id="netPill"></span>
-  <button class="btn" id="btnSettings">Settings</button>
-  <button class="btn primary hidden" id="btnInstall">Install app</button>
-</header>
+</div>
 
-<!-- 1. CAPTURE -->
-<section class="card">
-  <h2><span class="step">1</span> Capture the meeting</h2>
+<div class="app hidden" id="appWrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="side-brand"><img src="logo.png" alt="SYSHHB logo"><div><b>SYSHHB IT Recorder</b><span>Meetings to minutes</span></div></div>
+    <nav class="nav" id="nav">
+      <button class="nav-item" data-view="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Overview</button>
+      <div class="nav-label">Meeting</div>
+      <button class="nav-item" data-view="meeting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg>Record</button>
+      <button class="nav-item" data-view="report"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg>Report</button>
+      <button class="nav-item" data-view="translate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>Translate</button>
+      <button class="nav-item" data-view="ask"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Assistant</button>
+      <button class="nav-item" data-view="records"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Saved Records<span class="count" id="navCountRec">0</span></button>
+      <div class="nav-label admin-only">Admin</div>
+      <button class="nav-item admin-only" data-view="users"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Manage Access</button>
+      <button class="nav-item admin-only" data-view="audit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>Audit Logs</button>
+    </nav>
+    <div class="side-foot">
+      <div class="user-chip"><div class="avatar" id="avatar">?</div><div class="who"><b id="userName">Not signed in</b><span id="roleBadge">—</span></div></div>
+      <span id="syncStatus" data-state="ok">Offline</span>
+      <div class="prefs"><div class="lang-seg" role="group" aria-label="Language"><button type="button" data-lang="en">EN</button><button type="button" data-lang="ms">BM</button></div><button type="button" class="theme-btn" data-theme-btn title="Dark mode"><span class="ti">🌙</span></button><button class="btn side sm" id="btnSettings" style="flex:1">Settings</button></div>
+      <button class="btn gold sm hidden" id="btnInstall">Install app</button>
+      <div class="row" style="gap:6px;align-items:center"><button class="btn side sm" id="refreshBtn" style="flex:1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.9-3.4L23 10M1 14l4.6 4.4A9 9 0 0 0 20.5 15"/></svg>Refresh</button><button class="btn side sm" id="btnSignOut" style="flex:1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>Sign out</button></div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+      <div><h1 id="viewTitle">Record</h1><div class="sub" id="viewSub">Record or upload a meeting</div></div>
+      <div class="top-search hidden" id="topSearch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input id="q" type="search" placeholder="Search records…" aria-label="Search records"></div>
+      <div class="top-prefs"><div class="lang-seg light" role="group" aria-label="Language"><button type="button" data-lang="en">EN</button><button type="button" data-lang="ms">BM</button></div><button type="button" class="theme-btn light" data-theme-btn title="Dark mode"><span class="ti">🌙</span></button></div>
+      <button class="btn gold" id="btnNew"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>New meeting</button>
+    </header>
+
+    <main class="content">
+<div class="flow hidden" id="flow"></div>
+<!-- HOME -->
+<div class="view hidden" id="viewHome">
+  <section class="hero-card">
+    <div><h2 id="greet">Welcome</h2><p class="meta">Record a meeting, and the app writes the minutes.</p></div>
+    <div class="quick">
+      <button class="btn gold" id="qRecord"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg>Start recording</button>
+      <button class="btn" id="qUpload">Upload a file</button>
+      <button class="btn" id="qAsk">Ask the assistant</button>
+    </div>
+  </section>
+  <div class="kpis">
+    <button class="kpi" data-go="records"><b id="kMeet">0</b><span>Meetings</span></button>
+    <button class="kpi" data-go="records"><b id="kMonth">0</b><span>This month</span></button>
+    <button class="kpi" data-go="home"><b id="kOpen">0</b><span>Open actions</span></button>
+    <button class="kpi" data-go="records"><b id="kWait">0</b><span>Waiting to upload</span></button>
+  </div>
+  <section class="card">
+    <h2>Open action items <span class="spacer"></span><select id="actOwner" style="width:auto;font-weight:400" aria-label="Who"><option value="">Everyone</option></select></h2>
+    <div class="rec-list" id="homeActions" style="margin-top:0"></div>
+  </section>
+  <section class="card">
+    <h2>Recent meetings</h2>
+    <div class="rec-list" id="homeRecent" style="margin-top:0"></div>
+  </section>
+</div>
+
+<!-- RECORD -->
+<div class="view" id="viewMeetings">
+<section class="card" id="secCapture">
   <div class="tabs" role="tablist">
     <button class="tab" role="tab" id="tabRec" aria-selected="true">Record live</button>
     <button class="tab" role="tab" id="tabUp" aria-selected="false">Upload file</button>
   </div>
-
-  <div class="row" style="margin-bottom:12px">
-    <div class="field">
-      <label for="spokenLang">Language spoken in the meeting</label>
-      <select id="spokenLang"></select>
-    </div>
-    <div class="field">
-      <label for="speaker">Current speaker (optional, added to each line)</label>
-      <input type="text" id="speaker" placeholder="e.g. Pengerusi / Chair">
-    </div>
+  <div class="row" style="margin-bottom:6px">
+    <div class="field"><label for="spokenLang">Language spoken in the meeting</label><select id="spokenLang"></select></div>
+    <div class="field"><label for="speaker">Current speaker (optional)</label><input type="text" id="speaker" placeholder="e.g. Pengerusi / Chair"></div>
   </div>
 
-  <!-- Live -->
   <div id="paneRec">
-    <p class="hint" id="mixHint" style="margin:0 0 10px">Mixed mode: the browser can only listen in one language at a time, so words from the other language may be spelled wrongly. Tap “Hearing” to switch when a speaker changes language for a while. Afterwards, press “Fix mixed-language transcript” in step 2 to correct the spellings using context. Lines the browser was unsure about start with ~.</p>
-    <label class="meta" style="display:flex;gap:8px;align-items:flex-start;margin-bottom:10px"><input type="checkbox" id="liveText" checked style="margin-top:3px"> <span>Live text while recording (needs internet). Untick it, or go offline, to record audio only and transcribe later.</span></label>
-    <div class="row" style="align-items:center">
+    <p class="hint hidden" id="mixHint">Mixed mode: the browser can only listen in one language at a time, so words from the other language may be spelled wrongly. Tap “Hearing” to switch when a speaker changes language for a while. Afterwards press “Fix mixed-language transcript” on the transcript card. Lines the browser was unsure about start with ~.</p>
+    <div class="rec-stage">
       <div class="timer" id="timer">00:00</div>
-      <button class="btn primary" id="btnStart"><span class="dot"></span> Start recording</button>
-      <button class="btn" id="btnPause" disabled>Pause</button>
-      <button class="btn" id="btnStop" disabled>Stop</button>
-      <button class="btn hidden" id="btnSwitch" disabled title="Switch the listening language during the meeting">Hearing: Malay</button>
+      <div class="meter" id="meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="recbtn" id="btnStart" aria-label="Start recording"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg></button>
+      <div class="rec-ctrl">
+        <button class="btn" id="btnPause" disabled>Pause</button>
+        <button class="btn danger" id="btnStop" disabled>Stop</button>
+        <button class="btn hidden" id="btnSwitch" disabled title="Switch the listening language during the meeting">Hearing: Malay</button>
+      </div>
+      <div class="rec-hint" id="recHint">Tap the microphone to start</div>
     </div>
+    <div class="marks" id="marks">
+      <span class="meta">Mark the minutes as you go:</span>
+      <button class="chip-btn" data-mark="DECISION" disabled>✔ Decision</button>
+      <button class="chip-btn" data-mark="ACTION" disabled>➜ Action</button>
+      <button class="chip-btn" data-mark="IMPORTANT" disabled>★ Important</button>
+      <button class="chip-btn" data-mark="QUESTION" disabled>? Question</button>
+    </div>
+    <p class="hint kbd-hint" style="text-align:center;margin-top:4px">Keyboard: Space pauses, D A I Q add markers.</p>
+    <label class="meta" style="display:flex;gap:8px;align-items:flex-start;margin:14px 0 0;justify-content:center"><input type="checkbox" id="liveText" checked style="margin-top:3px"> <span>Live text while recording (needs internet). Untick it, or go offline, to record audio only and transcribe later.</span></label>
     <div class="interim" id="interim" aria-live="polite"></div>
     <div id="audioBox" class="hidden">
       <audio id="recAudio" controls></audio>
@@ -159,7 +425,6 @@ dialog p{font-size:13px;color:var(--muted);margin:8px 0}
     </div>
   </div>
 
-  <!-- Upload -->
   <div id="paneUp" class="hidden">
     <div class="drop" id="drop" tabindex="0" role="button" aria-label="Choose a file">
       <strong>Choose a file</strong> or drop it here<br>
@@ -168,10 +433,8 @@ dialog p{font-size:13px;color:var(--muted);margin:8px 0}
     <input type="file" id="file" class="hidden" accept=".txt,.md,.srt,.vtt,.csv,audio/*,video/*">
     <div id="fileAudioBox" class="hidden">
       <audio id="fileAudio" controls></audio>
-      <div class="actions">
-        <button class="btn primary" id="btnWhisper">Transcribe on this device</button>
-      </div>
-      <p class="hint">Works without internet once the speech model has been downloaded one time. It uses the language above and the quality chosen in “Recordings on this device” below.</p>
+      <div class="actions"><button class="btn primary" id="btnWhisper">Transcribe on this device</button></div>
+      <p class="hint">Works without internet once the speech model has been downloaded one time. It uses the language above and the quality chosen under “Recordings on this device”.</p>
       <details style="margin-top:8px"><summary class="meta" style="cursor:pointer">Other methods (use the browser’s online speech service)</summary>
         <div class="actions">
           <button class="btn" id="btnTranscribe">Transcribe (new Chrome only)</button>
@@ -182,42 +445,59 @@ dialog p{font-size:13px;color:var(--muted);margin:8px 0}
       </details>
     </div>
   </div>
-
   <div class="msg" id="capMsg" role="status"></div>
-
-  <div style="margin-top:18px;border-top:1px solid var(--border);padding-top:14px">
-    <div class="row" style="align-items:center"><b style="font-size:14px">Recordings on this device</b><span class="spacer"></span><span class="meta" id="recStore"></span></div>
-    <div class="row" style="margin-top:10px;align-items:flex-end">
-      <div class="field"><label for="whisperModel">Offline transcription quality</label>
-        <select id="whisperModel">
-          <option value="tiny">Fast (about 40 MB download)</option>
-          <option value="base" selected>Balanced (about 80 MB download)</option>
-          <option value="small">Best (about 250 MB download, slower)</option>
-        </select></div>
-      <button class="btn hidden" id="btnWStop">Stop</button>
-    </div>
-    <progress id="wBar" class="hidden" max="100" value="0" style="width:100%;margin-top:8px"></progress>
-    <div class="msg" id="wMsg" role="status"></div>
-    <div class="rec-list" id="audioList"></div>
-    <audio id="listPlayer" controls class="hidden"></audio>
-  </div>
 </section>
 
-<!-- 2. TRANSCRIPT -->
+<section class="card" id="secRecordings">
+  <h2>Recordings on this device <span class="spacer"></span><span class="meta" style="font-weight:400" id="recStore"></span></h2>
+  <div class="row" style="align-items:flex-end">
+    <div class="field"><label for="whisperModel">Offline transcription quality</label>
+      <select id="whisperModel">
+        <option value="tiny">Fast (about 40 MB download)</option>
+        <option value="base" selected>Balanced (about 80 MB download)</option>
+        <option value="small">Best (about 250 MB download, slower)</option>
+      </select></div>
+    <button class="btn hidden" id="btnWStop">Stop</button>
+  </div>
+  <progress id="wBar" class="hidden" max="100" value="0" style="width:100%;margin-top:8px"></progress>
+  <div class="msg" id="wMsg" role="status"></div>
+  <div class="rec-list" id="audioList"></div>
+  <audio id="listPlayer" controls class="hidden"></audio>
+</section>
+
 <section class="card">
-  <h2><span class="step">2</span> Meeting details and transcript</h2>
+  <h2>Meeting details and transcript</h2>
   <div class="row" style="margin-bottom:12px">
     <div class="field" style="flex:2 1 240px"><label for="title">Meeting title</label><input type="text" id="title" placeholder="e.g. Mesyuarat Panel IT Bil. 3/2026"></div>
     <div class="field"><label for="mdate">Date</label><input type="date" id="mdate"></div>
   </div>
   <div class="field" style="margin-bottom:12px"><label for="people">Attendees</label><input type="text" id="people" placeholder="Names separated by commas"></div>
-  <div class="field">
+  <div class="tabs" style="margin-bottom:10px">
+    <button class="tab" id="tabEdit" aria-selected="true">Edit</button>
+    <button class="tab" id="tabRead" aria-selected="false">Read and play</button>
+  </div>
+  <div class="field" id="editBox">
     <label for="transcript">Transcript (you can edit it freely)</label>
     <textarea id="transcript" dir="auto" placeholder="The transcript appears here while you record, or after you upload a file. You can also paste text."></textarea>
+  </div>
+  <div id="readerBox" class="hidden">
+    <div class="row" style="margin-bottom:8px;align-items:center">
+      <div class="field" style="flex:2 1 200px"><input type="search" id="trFind" placeholder="Find in transcript…" aria-label="Find in transcript…"></div>
+      <div class="tagbar" id="tagBar">
+        <button class="chip-btn" data-tag="DECISION">✔ Decision</button>
+        <button class="chip-btn" data-tag="ACTION">➜ Action</button>
+        <button class="chip-btn" data-tag="IMPORTANT">★ Important</button>
+        <button class="chip-btn" data-tag="QUESTION">? Question</button>
+        <button class="chip-btn" data-tag="">Clear tag</button>
+      </div>
+    </div>
+    <div class="reader" id="reader" data-noi18n></div>
+    <p class="hint">Tap a time to hear that moment (if the recording is on this device). Tap a line, then a tag, to mark it.</p>
   </div>
   <div class="actions">
     <span class="meta" id="wc">0 words</span>
     <span class="spacer"></span>
+    <button class="btn" id="btnCopyTr">Copy</button>
     <button class="btn" id="btnFix">Fix mixed-language transcript</button>
     <button class="btn hidden" id="btnFixStop">Stop</button>
     <button class="btn hidden" id="btnUndoFix">Undo fix</button>
@@ -225,30 +505,31 @@ dialog p{font-size:13px;color:var(--muted);margin:8px 0}
     <div class="msg" id="fixMsg" role="status" style="flex-basis:100%"></div>
   </div>
 </section>
+</div>
 
-<!-- 3. REPORT / TRANSLATE -->
+<!-- REPORT -->
+<div class="view hidden" id="viewReport">
+<section class="card" id="secInsights">
+  <h2>Smart analysis <span class="spacer"></span><button class="btn primary sm" id="btnAnalyse">Analyse meeting</button><button class="btn sm hidden" id="btnAnalyseStop">Stop</button></h2>
+  <p class="hint" style="margin-top:0">Find and track the decisions and action items in this meeting.</p>
+  <div class="msg" id="insMsg" role="status"></div>
+  <div class="ins" id="insBody"></div>
+  <div class="row" style="align-items:center;margin-top:12px"><b style="font-size:13.5px">Action items</b><span class="spacer"></span><button class="btn sm" id="btnAddAct">Add action</button></div>
+  <div id="actList"></div>
+</section>
+
 <section class="card">
-  <h2><span class="step">3</span> Report and translation</h2>
+  <h2>Meeting report</h2>
   <div class="row">
-    <div class="field">
-      <label for="outLang">Write the report and translation in</label>
-      <select id="outLang"></select>
-    </div>
+    <div class="field"><label for="outLang">Write the report in</label><select id="outLang"></select></div>
     <button class="btn primary" id="btnReport">Generate report</button>
-    <button class="btn" id="btnTranslate">Translate transcript</button>
     <button class="btn hidden" id="btnCancel">Cancel</button>
   </div>
   <div class="msg" id="aiMsg" role="status"></div>
-
-  <div class="tabs" style="margin-top:14px">
-    <button class="tab" id="tabOutReport" aria-selected="true">Report</button>
-    <button class="tab" id="tabOutTrans" aria-selected="false">Translation</button>
-  </div>
-  <div class="out" id="outReport" dir="auto" data-empty="The meeting report will appear here."></div>
-  <div class="out hidden" id="outTrans" dir="auto" data-empty="The translated transcript will appear here."></div>
-
+  <div class="out" id="outReport" dir="auto" data-empty="The meeting report will appear here. Record or paste a transcript first, then press Generate report." style="margin-top:14px"></div>
   <div class="actions">
     <button class="btn primary" id="btnSave">Save record</button>
+    <button class="btn" id="btnGoTranslate">Translate this report</button>
     <span class="spacer"></span>
     <span class="meta">Export:</span>
     <button class="btn" id="btnExpHtml" title="Opens in Word; use Save as PDF there">Word-ready (.html)</button>
@@ -257,19 +538,130 @@ dialog p{font-size:13px;color:var(--muted);margin:8px 0}
   </div>
   <div class="msg" id="saveMsg" role="status"></div>
 </section>
-
-<!-- 4. RECORDS -->
-<section class="card">
-  <h2><span class="step">4</span> Saved records</h2>
-  <div class="row">
-    <div class="field" style="flex:3 1 220px"><input type="search" id="q" placeholder="Search title or transcript"></div>
-    <button class="btn" id="btnNew">New meeting</button>
-  </div>
-  <div class="rec-list" id="recList"></div>
-</section>
-
 </div>
 
+<!-- TRANSLATE -->
+<div class="view hidden" id="viewTranslate">
+<section class="card">
+  <h2>Translate</h2>
+  <div class="row">
+    <div class="field"><label for="tFrom">From</label><select id="tFrom"></select></div>
+    <button class="btn" id="btnSwap" title="Swap languages" aria-label="Swap languages" style="flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 16V4M7 4 3 8M7 4l4 4M17 8v12M17 20l4-4M17 20l-4-4"/></svg></button>
+    <div class="field"><label for="tLang">To</label><select id="tLang"></select></div>
+    <div class="field" style="flex:0 1 170px"><label for="tStyle">Style</label><select id="tStyle"><option value="formal">Formal (official)</option><option value="plain">Everyday, simple</option></select></div>
+  </div>
+  <div class="field" style="margin-top:12px"><label for="glossary">Keep these words as they are (names, titles, acronyms)</label><input type="text" id="glossary" placeholder="e.g. SYSHHB, Yayasan, Pengerusi, YB"></div>
+  <div class="actions">
+    <button class="btn primary" id="btnTranslate">Translate transcript</button>
+    <button class="btn" id="btnTranslateReport">Translate report</button>
+    <button class="btn hidden" id="btnTCancel">Cancel</button>
+  </div>
+  <div class="msg" id="tMsg" role="status"></div>
+  <div class="tabs" style="margin-top:14px">
+    <button class="tab" id="tabTSide" aria-selected="true">Side by side</button>
+    <button class="tab" id="tabTOnly" aria-selected="false">Translation only</button>
+  </div>
+  <div class="out" id="outTrans" dir="auto" data-empty="The translation will appear here. Side by side shows each original line next to its translation."></div>
+  <div class="actions">
+    <button class="btn" id="btnCopyTrans">Copy translation</button>
+    <button class="btn primary" id="btnSaveT">Save record</button>
+    <span class="spacer"></span>
+    <span class="meta">Export:</span>
+    <button class="btn" id="btnExpTransHtml">Word-ready (.html)</button>
+    <button class="btn" id="btnExpTransTxt">.txt</button>
+  </div>
+</section>
+</div>
+
+<!-- ASSISTANT -->
+<div class="view hidden" id="viewAsk">
+<section class="card">
+  <div class="row" style="align-items:center;margin-bottom:10px">
+    <div class="tabs" style="margin:0"><button class="tab" id="askThis" aria-selected="true">This meeting</button><button class="tab" id="askAll" aria-selected="false">All saved meetings</button></div>
+    <span class="spacer"></span>
+    <button class="btn sm" id="askClear">Clear chat</button>
+  </div>
+  <p class="hint" id="askHint" style="margin:0 0 8px">Ask anything about the meeting. Answers come only from your transcript and report, with the time shown so you can check.</p>
+  <div class="chat" id="askLog" data-noi18n aria-live="polite"></div>
+  <div class="chips" id="askChips"></div>
+  <div class="row" style="margin-top:10px;align-items:stretch">
+    <div class="field" style="flex:1 1 200px"><input type="text" id="askInput" placeholder="Ask about the meeting…" autocomplete="off" aria-label="Ask about the meeting…"></div>
+    <button class="btn primary" id="askSend">Ask</button>
+    <button class="btn hidden" id="askStop">Stop</button>
+  </div>
+  <div class="msg" id="askMsg" role="status"></div>
+</section>
+</div>
+
+<!-- RECORDS -->
+<div class="view hidden" id="viewRecords">
+<section class="card">
+  <h2>Saved records</h2>
+  <div class="rec-list" id="recList"></div>
+</section>
+</div>
+
+<!-- USERS -->
+<div class="view hidden" id="viewUsers">
+<section class="card">
+  <h2>Manage access</h2>
+  <p class="hint" style="margin-top:0">People who can open this app. They must already have a Microsoft work account. <b>Admin</b> manages users and reads the audit log. <b>Editor</b> records, edits and saves meetings. <b>Viewer</b> can only read and export.</p>
+  <div class="actions" style="margin:0 0 12px">
+    <button class="btn primary" id="btnAddUser">Add user</button>
+    <button class="btn" id="btnCheck">Connection check</button>
+  </div>
+  <div class="inner hidden" id="addUserBox">
+    <div class="row">
+      <div class="field"><label for="auEmail">Work email</label><input type="text" id="auEmail" placeholder="name@syayasan.edu.bn" autocomplete="off"></div>
+      <div class="field"><label for="auName">Display name</label><input type="text" id="auName" placeholder="Full name"></div>
+      <div class="field" style="flex:0 1 140px"><label for="auRole">Role</label><select id="auRole"><option value="editor">Editor</option><option value="viewer">Viewer</option><option value="admin">Admin</option></select></div>
+    </div>
+    <label class="meta" style="display:flex;gap:8px;align-items:flex-start;margin:10px 0"><input type="checkbox" id="auShare" checked style="margin-top:3px"> <span>Also share the OneDrive data folder with this person (they need this to open the app)</span></label>
+    <div class="actions" style="margin-top:0"><button class="btn primary" id="btnAuSave">Add user</button><button class="btn" id="btnAuCancel">Cancel</button></div>
+  </div>
+  <div class="msg" id="userMsg" role="status"></div>
+  <pre class="diag hidden" id="checkOut"></pre>
+  <div class="rec-list" id="userList"></div>
+</section>
+</div>
+
+<!-- AUDIT -->
+<div class="view hidden" id="viewAudit">
+<section class="card">
+  <h2>Audit logs</h2>
+  <div class="row">
+    <div class="field"><label for="auFrom">From</label><input type="date" id="auFrom"></div>
+    <div class="field"><label for="auTo">To</label><input type="date" id="auTo"></div>
+    <div class="field"><label for="auUser">User</label><select id="auUser"><option value="">All users</option></select></div>
+    <div class="field"><label for="auAct">Action</label><select id="auAct"><option value="">All actions</option></select></div>
+  </div>
+  <div class="row" style="margin-top:10px">
+    <div class="field" style="flex:3 1 200px"><input type="search" id="auQ" placeholder="Search in the log"></div>
+    <button class="btn primary" id="btnAuLoad">Load</button>
+    <button class="btn" id="btnAuCsv">Export CSV</button>
+  </div>
+  <div class="msg" id="auditMsg" role="status"></div>
+  <div class="out" id="auditTable" style="padding:0;margin-top:12px"></div>
+  <p class="hint">Times are shown in this device’s time zone. The log is kept in the OneDrive data folder (audit folder). For a tamper-proof record, also use the Microsoft Purview audit log, which records OneDrive activity independently.</p>
+</section>
+</div>
+
+    </main>
+  </div>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<nav class="bottom-nav" id="bottomNav" aria-label="Main">
+  <button data-view="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Home</button>
+  <button data-view="meeting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg>Record</button>
+  <button data-view="report"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg>Report</button>
+  <button data-view="ask"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Ask</button>
+  <button id="bnMore"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>More</button>
+</nav>
+
+<script src="config.js"></script>
+<script src="auth.js"></script>
+<script src="cloud.js"></script>
 <script>
 /* Standalone app layer: replaces the Claude page runtime with the device and the Anthropic API */
 (function(){
@@ -363,11 +755,17 @@ var $ = function(id){ return document.getElementById(id); };
 
 /* ---------- languages ---------- */
 var LANGS = [
-  {code:"en-US", name:"English"},
-  {code:"ms-MY", name:"Bahasa Melayu"},
-  {code:"id-ID", name:"Bahasa Indonesia"},
-  {code:"zh-CN", name:"Chinese (中文)"},
-  {code:"ar-SA", name:"Arabic (العربية)"}
+  {code:"en-US", name:"English", w:"english"},
+  {code:"ms-MY", name:"Bahasa Melayu", w:"malay"},
+  {code:"id-ID", name:"Bahasa Indonesia", w:"indonesian"},
+  {code:"zh-CN", name:"Chinese (中文)", w:"chinese"},
+  {code:"ar-SA", name:"Arabic (العربية)", w:"arabic"},
+  {code:"ta-IN", name:"Tamil (தமிழ்)", w:"tamil"},
+  {code:"fil-PH", name:"Tagalog / Filipino", w:"tagalog"},
+  {code:"hi-IN", name:"Hindi (हिन्दी)", w:"hindi"},
+  {code:"ja-JP", name:"Japanese (日本語)", w:"japanese"},
+  {code:"ko-KR", name:"Korean (한국어)", w:"korean"},
+  {code:"fr-FR", name:"French", w:"french"}
 ];
 function fillLang(sel, def){
   LANGS.forEach(function(l){
@@ -378,6 +776,7 @@ function fillLang(sel, def){
 fillLang($("spokenLang"), "ms-MY");
 (function(){ var s = $("spokenLang"); [["mix-en","Mixed English + Malay (mostly English)"],["mix-ms","Mixed Malay + English (mostly Malay)"]].forEach(function(p){ var o = document.createElement('option'); o.value = p[0]; o.textContent = p[1]; s.insertBefore(o, s.firstChild); }); s.value = 'mix-ms'; })();
 fillLang($("outLang"), "en-US");
+(function(){ var f = $("tFrom"), o = document.createElement("option"); o.value = "auto"; o.textContent = "Detect automatically"; f.appendChild(o); fillLang(f, "auto"); fillLang($("tLang"), "en-US"); })();
 function langName(code){ var x = LANGS.filter(function(l){return l.code===code;})[0]; return x ? x.name : code; }
 
 /* ---------- helpers ---------- */
@@ -425,7 +824,7 @@ function md(src){
 }
 
 /* ---------- state ---------- */
-var S = { id:null, report:"", translation:"", transLang:"", reportLang:"" };
+var S = { id:null, report:"", translation:"", transLang:"", reportLang:"", transSrc:"", transFrom:"", tview:"side", actions:[], insights:null, audioId:null };
 var tr = $("transcript");
 function updWc(){ $("wc").textContent = words(tr.value).toLocaleString() + " words"; }
 tr.addEventListener("input", updWc);
@@ -439,13 +838,10 @@ function showCapture(which){
 }
 $("tabRec").onclick = function(){ showCapture("rec"); };
 $("tabUp").onclick = function(){ showCapture("up"); };
-function showOut(which){
-  var r = which === "report";
-  $("tabOutReport").setAttribute("aria-selected", r); $("tabOutTrans").setAttribute("aria-selected", !r);
-  $("outReport").classList.toggle("hidden", !r); $("outTrans").classList.toggle("hidden", r);
-}
-$("tabOutReport").onclick = function(){ showOut("report"); };
-$("tabOutTrans").onclick = function(){ showOut("trans"); };
+function showOut(){ /* report and translation have their own screens now */ }
+function showTV(v){ S.tview = v; $("tabTSide").setAttribute("aria-selected", v === "side"); $("tabTOnly").setAttribute("aria-selected", v === "only"); renderTrans(); }
+$("tabTSide").onclick = function(){ showTV("side"); };
+$("tabTOnly").onclick = function(){ showTV("only"); };
 
 /* ---------- mixed-language helpers ---------- */
 var engineOverride = null, trackMode = false, srcTrack = null;
@@ -492,6 +888,8 @@ function setMode(m){
   $("btnPlayTranscribe").disabled = m !== "idle";
   $("btnTranscribe").disabled = m !== "idle";
   $("btnStopPlay").disabled = !playMode;
+  $("recHint").textContent = m === "idle" ? "Tap the microphone to start" : m === "paused" ? "Paused. Tap Resume to continue" : (liveOn ? "Recording with live text…" : "Recording audio only…");
+  Array.prototype.forEach.call(document.querySelectorAll("#marks [data-mark]"), function(b){ b.disabled = m === "idle"; });
 }
 function append(text, conf){
   text = text.trim(); if(!text) return;
@@ -544,7 +942,7 @@ function startRec(withAudio){
   if(withAudio && navigator.mediaDevices && window.MediaRecorder){
     navigator.mediaDevices.getUserMedia({audio:true}).then(function(s){
       if(!want && mode === "idle"){ s.getTracks().forEach(function(t){t.stop();}); return; }
-      micStream = s; chunks = [];
+      micStream = s; chunks = []; startMeter(s); draftSid = "d" + Date.now().toString(36); draftStart = Date.now(); var mySid = draftSid;
       try{
         mediaRec = new MediaRecorder(s);
         mediaRec.ondataavailable = function(e){ if(e.data.size) chunks.push(e.data); };
@@ -553,10 +951,11 @@ function startRec(withAudio){
             audioBlob = new Blob(chunks, {type: mediaRec.mimeType || "audio/webm"});
             $("recAudio").src = URL.createObjectURL(audioBlob);
             $("audioBox").classList.remove("hidden");
-            saveRecording(audioBlob, lastDur, ($("title").value.trim() || "Meeting") + " " + new Date().toLocaleString());
+            saveRecording(audioBlob, lastDur, ($("title").value.trim() || "Meeting") + " " + new Date().toLocaleString()).then(function(){ return IDB.del("draft-" + mySid).then(loadAudio); }).catch(function(){});
           }
         };
         mediaRec.start(1000);
+        clearInterval(draftTimer); draftTimer = setInterval(saveDraft, 20000);
       }catch(_){}
     }).catch(function(){ if(!liveOn){ hardStop(); setMsg($("capMsg"), "The microphone is blocked. Allow microphone access for this app in the browser settings.", true); } });
   }
@@ -574,7 +973,7 @@ function pauseRec(){
   }
 }
 function hardStop(){
-  want = false; clearInterval(timerId); releaseWake(); try{ rec && rec.stop(); }catch(_){}
+  want = false; clearInterval(timerId); releaseWake(); stopMeter(); clearInterval(draftTimer); try{ rec && rec.stop(); }catch(_){}
   if(mediaRec && mediaRec.state !== "inactive"){ try{ mediaRec.stop(); }catch(_){} }
   if(micStream){ micStream.getTracks().forEach(function(t){t.stop();}); micStream = null; }
   $("interim").textContent = "";
@@ -688,63 +1087,123 @@ function details(){
   if($("people").value.trim()) parts.push("Attendees: " + $("people").value.trim());
   return parts.join("\n") || "(no details given)";
 }
-function busy(on){
-  $("btnReport").disabled = on; $("btnTranslate").disabled = on;
-  $("btnCancel").classList.toggle("hidden", !on);
+function busy(on){ $("btnReport").disabled = on; $("btnCancel").classList.toggle("hidden", !on); }
+function needAI(el){
+  if(!sample){ setMsg(el, "AI is not available. Open Settings and add your API key.", true); return false; }
+  return true;
 }
-async function runAI(kind){
-  if(!sample){ setMsg($("aiMsg"), "AI is not available in this view. Open the published page inside Claude to use it.", true); return; }
+function aiError(e, el, ctl){
+  if(e && e.code === "not_granted") setMsg(el, "Permission to use Claude was declined.", true);
+  else if(e && e.code === "rate_limited") setMsg(el, "Too many requests. Wait a moment and try again.", true);
+  else if(ctl && ctl.signal.aborted) setMsg(el, "Cancelled.");
+  else setMsg(el, "Something went wrong: " + ((e && e.message) || "unknown error"), true);
+}
+async function copyText(t, el){
+  try{ await navigator.clipboard.writeText(t); setMsg(el, "Copied."); }
+  catch(_){ setMsg(el, "Could not copy. Select the text and copy it by hand.", true); }
+}
+async function runReport(){
+  if(!needAI($("aiMsg"))) return;
   var text = tr.value.trim();
   if(!text){ setMsg($("aiMsg"), "The transcript is empty. Record, upload or paste something first.", true); return; }
-  var lang = langName($("outLang").value), prompt, target;
-  if(kind === "report"){
-    target = $("outReport"); showOut("report");
-    prompt = "You are a professional meeting secretary. Write formal meeting minutes from the transcript below. Write the whole report in " + lang + ".\n\n" + mixNote()
-      + "Use only what is in the transcript. Never invent names, numbers, dates or decisions. If something is not stated, write “Not stated”. If the transcript is in a different language from " + lang + ", translate faithfully. Transcript errors from speech recognition are possible, so use judgement for obvious mistakes but do not guess names.\n\n"
-      + "Output Markdown with exactly these sections, with headings translated into " + lang + ":\n"
-      + "# (meeting title)\n"
-      + "A short line with date and attendees.\n"
-      + "## Summary (3 to 5 sentences)\n"
-      + "## Key discussion points (bullets grouped by topic)\n"
-      + "## Decisions made (bullets)\n"
-      + "## Action items (a Markdown table with columns: No., Action, Person responsible, Deadline)\n"
-      + "## Issues and follow-up (bullets, only if any)\n\n"
-      + "Output only the report, with no preface and no closing remarks.\n\n"
-      + "MEETING DETAILS\n" + details() + "\n\nTRANSCRIPT\n" + text;
-  } else {
-    target = $("outTrans"); showOut("trans");
-    prompt = mixNote() + "Translate the meeting transcript below into " + lang + ". Keep every timestamp such as [00:12] and every speaker name exactly where it is, keep one line per original line, and keep the meaning and tone faithful. Do not summarise, add, or omit anything. If a part is already in " + lang + ", leave it as it is. Output only the translation.\n\nTRANSCRIPT\n" + text;
-  }
+  var lang = langName($("outLang").value), target = $("outReport");
+  var prompt = "You are a professional meeting secretary. Write formal meeting minutes from the transcript below. Write the whole report in " + lang + ".\n\n" + mixNote()
+    + "Use only what is in the transcript. Never invent names, numbers, dates or decisions. If something is not stated, write “Not stated”. If the transcript is in a different language from " + lang + ", translate faithfully. Speech recognition can make mistakes, so use judgement for obvious errors but do not guess names.\n\n"
+    + "Lines containing [DECISION], [ACTION], [IMPORTANT] or [QUESTION] are markers the secretary pressed during the meeting. The speech right after a marker is what it refers to. Put DECISION items under decisions, ACTION items in the action table, IMPORTANT items in the summary or key points, and QUESTION items under issues and follow-up.\n\n"
+    + "Output Markdown with exactly these sections, with headings translated into " + lang + ":\n"
+    + "# (meeting title)\nA short line with date and attendees.\n## Summary (3 to 5 sentences)\n## Key discussion points (bullets grouped by topic)\n## Decisions made (bullets)\n## Action items (a Markdown table with columns: No., Action, Person responsible, Deadline)\n## Issues and follow-up (bullets, only if any)\n\n"
+    + "Output only the report, with no preface and no closing remarks.\n\nMEETING DETAILS\n" + details() + "\n\nTRANSCRIPT\n" + text;
   cancelCtl = new AbortController(); busy(true);
-  setMsg($("aiMsg"), kind === "report" ? "Claude is writing the report. This can take up to a minute for a long meeting…" : "Claude is translating. This can take a while for a long transcript…");
+  setMsg($("aiMsg"), "Claude is writing the report. This can take up to a minute for a long meeting…");
   target.innerHTML = "";
   try{
-    var res = await sample(prompt, {
-      signal: cancelCtl.signal, modelTier: "default", cache: false,
-      onText: function(o){ target.innerHTML = md(o.text); }
-    });
-    var final = res.text;
-    target.innerHTML = md(final);
-    if(kind === "report"){ S.report = final; S.reportLang = lang; } else { S.translation = final; S.transLang = lang; }
-    setMsg($("aiMsg"), res.truncated ? "Done, but the answer was cut short because the transcript is very long. Split the transcript into parts for a complete result." : "Done. Review it, then press Save record.");
-  }catch(e){
-    if(e && e.code === "not_granted") setMsg($("aiMsg"), "Permission to use Claude was declined, so AI features are off for this view.", true);
-    else if(e && e.code === "rate_limited") setMsg($("aiMsg"), "Too many requests. Wait a moment and try again.", true);
-    else if(cancelCtl && cancelCtl.signal.aborted) setMsg($("aiMsg"), "Cancelled.");
-    else setMsg($("aiMsg"), "Something went wrong: " + ((e && e.message) || "unknown error"), true);
-    if(e && e.text){ target.innerHTML = md(e.text); }
-  }finally{ busy(false); cancelCtl = null; }
+    var res = await sample(prompt, {signal: cancelCtl.signal, modelTier: "default", cache: false, onText: function(o){ target.innerHTML = md(o.text); }});
+    target.innerHTML = md(res.text); S.report = res.text; S.reportLang = lang;
+    setMsg($("aiMsg"), res.truncated ? "Done, but the answer was cut short because the transcript is very long. Split the transcript into parts for a complete result." : "Done. Review it, then press Save record.", !!res.truncated);
+  }catch(e){ aiError(e, $("aiMsg"), cancelCtl); if(e && e.text) target.innerHTML = md(e.text); }
+  finally{ busy(false); cancelCtl = null; }
 }
-$("btnReport").onclick = function(){ runAI("report"); };
-$("btnTranslate").onclick = function(){ runAI("trans"); };
+var tCtl = null;
+function tBusy(on){ $("btnTranslate").disabled = on; $("btnTranslateReport").disabled = on; $("btnTCancel").classList.toggle("hidden", !on); }
+function tsSplit(line){ var m = line.match(/^(\[(?:\d{1,2}:)?\d{2}:\d{2}\](?:\s*\[[A-Z]+\])?)\s*(.*)$/); return m ? [m[1], m[2]] : ["", line]; }
+function renderTrans(){
+  var box = $("outTrans"), tl = S.translation || "";
+  if(!tl){ box.innerHTML = ""; return; }
+  if(S.transSrc === "report"){ box.innerHTML = md(tl); return; }
+  var tlines = tl.split("\n").filter(function(l){ return l.trim(); });
+  var olines = tr.value.split("\n").filter(function(l){ return l.trim(); });
+  if((S.tview || "side") !== "side" || tlines.length !== olines.length){ box.innerHTML = '<div class="plain">' + esc(tlines.join("\n")) + "</div>"; return; }
+  var h = "<table class=\"sbs\"><thead><tr><th>" + esc(S.transFrom || "Original") + "</th><th>" + esc(S.transLang || "Translation") + "</th></tr></thead><tbody>";
+  for(var i = 0; i < tlines.length; i++){
+    var o = tsSplit(olines[i]), t = tsSplit(tlines[i]);
+    h += "<tr><td>" + (o[0] ? '<span class="ts">' + esc(o[0]) + "</span>" : "") + esc(o[1]) + "</td><td>" + esc(t[1]) + "</td></tr>";
+  }
+  box.innerHTML = h + "</tbody></table>";
+}
+async function runTranslate(kind){
+  if(!needAI($("tMsg"))) return;
+  var src = kind === "report" ? S.report : tr.value;
+  if(!src.trim()){ setMsg($("tMsg"), kind === "report" ? "There is no report yet. Generate the report first." : "The transcript is empty. Record, upload or paste something first.", true); return; }
+  var to = langName($("tLang").value), fromCode = $("tFrom").value, from = fromCode === "auto" ? "" : langName(fromCode), gl = $("glossary").value.trim();
+  try{ localStorage.setItem("mvr:gloss", gl); }catch(_){}
+  var NLn = String.fromCharCode(10);
+  var common = mixNote() + "Translate into " + to + ". "
+    + (from ? "The source language is " + from + " (it may contain some words from other languages). " : "Detect the source language yourself. It is often Malay, English or a mix of both. ")
+    + ($("tStyle").value === "formal" ? "Use a formal register suitable for official meeting minutes. " : "Use natural, clear everyday language. ")
+    + (gl ? "Do not translate these words, keep them exactly as written: " + gl + ". " : "")
+    + "Keep names of people, organisations and places as they are, and keep numbers, dates and amounts exact. If a part is already in " + to + ", leave it as it is. Do not add notes, explanations or quotation marks." + NLn + NLn;
+  var out = $("outTrans");
+  tCtl = new AbortController(); tBusy(true);
+  S.transSrc = kind; S.transLang = to; S.transFrom = from || "Original"; out.innerHTML = "";
+  try{
+    if(kind === "report"){
+      setMsg($("tMsg"), "Translating the report…");
+      var r = await sample(common + "The text is a Markdown meeting report. Keep the Markdown structure exactly (headings, bullet points and tables) and translate the text inside it. Output only the translated report." + NLn + NLn + "REPORT" + NLn + src,
+        {signal: tCtl.signal, modelTier: "default", cache: false, onText: function(o){ out.innerHTML = md(o.text); }});
+      if(r.truncated) throw new Error("The report is too long to translate in one go.");
+      S.translation = r.text; renderTrans(); setMsg($("tMsg"), "Done. Review it, then press Save record.");
+    } else {
+      var lines = src.split(NLn).filter(function(l){ return l.trim(); }), parts = [], cur = [], len = 0;
+      lines.forEach(function(l){ if(cur.length && len + l.length > 3500){ parts.push(cur); cur = []; len = 0; } cur.push(l); len += l.length + 1; });
+      if(cur.length) parts.push(cur);
+      var outLines = [], mismatch = false;
+      for(var i = 0; i < parts.length; i++){
+        setMsg($("tMsg"), "Translating part " + (i + 1) + " of " + parts.length + "…");
+        var p = common + "Each input line is separated by a newline. Output exactly one line for every input line, in the same order, with nothing before or after. Keep every timestamp such as [00:12], every speaker name before a colon, and every marker such as [DECISION] or [ACTION] exactly as they are, and translate only the spoken words. Output only the translated lines." + NLn + NLn + "LINES" + NLn + parts[i].join(NLn);
+        var done = outLines.slice();
+        var r2 = await sample(p, {signal: tCtl.signal, modelTier: "default", cache: false,
+          onText: function(o){ out.innerHTML = '<div class="plain">' + esc(done.concat(o.text.split(NLn)).join(NLn)) + "</div>"; }});
+        if(r2.truncated) throw new Error("A part was too long to finish.");
+        var got = r2.text.split(NLn).filter(function(l){ return l.trim(); });
+        if(got.length !== parts[i].length) mismatch = true;
+        outLines = outLines.concat(got);
+      }
+      S.translation = outLines.join(NLn); renderTrans();
+      setMsg($("tMsg"), mismatch ? "Done, but some lines were merged or split, so the original and translation do not line up. Only the translation is shown." : "Done. Review it, then press Save record.", mismatch);
+    }
+  }catch(e){ aiError(e, $("tMsg"), tCtl); }
+  finally{ tBusy(false); tCtl = null; }
+}
+$("btnReport").onclick = runReport;
+$("btnTranslate").onclick = function(){ runTranslate("transcript"); };
+$("btnTranslateReport").onclick = function(){ runTranslate("report"); };
 $("btnCancel").onclick = function(){ if(cancelCtl) cancelCtl.abort(); };
+$("btnTCancel").onclick = function(){ if(tCtl) tCtl.abort(); };
+$("btnSwap").onclick = function(){
+  var f = $("tFrom").value, t = $("tLang").value;
+  if(f === "auto"){ $("tFrom").value = t; $("tLang").value = t === "en-US" ? "ms-MY" : "en-US"; } else { $("tFrom").value = t; $("tLang").value = f; }
+};
+$("btnCopyTr").onclick = function(){ copyText(tr.value, $("fixMsg")); };
+$("btnCopyTrans").onclick = function(){ if(!S.translation){ setMsg($("tMsg"), "Nothing to copy yet.", true); return; } copyText(S.translation, $("tMsg")); };
+$("btnSaveT").onclick = function(){ $("btnSave").onclick(); setMsg($("tMsg"), $("saveMsg").textContent, $("saveMsg").classList.contains("err")); };
+try{ $("glossary").value = localStorage.getItem("mvr:gloss") || ""; }catch(_){}
 
 /* ---------- mixed-language fix ---------- */
 var NL = String.fromCharCode(10), undoText = null, fixCtl = null;
 function mixNote(){ return 'Note: the speakers mix Malay and English freely, sometimes inside one sentence (code-switching, common in Brunei and Malaysia). Understand both languages together. Lines marked with ~ were low-confidence speech recognition and may contain words spelled in the wrong language, so use context to interpret them.' + NL + NL; }
 async function fixTranscript(){
   var msg = $('fixMsg');
-  if(!sample){ setMsg(msg, 'AI is not available in this view. Open the published page inside Claude to use it.', true); return; }
+  if(!sample){ setMsg(msg, 'AI is not available. Open Settings and add your API key.', true); return; }
   var src = tr.value;
   if(!src.trim()){ setMsg(msg, 'The transcript is empty.', true); return; }
   var parts = [], cur = '';
@@ -776,6 +1235,47 @@ $('btnFix').onclick = fixTranscript;
 $('btnFixStop').onclick = function(){ if(fixCtl) fixCtl.abort(); };
 $('btnUndoFix').onclick = function(){ if(undoText !== null){ tr.value = undoText; undoText = null; updWc(); $('btnUndoFix').classList.add('hidden'); setMsg($('fixMsg'), 'Restored the transcript from before the fix.'); } };
 
+/* ---------- recording helpers: level meter, crash-safe drafts, minute markers ---------- */
+var draftSid = null, draftStart = 0, draftTimer = null, meterCtx = null, meterRAF = 0;
+function startMeter(stream){
+  try{
+    var AC = window.AudioContext || window.webkitAudioContext; meterCtx = new AC();
+    var src = meterCtx.createMediaStreamSource(stream), an = meterCtx.createAnalyser(); an.fftSize = 128; src.connect(an);
+    var bars = document.querySelectorAll("#meter i"), data = new Uint8Array(an.frequencyBinCount);
+    (function draw(){
+      an.getByteFrequencyData(data);
+      for(var i = 0; i < bars.length; i++){ var v = data[i + 1] / 255; bars[i].style.transform = "scaleY(" + (0.1 + 0.9 * Math.min(1, v * 1.4)).toFixed(2) + ")"; }
+      meterRAF = requestAnimationFrame(draw);
+    })();
+  }catch(_){}
+}
+function stopMeter(){
+  try{ cancelAnimationFrame(meterRAF); }catch(_){}
+  try{ if(meterCtx) meterCtx.close(); }catch(_){} meterCtx = null;
+  Array.prototype.forEach.call(document.querySelectorAll("#meter i"), function(b){ b.style.transform = ""; });
+}
+function saveDraft(){
+  if(!chunks.length || !draftSid) return;
+  var blob = new Blob(chunks, {type: (mediaRec && mediaRec.mimeType) || "audio/webm"});
+  IDB.put({id: "draft-" + draftSid, name: "Unfinished recording " + new Date(draftStart).toLocaleString(), created: draftStart, ms: elapsed(), size: blob.size,
+    type: blob.type, lang: $("spokenLang").value, blob: blob, draft: true}).then(loadAudio).catch(function(){});
+}
+function mark(tag){
+  if(mode === "idle") return;
+  var t = elapsed();
+  tr.value += (tr.value && !/\n$/.test(tr.value) ? "\n" : "") + "[" + fmt(t) + "] [" + tag + "]\n";
+  tr.scrollTop = tr.scrollHeight; updWc();
+  setMsg($("capMsg"), "Marked " + tag.toLowerCase() + " at " + fmt(t) + "."); try{ if(navigator.vibrate) navigator.vibrate(30); }catch(_){} renderReader();
+}
+Array.prototype.forEach.call(document.querySelectorAll("#marks [data-mark]"), function(b){ b.onclick = function(){ mark(b.dataset.mark); }; });
+function mergeByTime(text){
+  var lines = text.split("\n").filter(function(l){ return l.trim(); });
+  var ts = lines.map(function(l){ var m = l.match(/^\[(?:(\d+):)?(\d{1,2}):(\d{2})\]/); return m ? (+(m[1] || 0)) * 3600 + (+m[2]) * 60 + (+m[3]) : null; });
+  if(!lines.length || ts.some(function(t){ return t === null; })) return text;
+  var idx = lines.map(function(_, i){ return i; }).sort(function(a, b){ return ts[a] - ts[b] || a - b; });
+  return idx.map(function(i){ return lines[i]; }).join("\n") + "\n";
+}
+
 /* ---------- recordings on this device (IndexedDB) + offline transcription ---------- */
 var IDB = (function(){
   var dbp = null;
@@ -805,7 +1305,7 @@ function mb(n){ return (n / 1048576).toFixed(1) + " MB"; }
 async function saveRecording(blob, ms, name){
   var o = { id: "a" + Date.now().toString(36) + Math.random().toString(36).slice(2,5), name: name || ("Recording " + new Date().toLocaleString()),
             created: Date.now(), ms: ms || 0, size: blob.size, type: blob.type, lang: $("spokenLang").value, blob: blob };
-  try{ await IDB.put(o); await loadAudio(); return true; }
+  try{ await IDB.put(o); S.audioId = o.id; await loadAudio(); return true; }
   catch(e){ setMsg($("capMsg"), "Could not keep the audio on this device (storage may be full). Use “Download the audio” to keep it.", true); return false; }
 }
 async function loadAudio(){
@@ -830,12 +1330,13 @@ function renderAudio(){
   if(!audioRecs.length){ box.innerHTML = '<div class="empty">No recordings yet. Record audio or upload a file and it will appear here.</div>'; return; }
   audioRecs.forEach(function(r){
     var d = document.createElement("div"); d.className = "rec-item";
-    d.innerHTML = '<div class="t"><b>' + esc(r.name) + '</b><span class="meta">' + (r.ms ? fmt(r.ms) + " · " : "") + mb(r.size) + '</span></div>';
+    d.innerHTML = '<div class="t"><b>' + esc(r.name) + '</b><span class="meta">' + (r.ms ? fmt(r.ms) + " · " : "") + mb(r.size) + (r.draft ? " · unfinished recording, recovered" : "") + '</span></div>';
     function btn(label, cls, fn, act){ var b = document.createElement("button"); b.className = "btn " + (cls || ""); b.textContent = label; if(act) b.dataset.act = act; b.onclick = fn; d.appendChild(b); return b; }
     var t = btn("Transcribe", "primary", function(){ if(!$("title").value.trim()) $("title").value = r.name.replace(/\s\d.*$/, "") || r.name; transcribeBlob(r.blob); }, "tr");
     t.disabled = wBusy;
     btn("Play", "", function(){ var p = $("listPlayer"); p.src = URL.createObjectURL(r.blob); p.classList.remove("hidden"); p.play().catch(function(){}); });
     btn("Download", "", function(){ var ext = /mp4|aac|m4a/.test(r.type) ? "m4a" : /ogg/.test(r.type) ? "ogg" : /wav/.test(r.type) ? "wav" : /mpeg|mp3/.test(r.type) ? "mp3" : "webm"; doDownload(slug(r.name) + "." + ext, r.blob, $("capMsg")); });
+    if(can("write")){ var up = btn("Save to OneDrive", "", function(){ uploadAudioToCloud(r, up); }); }
     var x = btn("Delete", "danger", function(){
       if(x.dataset.arm !== "1"){ x.dataset.arm = "1"; x.textContent = "Sure?"; setTimeout(function(){ x.dataset.arm = ""; x.textContent = "Delete"; }, 3000); }
       else IDB.del(r.id).then(loadAudio);
@@ -845,7 +1346,8 @@ function renderAudio(){
 }
 function whisperLang(){
   var v = $("spokenLang").value;
-  return {"en-US":"english","ms-MY":"malay","id-ID":"indonesian","zh-CN":"chinese","ar-SA":"arabic","mix-ms":"malay","mix-en":"english"}[v] || null;
+  if(v === "mix-ms") return "malay"; if(v === "mix-en") return "english";
+  var x = LANGS.filter(function(l){ return l.code === v; })[0]; return x ? x.w : null;
 }
 async function decodeAudio(blob){
   var AC = window.AudioContext || window.webkitAudioContext;
@@ -889,8 +1391,8 @@ async function transcribeBlob(blob){
     var txt = lines.join(NL);
     if(!txt){ setW("No speech was found in this audio.", null); $("wMsg").className = "msg err"; }
     else {
-      tr.value += (tr.value && !/\n$/.test(tr.value) ? "\n" : "") + txt + "\n"; tr.scrollTop = tr.scrollHeight; updWc();
-      setW("Done. " + words(txt).toLocaleString() + " words were added to the transcript in step 2. Please read through it. For mixed Malay and English, press “Fix mixed-language transcript”.");
+      tr.value = mergeByTime(tr.value + (tr.value && !/\n$/.test(tr.value) ? "\n" : "") + txt + "\n"); tr.scrollTop = tr.scrollHeight; updWc();
+      setW("Done. " + words(txt).toLocaleString() + " words were added to the transcript. Please read through it. For mixed Malay and English, press “Fix mixed-language transcript”.");
     }
   }catch(e){
     var m = (e && e.message) || "error";
@@ -903,14 +1405,14 @@ $("btnWStop").onclick = function(){ if(worker){ worker.terminate(); worker = nul
 try{ var wm = localStorage.getItem("mvr:wmodel"); if(wm) $("whisperModel").value = wm; }catch(_){}
 loadAudio();
 try{ if(navigator.storage && navigator.storage.persist) navigator.storage.persist(); }catch(_){}
-function netState(){ var p = $("netPill"); p.textContent = navigator.onLine ? "Online" : "Offline"; p.classList.toggle("ok", navigator.onLine); }
+function netState(){ if(!navigator.onLine) setSync("Offline: saved on this device", false, "offline"); }
 window.addEventListener("online", netState); window.addEventListener("offline", netState); netState();
 
 /* ---------- export ---------- */
 async function doDownload(name, data, msgEl){
   var dl = null;
   try{ dl = await claude.use("downloads"); }catch(_){}
-  if(!dl){ setMsg(msgEl, "Downloads are not available in this view. Open the published page inside Claude to export.", true); return; }
+  if(!dl){ setMsg(msgEl, "Downloads are not available in this browser.", true); return; }
   try{ await dl.save({filename:name, data:data}); setMsg(msgEl, "Saved " + name + "."); }
   catch(e){ if(e && e.code === "declined") return; setMsg(msgEl, "Could not save the file: " + ((e && e.message) || "error"), true); }
 }
@@ -934,116 +1436,737 @@ function exportHtml(){
 }
 function guardExport(){
   if(!(S.report || S.translation || tr.value.trim())){ setMsg($("saveMsg"), "Nothing to export yet.", true); return false; }
+  Audit.log("record_export", $("title").value.trim(), "");
   return true;
 }
 function base(){ return slug($("title").value) + "-" + ($("mdate").value || today()); }
 $("btnExpHtml").onclick = function(){ if(guardExport()) doDownload(base() + ".html", exportHtml(), $("saveMsg")); };
 $("btnExpMd").onclick = function(){ if(guardExport()) doDownload(base() + ".md", exportMd(), $("saveMsg")); };
 $("btnExpTxt").onclick = function(){ if(guardExport()) doDownload(base() + ".txt", plainFromMd(exportMd()), $("saveMsg")); };
+function guardTrans(){ if(!S.translation){ setMsg($("tMsg"), "Translate something first.", true); return false; } Audit.log("record_export", $("title").value.trim(), "translation"); return true; }
+$("btnExpTransTxt").onclick = function(){ if(guardTrans()) doDownload(base() + "-" + slug(S.transLang) + ".txt", plainFromMd(S.translation), $("tMsg")); };
+$("btnExpTransHtml").onclick = function(){
+  if(!guardTrans()) return;
+  var t = esc($("title").value.trim() || "Translation");
+  var html = "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>" + t + "</title><style>body{font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.45;max-width:900px;margin:24px auto;color:#111}table{border-collapse:collapse;width:100%}th,td{border:1px solid #999;padding:5px 8px;vertical-align:top;text-align:left}th{background:#e8eeec}.ts{display:block;color:#006b45;font-size:9pt;font-weight:bold}.plain{white-space:pre-wrap}</style></head><body><h1>" + t + "</h1><p>" + esc($("mdate").value || "") + " · " + esc(S.transLang || "") + "</p>" + $("outTrans").innerHTML + "</body></html>";
+  doDownload(base() + "-" + slug(S.transLang) + ".html", html, $("tMsg"));
+};
 
-/* ---------- storage: account (db) with browser fallback ---------- */
-var db = null, uid = null, LS = "mvr:records:v1";
-function lsRead(){ try{ return JSON.parse(localStorage.getItem(LS) || "[]"); }catch(_){ return []; } }
-function lsWrite(a){ try{ localStorage.setItem(LS, JSON.stringify(a)); return true; }catch(_){ return false; } }
-function coll(){ return db.collection("data/users/" + uid + "/meetings"); }
-var records = [];
-async function loadRecords(){
+/* ---------- Microsoft sign-in, roles, OneDrive sync ---------- */
+var CFG = window.MVR_CONFIG || {}, A = window.MVR_AUTH, Cloud = window.MVR_CLOUD, Audit = window.MVR_AUDIT;
+var sess = null, syncing = false, RC = "mvr:rec:v2", SC = "mvr:sess:v1";
+var cache = {recs: {}, deleted: []};
+function cLoad(){ try{ var c = JSON.parse(localStorage.getItem(RC) || "null"); if(c && c.recs) cache = {recs: c.recs, deleted: c.deleted || []}; }catch(_){} }
+function cSave(){ try{ localStorage.setItem(RC, JSON.stringify(cache)); }catch(_){ setMsg($("saveMsg"), "This device is out of storage space.", true); } }
+function recList(){ return Object.keys(cache.recs).map(function(k){ return cache.recs[k]; }).sort(function(a, b){ return (b.updatedAt || 0) - (a.updatedAt || 0); }); }
+function can(what){
+  if(!sess) return false;
+  if(what === "admin") return sess.role === "admin";
+  return sess.role === "admin" || sess.role === "editor";
+}
+function cap(t){ return t.charAt(0).toUpperCase() + t.slice(1); }
+function setSync(text, bad, st){ var p = $("syncStatus"); p.textContent = text; p.dataset.state = st || (bad ? "error" : /Syncing|Connecting/.test(text) ? "saving" : "ok"); }
+
+/* ----- gate ----- */
+function showGate(title, msg, o){
+  o = o || {};
+  $("gateTitle").textContent = title; $("gateMsg").textContent = msg;
+  $("btnSignIn").classList.toggle("hidden", !o.signin);
+  $("btnDiag").classList.toggle("hidden", !o.diag);
+  $("btnGateOut").classList.toggle("hidden", !o.signout);
+  $("diagOut").classList.add("hidden");
+  $("gateCard").classList.toggle("loading", !!o.loading);
+  $("gate").classList.remove("hidden"); $("appWrap").classList.add("hidden");
+}
+function fmtDiag(steps){ return steps.map(function(x){ return (x.ok ? "OK    " : "FAIL  ") + x.label + (x.detail ? ": " + x.detail : ""); }).join("\n"); }
+$("btnSignIn").onclick = function(){ A.login(); };
+$("btnGateOut").onclick = function(){ A.logout(); };
+$("btnDiag").onclick = async function(){
+  var o = $("diagOut"); o.classList.remove("hidden"); o.textContent = "Checking…";
+  try{ o.textContent = fmtDiag(await Cloud.selfTest()); }catch(e){ o.textContent = "Could not run the check: " + e.message; }
+};
+function friendly(e){
+  var m = (e && e.message) || "error", st = e && e.status;
+  if(st === 403 || st === 404) return "You do not have access to the OneDrive data folder. Ask the IT administrator to share it with you. (" + m + ")";
+  if(e && e.code === "offline") return "You are offline.";
+  return m;
+}
+function findUser(d, u){ return (d.users || []).filter(function(x){ return u.alts.indexOf(String(x.email).toLowerCase()) > -1; })[0]; }
+function cacheSess(s){ try{ localStorage.setItem(SC, JSON.stringify({email: s.email, name: s.name, role: s.role, at: Date.now()})); }catch(_){} }
+function readSess(){ try{ return JSON.parse(localStorage.getItem(SC) || "null"); }catch(_){ return null; } }
+
+async function startSession(){
+  var u = A.user();
+  if(!u){ showGate("Sign in", "Sign in with your Microsoft work account to continue.", {signin: true}); return; }
+  if(!navigator.onLine){
+    var cs = readSess();
+    if(cs && cs.email === u.email && Date.now() - cs.at < (CFG.offlineDays || 14) * 864e5){ enterApp(cs, true); return; }
+    showGate("You are offline", "Connect to the internet to sign in. Offline use is allowed only for people who signed in recently on this device.", {});
+    return;
+  }
+  showGate("Signing you in…", "Checking your access.", {loading: true});
   try{
-    if(db && uid){
-      var snap = await coll().get();
-      records = snap.docs.map(function(d){ var x = d.data(); x.id = d.id; return x; });
-    } else records = lsRead();
-  }catch(_){ records = lsRead(); }
-  records.sort(function(a,b){ return (b.updated||0) - (a.updated||0); });
-  renderList();
+    await A.token();
+    if(!CFG.driveId || !CFG.folderId){
+      if(u.alts.indexOf(String(CFG.dataOwner).toLowerCase()) > -1){
+        var ids = await Cloud.setupOwnerFolder();
+        showGate("First-time setup", "The OneDrive folder “" + ids.name + "” is ready. Copy these two lines into config.js on GitHub (replace the empty driveId and folderId), commit, then reload this page.", {signout: true});
+        var o = $("diagOut"); o.classList.remove("hidden"); o.textContent = 'driveId: "' + ids.driveId + '",\nfolderId: "' + ids.folderId + '",';
+      } else showGate("Not set up yet", "The OneDrive data folder has not been connected. Ask the IT administrator (" + CFG.dataOwner + ") to open the app and finish setup.", {signout: true});
+      return;
+    }
+    var res = await Cloud.loadUsers(), data = res.data;
+    if(!data || !data.users || !data.users.length){
+      if(CFG.initialAdmins && CFG.initialAdmins.map(function(x){ return x.toLowerCase(); }).some(function(x){ return u.alts.indexOf(x) > -1; })){
+        await Cloud.ensureLayout();
+        data = await Cloud.saveUsers(function(d){
+          if(d.users.length) return false;
+          CFG.initialAdmins.forEach(function(em){ var e = em.toLowerCase(); d.users.push({email: e, name: u.alts.indexOf(e) > -1 ? u.name : "", role: "admin", status: "active", addedBy: "setup", addedAt: Date.now()}); });
+          return d;
+        });
+      } else { showGate("Not set up yet", "The user list has not been created. Ask the IT administrator to sign in first.", {signout: true}); return; }
+    }
+    var entry = findUser(data, u);
+    if(!entry || entry.status !== "active"){
+      Audit.log("login_denied", u.email, entry ? "account disabled" : "not in user list");
+      await Audit.flush(); Audit.clear();
+      showGate("Access denied", entry ? "Your access to this app has been disabled. Contact the IT administrator." : "Your account (" + u.email + ") is not on the user list. Ask the IT administrator to add you.", {signout: true});
+      return;
+    }
+    var s = {email: String(entry.email).toLowerCase(), name: entry.name || u.name, role: entry.role};
+    cacheSess(s);
+    if(!sessionStorage.getItem("mvr:logged")){ sessionStorage.setItem("mvr:logged", "1"); Audit.log("login", s.email, s.role); }
+    enterApp(s, false);
+  }catch(e){
+    if(e && e.code === "login_required"){ showGate("Please sign in", "Your sign-in has expired.", {signin: true}); return; }
+    showGate("Could not open the data folder", friendly(e), {diag: true, signout: true});
+  }
 }
+function applyRole(){
+  var r = sess.role;
+  $("userName").textContent = sess.name; $("roleBadge").textContent = cap(r) + (sess.offline ? " · offline" : "");
+  $("avatar").textContent = ((sess.name || "?").trim().charAt(0) || "?").toUpperCase();
+  document.body.classList.toggle("viewer", r === "viewer");
+  document.body.classList.toggle("admin-mode", r === "admin");
+  tr.readOnly = r === "viewer";
+  if(r !== "admin" && (curView === "users" || curView === "audit")) showView("meeting");
+}
+function enterApp(s, offline){
+  sess = s; sess.offline = !!offline;
+  $("gate").classList.add("hidden"); $("appWrap").classList.remove("hidden");
+  applyRole(); cLoad(); renderList(); netState(); showView(curView);
+  setSync(offline ? "Offline: saved on this device" : "Connecting to OneDrive…");
+  if(!offline) syncNow();
+}
+async function revalidate(){
+  if(!sess || !navigator.onLine || document.hidden) return;
+  try{
+    var r = await Cloud.loadUsers(), e = r.data && findUser(r.data, A.user());
+    if(!e || e.status !== "active"){ var m = "Your access to this app was removed. Contact the IT administrator."; sess = null; showGate("Access removed", m, {signout: true}); }
+    else if(e.role !== sess.role){ sess.role = e.role; cacheSess(sess); applyRole(); }
+  }catch(_){}
+}
+setInterval(revalidate, 10 * 60 * 1000);
+window.addEventListener("online", function(){
+  if(sess && sess.offline){ sessionStorage.removeItem("mvr:logged"); startSession(); } else { syncNow(); Audit.flush(); }
+});
+$("btnSignOut").onclick = async function(){
+  var b = $("btnSignOut"), dirty = recList().some(function(r){ return r._dirty; });
+  if(dirty && b.dataset.arm !== "1"){ b.dataset.arm = "1"; b.textContent = "Some records are not on OneDrive yet. Tap again to sign out"; setTimeout(function(){ b.dataset.arm = ""; b.textContent = "Sign out"; }, 5000); return; }
+  Audit.log("logout", "", ""); try{ await Audit.flush(); }catch(_){}
+  A.logout();
+};
+
+/* ----- views ----- */
+var curView = "home";
+var VIEWS = {
+  home: ["viewHome", "Overview", "Your meetings at a glance"],
+  meeting: ["viewMeetings", "Record", "Record or upload a meeting"],
+  ask: ["viewAsk", "Assistant", "Ask questions about your meetings"],
+  report: ["viewReport", "Report", "Minutes of the meeting"],
+  translate: ["viewTranslate", "Translate", "Translate the transcript or the report"],
+  records: ["viewRecords", "Saved Records", "Meetings saved to OneDrive"],
+  users: ["viewUsers", "Manage Access", "Who can use this app"],
+  audit: ["viewAudit", "Audit Logs", "Sign-ins and changes"]
+};
+function showView(v){
+  if(!VIEWS[v]) v = "meeting";
+  curView = v;
+  Object.keys(VIEWS).forEach(function(k){ $(VIEWS[k][0]).classList.toggle("hidden", k !== v); });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-view]"), function(b){ b.classList.toggle("active", b.dataset.view === v); });
+  $("viewTitle").textContent = VIEWS[v][1]; $("viewSub").textContent = VIEWS[v][2];
+  $("topSearch").classList.toggle("hidden", v !== "records");
+  document.body.classList.remove("nav-open");
+  if(v === "users") loadUsersView();
+  if(v === "audit") initAudit();
+  if(v === "home") renderHome();
+  if(v === "meeting") renderReader();
+  updFlow();
+  try{ window.scrollTo({top: 0}); }catch(_){}
+}
+Array.prototype.forEach.call(document.querySelectorAll("[data-view]"), function(b){ b.onclick = function(){ showView(b.dataset.view); }; });
+$("menuBtn").onclick = function(){ document.body.classList.toggle("nav-open"); };
+$("bnMore").onclick = function(){ document.body.classList.toggle("nav-open"); };
+document.body.addEventListener("click", function(e){ if(e.target === document.body) document.body.classList.remove("nav-open"); });
+$("refreshBtn").onclick = function(){ if(sess) syncNow(); else location.reload(); };
+$("btnGoTranslate").onclick = function(){ showView("translate"); };
+
+/* ----- meetings (cached on the device, synced to OneDrive) ----- */
 function current(){
-  return {
-    title: $("title").value.trim(), date: $("mdate").value, people: $("people").value.trim(),
-    spoken: $("spokenLang").value, transcript: tr.value, report: S.report, reportLang: S.reportLang,
-    translation: S.translation, transLang: S.transLang, updated: Date.now()
-  };
+  return {title: $("title").value.trim(), date: $("mdate").value, people: $("people").value.trim(), spoken: $("spokenLang").value,
+    transcript: tr.value, report: S.report, reportLang: S.reportLang, translation: S.translation, transLang: S.transLang, transSrc: S.transSrc, transFrom: S.transFrom, actions: S.actions, insights: S.insights, audioId: S.audioId};
 }
-$("btnSave").onclick = async function(){
+function newId(){ return "m" + Date.now().toString(36) + Math.random().toString(36).slice(2, 5); }
+$("btnSave").onclick = function(){
+  if(!can("write")){ setMsg($("saveMsg"), "Your role is read-only.", true); return; }
   var r = current();
   if(!r.title) r.title = "Untitled meeting " + (r.date || today());
   if(!r.transcript.trim() && !r.report){ setMsg($("saveMsg"), "There is nothing to save yet.", true); return; }
-  if(!S.id) S.id = "m" + Date.now().toString(36) + Math.random().toString(36).slice(2,5);
+  var isNew = !S.id || !cache.recs[S.id];
+  if(!S.id) S.id = newId();
   if(!$("title").value.trim()) $("title").value = r.title;
-  try{
-    if(db && uid){ await coll().doc(S.id).set(r); }
-    else {
-      var a = lsRead().filter(function(x){return x.id !== S.id;}); r.id = S.id; a.push(r);
-      if(!lsWrite(a)) throw new Error("This browser blocked local storage.");
-    }
-    setMsg($("saveMsg"), db && uid ? "Saved to your account." : "Saved on this device.");
-    await loadRecords();
-  }catch(e){ setMsg($("saveMsg"), "Could not save: " + ((e && e.message) || "error") + (db ? " (a single record is limited to about 250 KB of text)" : ""), true); }
+  var prev = cache.recs[S.id] || {}, now = Date.now();
+  cache.recs[S.id] = Object.assign({}, prev, r, {id: S.id,
+    createdBy: prev.createdBy || sess.email, createdByName: prev.createdByName || sess.name, createdAt: prev.createdAt || now,
+    updatedBy: sess.email, updatedByName: sess.name, updatedAt: now, _dirty: true});
+  cSave(); renderList();
+  Audit.log(isNew ? "record_create" : "record_update", r.title, S.id);
+  toast("Saved."); setMsg($("saveMsg"), navigator.onLine ? "Saved. Uploading to OneDrive…" : "Saved on this device. It will upload to OneDrive when you are online.");
+  syncNow();
 };
+async function syncNow(){
+  if(syncing || !sess || !navigator.onLine) return;
+  syncing = true; setSync("Syncing with OneDrive…");
+  try{
+    await Cloud.ensureLayout();
+    var list = recList();
+    for(var i = 0; i < list.length; i++){
+      var rec = list[i]; if(!rec._dirty) continue;
+      var st = await Cloud.statMeeting(rec.id), id = rec.id;
+      if(st && st.etag !== rec._etag){
+        var copy = Object.assign({}, rec, {id: newId(), title: (rec.title || "Untitled") + " (conflict copy)"});
+        var cr = await Cloud.putMeeting(copy, null);
+        cache.recs[copy.id] = Object.assign({}, copy, {_etag: cr.etag, _dirty: false});
+        cache.recs[id] = Object.assign({}, rec, {_dirty: false, _etag: "stale"});
+        setMsg($("saveMsg"), "Someone else changed “" + (rec.title || "this record") + "” at the same time. Your version was kept as a separate copy.", true);
+      } else {
+        var pr = await Cloud.putMeeting(rec, st ? st.etag : null);
+        cache.recs[id]._etag = pr.etag; cache.recs[id]._dirty = false;
+      }
+      cSave();
+    }
+    var del = cache.deleted.slice();
+    for(var j = 0; j < del.length; j++){ await Cloud.deleteMeeting(del[j]); cache.deleted = cache.deleted.filter(function(x){ return x !== del[j]; }); cSave(); }
+    var remote = await Cloud.listMeetings(), seen = {}, need = [];
+    remote.forEach(function(m){
+      seen[m.id] = 1;
+      if(cache.deleted.indexOf(m.id) > -1) return;
+      var l = cache.recs[m.id];
+      if(!l || (!l._dirty && l._etag !== m.etag)) need.push(m);
+    });
+    for(var k = 0; k < need.length; k += 4){
+      await Promise.all(need.slice(k, k + 4).map(async function(m){
+        var g = await Cloud.getMeeting(m.id);
+        if(g && g.data) cache.recs[m.id] = Object.assign({}, g.data, {id: m.id, _etag: g.etag, _dirty: false});
+      }));
+    }
+    Object.keys(cache.recs).forEach(function(id){ var l = cache.recs[id]; if(!seen[id] && !l._dirty && l._etag) delete cache.recs[id]; });
+    cSave(); renderList();
+    var d = new Date(); setSync("Synced with OneDrive " + pad(d.getHours()) + ":" + pad(d.getMinutes()));
+    Audit.flush();
+  }catch(e){
+    if(e && e.code === "login_required") startSession();
+    else setSync("Not synced: " + friendly(e).slice(0, 60), true);
+  }finally{ syncing = false; }
+}
 function newMeeting(){
-  S = { id:null, report:"", translation:"", transLang:"", reportLang:"" };
+  S = {id: null, report: "", translation: "", transLang: "", reportLang: "", transSrc: "", transFrom: "", tview: "side", actions: [], insights: null, audioId: null};
   tr.value = ""; $("title").value = ""; $("people").value = ""; $("mdate").value = today();
   $("outReport").innerHTML = ""; $("outTrans").innerHTML = ""; $("timer").textContent = "00:00"; acc = 0;
   $("audioBox").classList.add("hidden"); audioBlob = null;
-  setMsg($("capMsg"), ""); setMsg($("aiMsg"), ""); setMsg($("saveMsg"), ""); updWc(); showOut("report");
+  setMsg($("capMsg"), ""); setMsg($("aiMsg"), ""); setMsg($("saveMsg"), ""); updWc(); showOut("report"); smartReset();
 }
-$("btnNew").onclick = function(){ if(mode !== "idle") hardStop(); newMeeting(); window.scrollTo({top:0, behavior:"smooth"}); };
-
+$("btnNew").onclick = function(){ if(mode !== "idle") hardStop(); newMeeting(); showView("meeting"); window.scrollTo({top: 0, behavior: "smooth"}); };
 function openRecord(r){
   if(mode !== "idle") hardStop();
-  S = { id:r.id, report:r.report||"", translation:r.translation||"", transLang:r.transLang||"", reportLang:r.reportLang||"" };
-  $("title").value = r.title||""; $("mdate").value = r.date||today(); $("people").value = r.people||"";
+  S = {id: r.id, report: r.report || "", translation: r.translation || "", transLang: r.transLang || "", reportLang: r.reportLang || "", transSrc: r.transSrc || "transcript", transFrom: r.transFrom || "", tview: "side", actions: JSON.parse(JSON.stringify(r.actions || [])), insights: r.insights || null, audioId: r.audioId || null};
+  $("title").value = r.title || ""; $("mdate").value = r.date || today(); $("people").value = r.people || "";
   if(r.spoken) $("spokenLang").value = r.spoken;
-  tr.value = r.transcript||""; updWc();
-  $("outReport").innerHTML = md(S.report); $("outTrans").innerHTML = md(S.translation);
-  setMsg($("saveMsg"), "Opened “" + (r.title||"record") + "”."); showOut(S.report ? "report" : "trans");
-  window.scrollTo({top:0, behavior:"smooth"});
+  tr.value = r.transcript || ""; updWc();
+  $("outReport").innerHTML = md(S.report); renderTrans(); smartReset();
+  setMsg($("saveMsg"), "Opened “" + (r.title || "record") + "”."); showView(S.report ? "report" : "meeting");
+  Audit.log("record_open", r.title || "", r.id);
+  window.scrollTo({top: 0, behavior: "smooth"});
 }
-async function delRecord(id){
-  try{
-    if(db && uid) await coll().doc(id).delete();
-    else lsWrite(lsRead().filter(function(x){return x.id !== id;}));
-    if(S.id === id) S.id = null;
-    await loadRecords();
-  }catch(e){ setMsg($("saveMsg"), "Could not delete: " + ((e && e.message)||"error"), true); }
+function delRecord(id){
+  var r = cache.recs[id]; if(!r) return;
+  Audit.log("record_delete", r.title || "", id);
+  delete cache.recs[id];
+  if(r._etag) cache.deleted.push(id);
+  if(S.id === id) S.id = null;
+  cSave(); renderList(); syncNow();
 }
 function renderList(){
-  var box = $("recList"), q = $("q").value.trim().toLowerCase();
-  var list = records.filter(function(r){ return !q || ((r.title||"") + " " + (r.transcript||"") + " " + (r.report||"")).toLowerCase().indexOf(q) > -1; });
+  var box = $("recList"), q = $("q").value.trim().toLowerCase(), records = recList();
+  $("navCountRec").textContent = records.length;
+  try{ renderHome(); }catch(_){}
+  var list = records.filter(function(r){ return !q || ((r.title || "") + " " + (r.transcript || "") + " " + (r.report || "")).toLowerCase().indexOf(q) > -1; });
   box.innerHTML = "";
-  if(!list.length){ box.innerHTML = "<div class=\"empty\">" + (records.length ? "No record matches your search." : "No saved records yet.") + "</div>"; return; }
+  if(!list.length){ box.innerHTML = '<div class="empty">' + (records.length ? "No record matches your search." : "No saved records yet.") + "</div>"; return; }
   list.forEach(function(r){
     var d = document.createElement("div"); d.className = "rec-item";
-    var tags = "<span class=\"tag\">" + words(r.transcript||"").toLocaleString() + " words</span>"
-      + (r.report ? "<span class=\"tag\">Report</span>" : "") + (r.translation ? "<span class=\"tag\">Translated</span>" : "");
-    d.innerHTML = "<div class=\"t\"><b>" + esc(r.title||"Untitled") + "</b><span class=\"meta\">" + esc(r.date||"") + "</span><div class=\"tags\">" + tags + "</div></div>";
-    var o = document.createElement("button"); o.className = "btn"; o.textContent = "Open"; o.onclick = function(){ openRecord(r); };
-    var x = document.createElement("button"); x.className = "btn danger"; x.textContent = "Delete";
-    x.onclick = function(){
-      if(x.dataset.arm !== "1"){ x.dataset.arm = "1"; x.textContent = "Sure?"; setTimeout(function(){ x.dataset.arm = ""; x.textContent = "Delete"; }, 3000); }
-      else delRecord(r.id);
-    };
-    d.appendChild(o); d.appendChild(x); box.appendChild(d);
+    var tags = '<span class="tag">' + words(r.transcript || "").toLocaleString() + " words</span>"
+      + (r.report ? '<span class="tag">Report</span>' : "") + (r.translation ? '<span class="tag">Translated</span>' : "")
+      + (r._dirty ? '<span class="badge">Waiting to upload</span>' : "");
+    d.innerHTML = '<div class="t"><b>' + esc(r.title || "Untitled") + '</b><span class="meta">' + esc(r.date || "") + (r.updatedByName ? " · " + esc(r.updatedByName) : "") + '</span><div class="tags">' + tags + "</div></div>";
+    var o = document.createElement("button"); o.className = "btn"; o.textContent = "Open"; o.onclick = function(){ openRecord(r); }; d.appendChild(o);
+    if(sess && (sess.role === "admin" || (sess.role === "editor" && r.createdBy === sess.email))){
+      var x = document.createElement("button"); x.className = "btn danger"; x.textContent = "Delete";
+      x.onclick = function(){
+        if(x.dataset.arm !== "1"){ x.dataset.arm = "1"; x.textContent = "Sure?"; setTimeout(function(){ x.dataset.arm = ""; x.textContent = "Delete"; }, 3000); }
+        else delRecord(r.id);
+      };
+      d.appendChild(x);
+    }
+    box.appendChild(d);
   });
 }
 $("q").addEventListener("input", renderList);
+async function uploadAudioToCloud(r, b){
+  if(!navigator.onLine){ setW("You are offline. Try again when you have internet.", null); $("wMsg").className = "msg err"; return; }
+  if(r.size > 250 * 1048576){ setW("This recording is over 250 MB, which is too large to upload from the app.", null); $("wMsg").className = "msg err"; return; }
+  b.disabled = true; setW("Uploading “" + r.name + "” to OneDrive…");
+  try{
+    var ext = /mp4|aac|m4a/.test(r.type) ? "m4a" : /ogg/.test(r.type) ? "ogg" : /wav/.test(r.type) ? "wav" : /mpeg|mp3/.test(r.type) ? "mp3" : "webm";
+    var res = await Cloud.uploadAudio(slug(r.name) + "-" + r.id + "." + ext, r.blob);
+    Audit.log("audio_upload", r.name, res.name);
+    setW("Saved to OneDrive as " + res.name + ".");
+  }catch(e){ setW("Could not upload: " + friendly(e), null); $("wMsg").className = "msg err"; }
+  b.disabled = false;
+}
+
+/* ----- users (admin) ----- */
+var usersData = {users: []};
+async function loadUsersView(){
+  setMsg($("userMsg"), "Loading…");
+  try{ var r = await Cloud.loadUsers(); usersData = r.data || {users: []}; setMsg($("userMsg"), ""); renderUsers(); }
+  catch(e){ setMsg($("userMsg"), "Could not load users: " + friendly(e), true); }
+}
+function renderUsers(){
+  var box = $("userList"); box.innerHTML = "";
+  (usersData.users || []).slice().sort(function(a, b){ return (a.name || a.email).localeCompare(b.name || b.email); }).forEach(function(u){
+    var d = document.createElement("div"); d.className = "rec-item";
+    d.innerHTML = '<div class="t"><b>' + esc(u.name || u.email) + '</b><span class="meta">' + esc(u.email) + (u.email === sess.email ? " (you)" : "") + "</span></div>";
+    function sel(opts, val, fn){ var s2 = document.createElement("select"); opts.forEach(function(o){ var op = document.createElement("option"); op.value = o[0]; op.textContent = o[1]; s2.appendChild(op); }); s2.value = val; s2.onchange = function(){ fn(s2.value); }; d.appendChild(s2); }
+    sel([["admin", "Admin"], ["editor", "Editor"], ["viewer", "Viewer"]], u.role, function(v){ editUser(u.email, {role: v}, "role set to " + v); });
+    sel([["active", "Active"], ["disabled", "Disabled"]], u.status, function(v){ editUser(u.email, {status: v}, "status set to " + v); });
+    var x = document.createElement("button"); x.className = "btn danger"; x.textContent = "Remove";
+    x.onclick = function(){
+      if(x.dataset.arm !== "1"){ x.dataset.arm = "1"; x.textContent = "Sure?"; setTimeout(function(){ x.dataset.arm = ""; x.textContent = "Remove"; }, 3000); }
+      else removeUser(u.email);
+    };
+    d.appendChild(x); box.appendChild(d);
+  });
+  if(!usersData.users || !usersData.users.length) box.innerHTML = '<div class="empty">No users yet.</div>';
+}
+function guardAdmins(d, email, u){
+  if(email === sess.email && u && (u.role !== "admin" || u.status !== "active")) throw new Error("You cannot remove your own admin access.");
+  if(!d.users.some(function(x){ return x.role === "admin" && x.status === "active"; })) throw new Error("There must be at least one active admin.");
+}
+async function editUser(email, patch, what){
+  try{
+    usersData = await Cloud.saveUsers(function(d){
+      var u = d.users.filter(function(x){ return x.email === email; })[0];
+      if(!u) throw new Error("User not found.");
+      Object.assign(u, patch, {updatedAt: Date.now(), updatedBy: sess.email});
+      guardAdmins(d, email, u); return d;
+    });
+    Audit.log("user_edit", email, what); setMsg($("userMsg"), "Updated " + email + "."); renderUsers();
+  }catch(e){ setMsg($("userMsg"), e.message, true); await loadUsersView(); }
+}
+async function removeUser(email){
+  try{
+    usersData = await Cloud.saveUsers(function(d){
+      if(email === sess.email) throw new Error("You cannot remove yourself.");
+      d.users = d.users.filter(function(x){ return x.email !== email; });
+      guardAdmins(d, email, null); return d;
+    });
+    Audit.log("user_remove", email, "");
+    var extra = "";
+    try{ var n = await Cloud.unshareFolder(email); if(n){ Audit.log("folder_unshare", email, ""); extra = " Their OneDrive folder access was removed too."; } }
+    catch(e){ extra = " Remember to remove their access to the OneDrive folder manually."; }
+    setMsg($("userMsg"), "Removed " + email + "." + extra); renderUsers();
+  }catch(e){ setMsg($("userMsg"), e.message, true); await loadUsersView(); }
+}
+$("btnAddUser").onclick = function(){ $("addUserBox").classList.toggle("hidden"); $("auEmail").focus(); };
+$("btnAuCancel").onclick = function(){ $("addUserBox").classList.add("hidden"); };
+$("btnAuSave").onclick = async function(){
+  var email = $("auEmail").value.trim().toLowerCase(), name = $("auName").value.trim(), role = $("auRole").value;
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ setMsg($("userMsg"), "Enter a valid work email address.", true); return; }
+  if(CFG.allowedDomain && !email.endsWith("@" + CFG.allowedDomain.toLowerCase())){ setMsg($("userMsg"), "Only @" + CFG.allowedDomain + " addresses can be added.", true); return; }
+  $("btnAuSave").disabled = true;
+  try{
+    usersData = await Cloud.saveUsers(function(d){
+      if(d.users.some(function(x){ return x.email === email; })) throw new Error("That person is already on the list.");
+      d.users.push({email: email, name: name, role: role, status: "active", addedBy: sess.email, addedAt: Date.now()}); return d;
+    });
+    Audit.log("user_add", email, role);
+    var msg = "Added " + email + " as " + cap(role) + ".";
+    if($("auShare").checked){
+      try{ await Cloud.shareFolder(email, true); Audit.log("folder_share", email, "edit"); msg += " The OneDrive folder was shared with them."; }
+      catch(e){ msg += " The user was added, but the folder could not be shared automatically (" + friendly(e) + "). Share the OneDrive folder with them manually."; }
+    }
+    setMsg($("userMsg"), msg); renderUsers();
+    $("auEmail").value = ""; $("auName").value = ""; $("addUserBox").classList.add("hidden");
+  }catch(e){ setMsg($("userMsg"), e.message, true); }
+  $("btnAuSave").disabled = false;
+};
+$("btnCheck").onclick = async function(){
+  var o = $("checkOut"); o.classList.remove("hidden"); o.textContent = "Checking…";
+  try{ o.textContent = fmtDiag(await Cloud.selfTest()); }catch(e){ o.textContent = "Could not run the check: " + e.message; }
+};
+
+/* ----- audit log (admin) ----- */
+var ACTIONS = {login: "Sign in", login_denied: "Sign-in denied", logout: "Sign out", user_add: "User added", user_edit: "User changed", user_remove: "User removed",
+  folder_share: "Folder shared", folder_unshare: "Folder access removed", record_create: "Record created", record_update: "Record edited", record_delete: "Record deleted",
+  record_open: "Record opened", record_export: "Record exported", audio_upload: "Audio uploaded", action_update: "Action item updated", ai_ask: "Assistant question", ai_analysis: "Meeting analysed"};
+var auditRows = [];
+function isoDay(d){ return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+function initAudit(){
+  if(!$("auFrom").value){ var t = new Date(), f = new Date(Date.now() - 6 * 864e5); $("auTo").value = isoDay(t); $("auFrom").value = isoDay(f); }
+  if($("auAct").options.length < 2) Object.keys(ACTIONS).forEach(function(k){ var o = document.createElement("option"); o.value = k; o.textContent = ACTIONS[k]; $("auAct").appendChild(o); });
+  loadAudit();
+}
+async function loadAudit(){
+  setMsg($("auditMsg"), "Loading…");
+  try{
+    var from = $("auFrom").value, to = $("auTo").value, days = (await Cloud.listAuditDays()).filter(function(d){ return (!from || d >= from) && (!to || d <= to); }).slice(0, 62);
+    auditRows = [];
+    for(var i = 0; i < days.length; i++){ auditRows = auditRows.concat(await Cloud.readAuditDay(days[i])); setMsg($("auditMsg"), "Loading " + (i + 1) + " of " + days.length + " days…"); }
+    auditRows.sort(function(a, b){ return a.ts < b.ts ? 1 : -1; });
+    var users = {}; auditRows.forEach(function(e){ users[e.email] = e.name || e.email; });
+    var cur = $("auUser").value; $("auUser").innerHTML = '<option value="">All users</option>';
+    Object.keys(users).sort().forEach(function(em){ var o = document.createElement("option"); o.value = em; o.textContent = users[em] + " (" + em + ")"; $("auUser").appendChild(o); });
+    $("auUser").value = cur; setMsg($("auditMsg"), ""); renderAudit();
+  }catch(e){ setMsg($("auditMsg"), "Could not load the audit log: " + friendly(e), true); }
+}
+function auditFiltered(){
+  var u = $("auUser").value, a = $("auAct").value, q = $("auQ").value.trim().toLowerCase();
+  return auditRows.filter(function(e){
+    return (!u || e.email === u) && (!a || e.action === a) && (!q || (e.name + " " + e.email + " " + e.action + " " + e.target + " " + e.detail).toLowerCase().indexOf(q) > -1);
+  });
+}
+function renderAudit(){
+  var rows = auditFiltered(), shown = rows.slice(0, 1000);
+  if(!rows.length){ $("auditTable").innerHTML = '<div class="empty">No events for these filters.</div>'; return; }
+  $("auditTable").innerHTML = "<table><thead><tr><th>Time</th><th>User</th><th>Action</th><th>Item</th><th>Detail</th></tr></thead><tbody>"
+    + shown.map(function(e){ return "<tr><td>" + esc(new Date(e.ts).toLocaleString()) + "</td><td>" + esc(e.name || e.email) + "<br><span class=\"meta\">" + esc(e.email) + "</span></td><td>" + esc(ACTIONS[e.action] || e.action) + "</td><td>" + esc(e.target) + "</td><td>" + esc(e.detail) + "</td></tr>"; }).join("")
+    + "</tbody></table>" + (rows.length > shown.length ? '<p class="hint" style="padding:0 12px">Showing the newest 1,000 of ' + rows.length.toLocaleString() + " events. Narrow the dates or use Export CSV.</p>" : "");
+}
+["auUser", "auAct"].forEach(function(id){ $(id).addEventListener("change", renderAudit); });
+$("auQ").addEventListener("input", renderAudit);
+$("btnAuLoad").onclick = loadAudit;
+$("btnAuCsv").onclick = function(){
+  var rows = auditFiltered();
+  if(!rows.length){ setMsg($("auditMsg"), "Nothing to export.", true); return; }
+  function q(v){ return '"' + String(v == null ? "" : v).replace(/"/g, '""') + '"'; }
+  var csv = "\ufeffTime (UTC),User,Email,Action,Item,Detail\r\n" + rows.map(function(e){ return [e.ts, e.name, e.email, ACTIONS[e.action] || e.action, e.target, e.detail].map(q).join(","); }).join("\r\n");
+  doDownload("audit-log-" + ($("auFrom").value || "all") + "_to_" + ($("auTo").value || "all") + ".csv", csv, $("auditMsg"));
+};
+
+/* ---------- smart layer: dashboard, assistant, analysis, interactive transcript ---------- */
+var NLc = String.fromCharCode(10), NL2 = NLc + NLc;
+function T(x){ return (window.MVR_LANG && window.MVR_LANG.lang === "ms") ? window.MVR_LANG.tx(x) : x; }
+function toast(text){ var d = document.createElement("div"); d.className = "toast"; d.textContent = text; $("toasts").appendChild(d); setTimeout(function(){ if(d.remove) d.remove(); }, 3200); }
+function tsSec(t){ var m = String(t).match(/(?:(\d+):)?(\d{1,2}):(\d{2})/); return m ? (+(m[1] || 0)) * 3600 + (+m[2]) * 60 + (+m[3]) : null; }
+function nid(){ return "a" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+
+/* ----- guided steps ----- */
+var flowSig = "";
+function updFlow(){
+  var f = $("flow"), show = !!sess && (curView === "meeting" || curView === "report" || curView === "translate");
+  f.classList.toggle("hidden", !show); if(!show) return;
+  var rec = S.id && cache.recs[S.id];
+  var st = [["meeting", "Record", !!tr.value.trim()], ["report", "Report", !!S.report], ["translate", "Translate", !!S.translation],
+            ["save", "Save", !!rec && rec.transcript === tr.value && (rec.report || "") === S.report]];
+  var next = !st[0][2] ? 0 : !st[1][2] ? 1 : !st[3][2] ? 3 : -1;
+  var sig = st.map(function(x){ return x[2] ? 1 : 0; }).join("") + next;
+  if(sig === flowSig && f.children && f.children.length) return;
+  flowSig = sig; f.innerHTML = "";
+  st.forEach(function(x, i){
+    var b = document.createElement("button"); b.className = x[2] ? "done" : (i === next ? "next" : "");
+    b.textContent = (x[2] ? "✓ " : (i + 1) + ". ") + x[1];
+    b.onclick = function(){ if(x[0] === "save"){ if(can("write")) $("btnSave").onclick(); showView("report"); } else showView(x[0]); };
+    f.appendChild(b);
+  });
+}
+setInterval(function(){ try{ updFlow(); }catch(_){} }, 1500);
+
+/* ----- dashboard ----- */
+function allActions(){ var out = []; recList().forEach(function(r){ (r.actions || []).forEach(function(a){ out.push({rec: r, a: a}); }); }); return out; }
+function setActionDone(recId, actId, done){
+  var r = cache.recs[recId]; if(!r || !can("write")) return;
+  (r.actions || []).forEach(function(a){ if(a.id === actId) a.done = done; });
+  r.updatedAt = Date.now(); r.updatedBy = sess.email; r.updatedByName = sess.name; r._dirty = true;
+  if(S.id === recId){ S.actions = JSON.parse(JSON.stringify(r.actions)); renderActions(); }
+  cSave(); Audit.log("action_update", r.title || "", done ? "done" : "reopened"); renderHome(); syncNow();
+}
+function renderHome(){
+  if(!sess) return;
+  var recs = recList(), now = new Date(), ym = now.getFullYear() + "-" + pad(now.getMonth() + 1), td = today();
+  $("kMeet").textContent = recs.length;
+  $("kMonth").textContent = recs.filter(function(r){ return (r.date || "").slice(0, 7) === ym; }).length;
+  var open = allActions().filter(function(x){ return !x.a.done; });
+  $("kOpen").textContent = open.length;
+  $("kWait").textContent = recs.filter(function(r){ return r._dirty; }).length;
+  var h = now.getHours();
+  $("greet").textContent = (h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening") + ", " + String(sess.name || "").split(" ")[0];
+  var sel = $("actOwner"), cur = sel.value, owners = {};
+  open.forEach(function(x){ if(x.a.owner) owners[x.a.owner] = 1; });
+  sel.innerHTML = ""; var o0 = document.createElement("option"); o0.value = ""; o0.textContent = "Everyone"; sel.appendChild(o0);
+  Object.keys(owners).sort().forEach(function(n){ var o = document.createElement("option"); o.value = n; o.textContent = n; o.dataset.noi18n = ""; sel.appendChild(o); });
+  sel.value = owners[cur] ? cur : "";
+  var box = $("homeActions"); box.innerHTML = "";
+  var list = open.filter(function(x){ return !sel.value || x.a.owner === sel.value; })
+    .sort(function(a, b){ return (a.a.due || "9999").localeCompare(b.a.due || "9999"); });
+  if(!list.length) box.innerHTML = '<div class="empty">No open action items. Analyse a meeting on the Report screen to find them.</div>';
+  list.slice(0, 40).forEach(function(x){
+    var d = document.createElement("div"); d.className = "rec-item";
+    var cb = document.createElement("input"); cb.type = "checkbox"; cb.disabled = !can("write"); cb.style.width = "18px"; cb.style.height = "18px";
+    cb.onchange = function(){ setActionDone(x.rec.id, x.a.id, cb.checked); };
+    var t = document.createElement("div"); t.className = "t";
+    var over = x.a.due && x.a.due < td;
+    t.innerHTML = "<b data-noi18n>" + esc(x.a.task) + '</b><span class="meta">' + (x.a.owner ? "<span data-noi18n>" + esc(x.a.owner) + "</span> · " : "")
+      + (x.a.due ? '<span class="' + (over ? "over" : "") + '">' + (over ? "overdue " : "due ") + esc(x.a.due) + "</span> · " : "") + "<span data-noi18n>" + esc(x.rec.title || "") + "</span></span>";
+    var ob = document.createElement("button"); ob.className = "btn sm"; ob.textContent = "Open"; ob.onclick = function(){ openRecord(x.rec); };
+    d.appendChild(cb); d.appendChild(t); d.appendChild(ob); box.appendChild(d);
+  });
+  var rb = $("homeRecent"); rb.innerHTML = "";
+  if(!recs.length) rb.innerHTML = '<div class="empty">No meetings yet. Tap Start recording to begin.</div>';
+  recs.slice(0, 5).forEach(function(r){
+    var d = document.createElement("div"); d.className = "rec-item";
+    d.innerHTML = '<div class="t"><b data-noi18n>' + esc(r.title || "Untitled") + '</b><span class="meta" data-noi18n>' + esc(r.date || "") + (r.updatedByName ? " · " + esc(r.updatedByName) : "") + "</span></div>";
+    var ob = document.createElement("button"); ob.className = "btn sm"; ob.textContent = "Open"; ob.onclick = function(){ openRecord(r); };
+    d.appendChild(ob); rb.appendChild(d);
+  });
+}
+$("actOwner").onchange = renderHome;
+$("qRecord").onclick = function(){ showView("meeting"); showCapture("rec"); };
+$("qUpload").onclick = function(){ showView("meeting"); showCapture("up"); };
+$("qAsk").onclick = function(){ showView("ask"); };
+Array.prototype.forEach.call(document.querySelectorAll("[data-go]"), function(b){ b.onclick = function(){ showView(b.dataset.go); }; });
+
+/* ----- smart analysis and action items ----- */
+var insCtl = null, touchT = null;
+function touchRecord(){
+  clearTimeout(touchT);
+  touchT = setTimeout(function(){
+    if(!S.id || !cache.recs[S.id] || !can("write")) return;
+    var r = cache.recs[S.id];
+    r.actions = JSON.parse(JSON.stringify(S.actions)); r.insights = S.insights; r.updatedAt = Date.now(); r.updatedBy = sess.email; r.updatedByName = sess.name; r._dirty = true;
+    cSave(); renderHome(); syncNow();
+  }, 900);
+}
+function renderInsights(){
+  var b = $("insBody"), x = S.insights; b.innerHTML = "";
+  if(!x) return;
+  function list(title, arr){ return (arr && arr.length) ? "<h4>" + title + "</h4><ul data-noi18n>" + arr.map(function(v){ return "<li>" + esc(v) + "</li>"; }).join("") + "</ul>" : ""; }
+  var h = "";
+  if(x.title) h += '<div class="sug"><span>Suggested title:</span> <b data-noi18n>' + esc(x.title) + '</b><span class="spacer"></span><button class="btn sm" id="useTitle">Use</button></div>';
+  if(x.attendees && x.attendees.length) h += '<div class="sug"><span>People mentioned:</span> <span data-noi18n>' + esc(x.attendees.join(", ")) + '</span><span class="spacer"></span><button class="btn sm" id="usePeople">Use</button></div>';
+  if(x.summary) h += "<h4>Summary</h4><p data-noi18n>" + esc(x.summary) + "</p>";
+  if(x.topics && x.topics.length) h += '<h4>Topics</h4><div class="tags" data-noi18n>' + x.topics.map(function(v){ return '<span class="tag">' + esc(v) + "</span>"; }).join("") + "</div>";
+  h += list("Decisions", x.decisions) + list("Open questions", x.questions);
+  b.innerHTML = h;
+  if($("useTitle")) $("useTitle").onclick = function(){ $("title").value = x.title; toast("Saved."); };
+  if($("usePeople")) $("usePeople").onclick = function(){ $("people").value = x.attendees.join(", "); toast("Saved."); };
+}
+function renderActions(){
+  var box = $("actList"), ro = !can("write"); box.innerHTML = "";
+  if(!S.actions.length){ box.innerHTML = '<div class="empty">No action items yet. Analyse the meeting or add one.</div>'; return; }
+  S.actions.forEach(function(a){
+    var d = document.createElement("div"); d.className = "act" + (a.done ? " done" : "");
+    function inp(type, cls, val, ph, fn){ var i = document.createElement("input"); i.type = type; i.className = cls; i.value = val || ""; if(ph){ i.placeholder = ph; i.setAttribute("aria-label", ph); } i.disabled = ro; i.onchange = function(){ fn(i.value); touchRecord(); }; d.appendChild(i); return i; }
+    var cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = !!a.done; cb.disabled = ro;
+    cb.onchange = function(){ a.done = cb.checked; d.classList.toggle("done", a.done); touchRecord(); };
+    d.appendChild(cb);
+    inp("text", "task", a.task, "What needs to be done", function(v){ a.task = v; });
+    inp("text", "own", a.owner, "Who", function(v){ a.owner = v; });
+    inp("date", "due", a.due, "", function(v){ a.due = v; });
+    if(!ro){ var x = document.createElement("button"); x.className = "btn sm danger"; x.textContent = "✕"; x.title = "Remove this action"; x.setAttribute("aria-label", "Remove this action");
+      x.onclick = function(){ S.actions = S.actions.filter(function(y){ return y !== a; }); renderActions(); touchRecord(); }; d.appendChild(x); }
+    box.appendChild(d);
+  });
+}
+$("btnAddAct").onclick = function(){ S.actions.push({id: nid(), task: "", owner: "", due: "", done: false}); renderActions(); };
+async function runAnalyse(){
+  if(!needAI($("insMsg"))) return;
+  var text = tr.value.trim();
+  if(!text){ setMsg($("insMsg"), "The transcript is empty. Record, upload or paste something first.", true); return; }
+  var lang = langName($("outLang").value);
+  var prompt = mixNote() + "Analyse this meeting transcript and return ONLY a JSON object, with no Markdown fences and no other text, with exactly these keys: "
+    + '{"title": a short specific meeting title, "attendees": [names of people who spoke or were named as present, empty if unknown], "summary": 2 to 3 sentences, "topics": [3 to 6 short topic labels], "decisions": [each decision as one sentence], "actions": [{"task": what must be done, "owner": the responsible person or "", "due": "YYYY-MM-DD" or ""}], "questions": [open issues or unanswered questions]}. '
+    + "Write all text values in " + lang + ". Use only what is in the transcript and never invent names, dates or decisions. Resolve relative dates such as next Friday using the meeting date " + ($("mdate").value || today())
+    + ". If no deadline is stated use an empty string. Lines with [DECISION], [ACTION], [IMPORTANT] or [QUESTION] are markers pressed during the meeting and must be reflected." + NL2 + "MEETING DETAILS" + NLc + details() + NL2 + "TRANSCRIPT" + NLc + text;
+  insCtl = new AbortController(); $("btnAnalyse").disabled = true; $("btnAnalyseStop").classList.remove("hidden");
+  setMsg($("insMsg"), "Analysing the meeting…");
+  try{
+    var res = await sample(prompt, {signal: insCtl.signal, modelTier: "default", cache: false});
+    var raw = String(res.text || ""), a = raw.indexOf("{"), b = raw.lastIndexOf("}"), o;
+    try{ o = JSON.parse(raw.slice(a, b + 1)); }catch(_){ throw new Error("The analysis came back in a form the app could not read. Please try again."); }
+    function arr(v){ return Array.isArray(v) ? v.map(function(z){ return String(z); }).filter(Boolean) : []; }
+    S.insights = {title: String(o.title || ""), attendees: arr(o.attendees), summary: String(o.summary || ""), topics: arr(o.topics), decisions: arr(o.decisions), questions: arr(o.questions), at: Date.now()};
+    var have = {}; S.actions.forEach(function(x){ have[String(x.task).toLowerCase().trim()] = 1; });
+    (Array.isArray(o.actions) ? o.actions : []).forEach(function(x){
+      var task = String((x && x.task) || "").trim(); if(!task || have[task.toLowerCase()]) return;
+      var due = String((x && x.due) || ""); if(!/^\d{4}-\d{2}-\d{2}$/.test(due)) due = "";
+      S.actions.push({id: nid(), task: task, owner: String((x && x.owner) || ""), due: due, done: false}); have[task.toLowerCase()] = 1;
+    });
+    renderInsights(); renderActions(); touchRecord();
+    Audit.log("ai_analysis", $("title").value.trim() || S.insights.title, "");
+    setMsg($("insMsg"), "Analysis done. Check the action items below.");
+  }catch(e){
+    if(e && /could not read/.test(e.message || "")) setMsg($("insMsg"), e.message, true); else aiError(e, $("insMsg"), insCtl);
+  }finally{ $("btnAnalyse").disabled = false; $("btnAnalyseStop").classList.add("hidden"); insCtl = null; }
+}
+$("btnAnalyse").onclick = runAnalyse;
+$("btnAnalyseStop").onclick = function(){ if(insCtl) insCtl.abort(); };
+
+/* ----- interactive transcript ----- */
+var readMode = false, selLine = -1;
+function parseLine(l){
+  var m = l.match(/^\s*(\[(?:\d{1,2}:)?\d{2}:\d{2}\])?\s*(?:\[(DECISION|ACTION|IMPORTANT|QUESTION)\])?\s*(?:~\s*)?([\s\S]*)$/);
+  var rest = m[3] || "", sp = rest.match(/^([^:\[\]]{1,40}):\s+([\s\S]*)$/);
+  return {ts: m[1] || "", tag: m[2] || "", sp: sp ? sp[1] : "", text: sp ? sp[2] : rest};
+}
+function renderReader(){
+  if(!readMode) return;
+  var q = $("trFind").value.trim().toLowerCase(), lines = tr.value.split("\n"), h = "";
+  var re = q ? new RegExp("(" + esc(q).replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "ig") : null;
+  lines.forEach(function(l, i){
+    if(!l.trim() || (q && l.toLowerCase().indexOf(q) < 0)) return;
+    var p = parseLine(l), sec = p.ts ? tsSec(p.ts) : null, body = esc(p.text);
+    if(re) body = body.replace(re, "<mark>$1</mark>");
+    h += '<div class="ln' + (i === selLine ? " sel" : "") + '" data-i="' + i + '"' + (sec !== null ? ' data-ts="' + sec + '"' : "") + ">"
+      + (p.ts ? '<button class="ts-link" data-ts="' + sec + '">' + esc(p.ts.slice(1, -1)) + "</button> " : "")
+      + (p.tag ? '<span class="mk ' + p.tag + '">' + esc(T(cap(p.tag.toLowerCase()))) + "</span>" : "")
+      + (p.sp ? "<b>" + esc(p.sp) + ":</b> " : "") + body + "</div>";
+  });
+  $("reader").innerHTML = h || '<div class="empty">' + esc(T(q ? "Nothing found." : "The transcript is empty.")) + "</div>";
+}
+function setRead(on){
+  readMode = on; $("tabEdit").setAttribute("aria-selected", !on); $("tabRead").setAttribute("aria-selected", on);
+  $("editBox").classList.toggle("hidden", on); $("readerBox").classList.toggle("hidden", !on); renderReader();
+}
+$("tabEdit").onclick = function(){ setRead(false); };
+$("tabRead").onclick = function(){ setRead(true); };
+$("trFind").addEventListener("input", renderReader);
+function playAt(sec){
+  var r = audioRecs.filter(function(x){ return x.id === S.audioId; })[0];
+  if(!r){ toast("The recording for this meeting is not on this device."); return; }
+  var p = $("listPlayer");
+  if(p.dataset.rid !== r.id){ p.src = URL.createObjectURL(r.blob); p.dataset.rid = r.id; }
+  p.classList.remove("hidden");
+  var go = function(){ try{ p.currentTime = sec; }catch(_){} var pr = p.play(); if(pr && pr.catch) pr.catch(function(){}); };
+  if(p.readyState >= 1) go(); else p.addEventListener("loadedmetadata", go, {once: true});
+}
+$("reader").addEventListener("click", function(e){
+  var t = e.target;
+  if(t.classList && t.classList.contains("ts-link")){ playAt(+t.dataset.ts); return; }
+  var ln = t.closest ? t.closest(".ln") : null;
+  if(ln){ selLine = +ln.dataset.i; renderReader(); }
+});
+Array.prototype.forEach.call(document.querySelectorAll("#tagBar [data-tag]"), function(b){
+  b.onclick = function(){
+    if(selLine < 0){ toast("Tap a line first."); return; }
+    var lines = tr.value.split("\n"), tag = b.dataset.tag; if(lines[selLine] === undefined) return;
+    var l = lines[selLine].replace(/\[(DECISION|ACTION|IMPORTANT|QUESTION)\]\s*/, "");
+    lines[selLine] = l.replace(/^(\s*\[(?:\d{1,2}:)?\d{2}:\d{2}\])?\s*/, function(m0, ts){ return (ts ? ts.trim() + " " : "") + (tag ? "[" + tag + "] " : ""); });
+    tr.value = lines.join("\n"); updWc(); renderReader();
+  };
+});
+function jumpTo(sec){
+  showView("meeting"); setRead(true);
+  var best = null;
+  Array.prototype.forEach.call($("reader").querySelectorAll(".ln[data-ts]"), function(n){ if(+n.dataset.ts <= sec) best = n; });
+  if(best){ selLine = +best.dataset.i; renderReader(); var el = $("reader").querySelector(".ln.sel"); if(el && el.scrollIntoView) el.scrollIntoView({block: "center"}); }
+  if(S.audioId) playAt(sec);
+}
+
+/* ----- assistant ----- */
+var askScope = "this", askHist = [], askCtl = null;
+var ASKQ = ["Summarise this in 5 points", "What was decided?", "List the action items and who is responsible", "What is still unresolved?", "Draft a follow-up email to the attendees"];
+ASKQ.forEach(function(q){ var b = document.createElement("button"); b.className = "chip-btn"; b.textContent = q; b.onclick = function(){ ask(b.textContent); }; $("askChips").appendChild(b); });
+function setScope(v){ askScope = v; $("askThis").setAttribute("aria-selected", v === "this"); $("askAll").setAttribute("aria-selected", v === "all"); askHist = []; $("askLog").innerHTML = ""; $("askHint").classList.remove("hidden"); setMsg($("askMsg"), ""); }
+$("askThis").onclick = function(){ setScope("this"); };
+$("askAll").onclick = function(){ setScope("all"); };
+$("askClear").onclick = function(){ setScope(askScope); };
+function askContext(){
+  if(askScope === "this"){
+    var t = tr.value.trim(); if(!t && !S.report) return null;
+    return "MEETING DETAILS" + NLc + details() + (S.report ? NL2 + "REPORT" + NLc + S.report : "") + NL2 + "TRANSCRIPT" + NLc + (t || "(none)");
+  }
+  var recs = recList(); if(!recs.length) return null;
+  var out = "";
+  for(var i = 0; i < recs.length; i++){
+    var r = recs[i];
+    var block = "=== MEETING: " + (r.title || "Untitled") + " | DATE: " + (r.date || "") + " | ATTENDEES: " + (r.people || "") + " ===" + NLc + (r.report ? r.report : String(r.transcript || "").slice(0, 2500))
+      + ((r.actions && r.actions.length) ? NLc + "ACTION ITEMS: " + r.actions.map(function(a){ return (a.done ? "[done] " : "[open] ") + a.task + (a.owner ? " (" + a.owner + ")" : "") + (a.due ? " due " + a.due : ""); }).join("; ") : "") + NL2;
+    if(out.length + block.length > 70000) break;
+    out += block;
+  }
+  return out;
+}
+function bubble(cls, html){ var d = document.createElement("div"); d.className = "bub " + cls; d.innerHTML = html; $("askLog").appendChild(d); $("askLog").scrollTop = $("askLog").scrollHeight; return d; }
+function linkTs(h){ return askScope === "this" ? h.replace(/\[((?:\d{1,2}:)?\d{2}:\d{2})\]/g, '<button class="ts-link" data-ts="$1">$1</button>') : h; }
+async function ask(q){
+  q = String(q || "").trim(); if(!q || askCtl) return;
+  if(!needAI($("askMsg"))) return;
+  var ctx = askContext();
+  if(!ctx){ setMsg($("askMsg"), askScope === "this" ? "There is no transcript yet. Record or open a meeting first." : "There are no saved meetings yet.", true); return; }
+  setMsg($("askMsg"), ""); $("askHint").classList.add("hidden"); $("askInput").value = "";
+  bubble("me", esc(q)); var b = bubble("ai", "…");
+  var sys = "You are the meeting assistant of SYSHHB IT Recorder. Answer using only the meeting material below. If the answer is not in the material, say so plainly. "
+    + (askScope === "this" ? "When you rely on the transcript, cite the timestamp in square brackets exactly as written, for example [12:34]. " : "Say which meeting (title and date) each point comes from. ")
+    + "Be concise and practical, and use short bullet points when listing. Reply in the same language as the question. " + mixNote() + NL2 + "MATERIAL" + NLc + ctx + NL2 + "QUESTION: ";
+  var hist = askHist.slice(-4), msgs = [];
+  hist.forEach(function(x, i){ msgs.push({role: "user", content: (i === 0 ? sys : "") + x.q}); msgs.push({role: "assistant", content: x.a}); });
+  msgs.push({role: "user", content: (hist.length ? "" : sys) + q});
+  askCtl = new AbortController(); $("askSend").disabled = true; $("askStop").classList.remove("hidden");
+  try{
+    var res = await sample(msgs, {signal: askCtl.signal, modelTier: "default", cache: false, onText: function(o){ b.innerHTML = linkTs(md(o.text)); $("askLog").scrollTop = $("askLog").scrollHeight; }});
+    b.innerHTML = linkTs(md(res.text)); askHist.push({q: q, a: res.text});
+    Audit.log("ai_ask", askScope === "this" ? ($("title").value.trim() || "") : "all meetings", "");
+  }catch(e){ if(b.remove) b.remove(); aiError(e, $("askMsg"), askCtl); }
+  finally{ askCtl = null; $("askSend").disabled = false; $("askStop").classList.add("hidden"); }
+}
+$("askSend").onclick = function(){ ask($("askInput").value); };
+$("askStop").onclick = function(){ if(askCtl) askCtl.abort(); };
+$("askInput").addEventListener("keydown", function(e){ if(e.key === "Enter"){ e.preventDefault(); ask($("askInput").value); } });
+$("askLog").addEventListener("click", function(e){ var t = e.target; if(t.classList && t.classList.contains("ts-link")){ var sec = tsSec(t.dataset.ts); if(sec !== null) jumpTo(sec); } });
+
+function smartReset(){ selLine = -1; askHist = []; $("askLog").innerHTML = ""; $("askHint").classList.remove("hidden"); renderInsights(); renderActions(); renderReader(); flowSig = ""; updFlow(); }
+
+/* ----- keyboard shortcuts while recording ----- */
+document.addEventListener("keydown", function(e){
+  if(mode === "idle" || e.ctrlKey || e.metaKey || e.altKey) return;
+  var tg = e.target && e.target.tagName; if(tg === "INPUT" || tg === "TEXTAREA" || tg === "SELECT" || tg === "BUTTON") return;
+  var k = String(e.key || "").toLowerCase(), tag = {d: "DECISION", a: "ACTION", i: "IMPORTANT", q: "QUESTION"}[k];
+  if(k === " "){ e.preventDefault(); if(!playMode) pauseRec(); } else if(tag) mark(tag);
+});
+renderActions();
+window.addEventListener("syshhb-lang", function(){ try{ renderReader(); }catch(_){} });
 
 /* ---------- init ---------- */
-if(!SR) setMsg($("capMsg"), "Live speech recognition is not supported in this browser. Use Chrome, Edge or Safari for live recording. Uploading or pasting a transcript still works.", true);
-setMode("idle"); updWc();
-renderList();
+if(!SR) setMsg($("capMsg"), "Live speech recognition is not supported in this browser. Use Chrome or Edge for live text. You can still record audio, upload files and paste a transcript.", true);
+setMode("idle"); updWc(); renderList();
 (async function(){
   try{ sample = await claude.use("sample"); }catch(_){ sample = null; }
-  if(!sample){ $("btnReport").disabled = true; $("btnTranslate").disabled = true; setMsg($("aiMsg"), "AI report and translation work when this page is opened inside Claude."); }
-  try{
-    db = await claude.use("db");
-    var user = await claude.use("user");
-    uid = (db && user) ? await user.id() : null;
-  }catch(_){ db = null; uid = null; }
-  var pill = $("storePill");
-  if(db && uid){ pill.textContent = "Records saved to your account"; pill.classList.add("ok"); }
-  else pill.textContent = "Records saved on this device";
-  loadRecords();
+  var bad = !CFG.clientId || !CFG.tenantId || /PASTE/i.test(CFG.clientId + CFG.tenantId);
+  if(bad){ showGate("Setup needed", "Open config.js in your GitHub repository and fill in tenantId and clientId (see SETUP-MICROSOFT.txt), then reload.", {}); return; }
+  try{ await A.handleRedirect(); }
+  catch(e){ showGate("Sign-in did not finish", (e && e.message) || "Please try again.", {signin: true}); return; }
+  startSession();
 })();
 })();
 </script>
@@ -1076,7 +2199,13 @@ renderList();
   if("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")){
     navigator.serviceWorker.register("sw.js").catch(function(){});
   }
+  function ico(){ var d = document.documentElement.dataset.theme === "dark"; var mt = document.querySelector('meta[name="theme-color"]'); if(mt) mt.setAttribute("content", d ? "#082a1d" : "#006b45"); Array.prototype.forEach.call(document.querySelectorAll("[data-theme-btn] .ti"), function(e){ e.textContent = d ? "☀️" : "🌙"; }); }
+  Array.prototype.forEach.call(document.querySelectorAll("[data-theme-btn]"), function(b){
+    b.onclick = function(){ var t = document.documentElement.dataset.theme === "dark" ? "light" : "dark"; document.documentElement.dataset.theme = t; try{ localStorage.setItem("syshhb_theme", t); }catch(e){} ico(); };
+  });
+  ico();
 })();
 </script>
+<script src="i18n.js"></script>
 </body>
 </html>

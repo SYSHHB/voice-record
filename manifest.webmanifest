@@ -1,13 +1,13 @@
 {
-  "name": "Meeting Voice to Report",
-  "short_name": "Meeting Report",
-  "description": "Record or upload a meeting, get a transcript, translate it, write the minutes and save the record.",
-  "start_url": "./index.html",
+  "name": "SYSHHB IT Recorder",
+  "short_name": "SYSHHB Recorder",
+  "description": "Record or upload meetings, get the transcript, translate it and write the minutes. Yayasan Sultan Haji Hassanal Bolkiah.",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#f5f6f4",
-  "theme_color": "#0f766e",
+  "background_color": "#f4f7f5",
+  "theme_color": "#006b45",
   "icons": [
     {
       "src": "icon-192.png",

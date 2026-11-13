@@ -1,0 +1,66 @@
+SETUP: MICROSOFT SIGN-IN + ONEDRIVE  (about 20 minutes, done once by the IT administrator)
+=========================================================================================
+
+What you get
+- Everyone signs in with their Microsoft work account (syayasan.edu.bn). No separate passwords.
+- Meetings are saved in the OneDrive of it.helpdesk@syayasan.edu.bn, in the folder MeetingReportData.
+- Admins can add, edit, disable and remove users, and read the audit log.
+- Recording and transcribing still work offline. Records upload when the phone is online again.
+
+PART 1 - Register the app in Microsoft Entra (admin)
+1. Go to https://entra.microsoft.com and sign in as an administrator.
+2. Identity > Applications > App registrations > New registration.
+   Name: SYSHHB IT Recorder
+   Supported account types: "Accounts in this organizational directory only" (single tenant)
+   Redirect URI: choose platform "Single-page application (SPA)" and enter your app address
+   exactly, with the slash at the end, for example:
+       https://YOURNAME.github.io/meeting-report/
+   Click Register.
+3. On the Overview page copy:
+       Application (client) ID   -> clientId
+       Directory (tenant) ID     -> tenantId
+4. (Optional, for testing on a computer) Authentication > Add a platform/URI > SPA >
+   http://localhost:8080/
+5. API permissions > Add a permission > Microsoft Graph > Delegated permissions. Add:
+       User.Read   Files.ReadWrite.All   offline_access   openid   profile
+   Then click "Grant admin consent for <your organisation>".
+6. Limit who can sign in (recommended): Identity > Applications > Enterprise applications >
+   SYSHHB IT Recorder > Properties > "Assignment required?" = Yes > Save.
+   Then Users and groups > Add user/group: add the staff or a group.
+
+PART 2 - Put the values in config.js (GitHub)
+1. In your GitHub repository open config.js > pencil icon (Edit).
+2. Replace tenantId and clientId with the two values from step 3. Leave driveId and folderId empty for now.
+3. Commit changes. Wait 1-2 minutes.
+
+PART 3 - First sign-in creates the OneDrive folder
+1. Open the app and tap "Sign in with Microsoft". Sign in as  it.helpdesk@syayasan.edu.bn
+   (this account must have a OneDrive licence).
+2. The app creates the folder MeetingReportData and shows two lines:
+       driveId: "...",
+       folderId: "...",
+3. Copy them into config.js on GitHub (replace the empty driveId and folderId). Commit.
+4. Reload the app and sign in again. You are now the first Admin.
+
+PART 4 - Add your people
+1. Open the Users tab > Add user. Enter their work email, name and role.
+   Keep "Also share the OneDrive data folder" ticked. This gives them access to the folder.
+2. Tell them to open the app link and sign in. Roles:
+       Admin  - manages users, reads the audit log, edits and deletes any record
+       Editor - records, edits and saves meetings, deletes their own records
+       Viewer - reads and exports only
+3. Use "Connection check" (Users tab) if anything does not work. It tests sign-in, the folder and writing.
+
+WHAT IS PROTECTED, AND WHAT IS NOT  (please read)
+- Who can open the app: Microsoft sign-in, Entra "Assignment required", and the user list.
+- Who can reach the data: OneDrive folder sharing. This is the real lock. The app's roles
+  (Admin / Editor / Viewer) are enforced by the app itself. Because this is a web page with no
+  server, a technically skilled person who has Edit access to the OneDrive folder could change
+  files directly. Share the folder only with people you trust to edit it.
+- Audit log: written by the app into MeetingReportData/audit. Anyone with Edit access to the
+  folder could alter it. For a tamper-proof record, use Microsoft Purview > Audit, which records
+  OneDrive file activity independently of this app.
+- Use a work device. Records and recordings are also cached in the browser on each device.
+  Signing out does not wipe that cache.
+- The Anthropic API key (Settings) is stored per device. Each person who uses Generate report,
+  Translate or Fix needs a key entered on their own device.

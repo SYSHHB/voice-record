@@ -1,5 +1,5 @@
 /* Offline support for SYSHHB IT Recorder. Bump VERSION when you publish an update. */
-var VERSION = "mvr-v8", CDN = "mvr-cdn-v1";
+var VERSION = "mvr-v9", CDN = "mvr-cdn-v1";
 var FILES = ["./", "./index.html", "./whisper-worker.js", "./logo.png", "./i18n.js", "./config.js", "./auth.js", "./cloud.js", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png"];
 self.addEventListener("install", function(e){
   e.waitUntil(caches.open(VERSION).then(function(c){ return c.addAll(FILES); }).then(function(){ return self.skipWaiting(); }));

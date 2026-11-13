@@ -24,5 +24,10 @@ window.MVR_CONFIG = {
   allowedDomain: "syayasan.edu.bn",
 
   // How many days the app may be used offline before it needs to sign in again
-  offlineDays: 14
+  offlineDays: 14,
+
+  // Clock and calendar. hijriAdjust shifts the Hijri date by +1 or -1 day if the official
+  // Brunei date (moon sighting) differs from the calculated one. Normally 0.
+  timeZone: "Asia/Brunei",
+  hijriAdjust: 0
 };

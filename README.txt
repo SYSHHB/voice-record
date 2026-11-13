@@ -13,6 +13,18 @@ ORDER OF WORK
 3. Phone (Chrome or Edge): open the address, sign in, tap "Install app" (or menu > Install app).
    Open it once while online so it can work offline.
 
+LOOK AND CALENDAR
+- Sign-in page: today's Gregorian and Hijri date, greeting, live Brunei time (BNT), English / Bahasa Melayu
+  switch and the Sign in with Microsoft button.
+- Every screen has the header card: app name, Yayasan name, Gregorian date, Hijri date, clock, and buttons for
+  open actions (bell), language, dark mode and sign out.
+- Hijri months use the Brunei names in both languages: Muharram, Safar, Rabiulawal, Rabiulakhir, Jamadilawal,
+  Jamadilakhir, Rejab, Syaaban, Ramadan, Syawal, Zulkaedah, Zulhijjah.
+- The Hijri date is calculated (Umm al-Qura). If the official Brunei date differs by a day after moon sighting,
+  set hijriAdjust to 1 or -1 in config.js.
+- Phone: bottom bar (Home, Record, Report, Ask, More) and a round + button for a new meeting.
+  Computer: menu on the left, wider header card.
+
 SMART FEATURES
 - Overview (home)   greeting, counts, quick buttons, open action items from all meetings (tick them off here),
                     recent meetings.

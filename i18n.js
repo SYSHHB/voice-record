@@ -88,6 +88,8 @@ var D = {
 "Tap a line first.":"Ketik baris dahulu.","The recording for this meeting is not on this device.":"Rakaman untuk mesyuarat ini tiada pada peranti ini.","Nothing found.":"Tiada dijumpai.",
 "Decision":"Keputusan","Important":"Penting","Question":"Soalan","Keyboard: Space pauses, D A I Q add markers.":"Papan kekunci: Space menjeda, D A I Q menambah tanda.",
 "Action item updated":"Item tindakan dikemas kini","Assistant question":"Soalan kepada pembantu","Meeting analysed":"Mesyuarat dianalisis",
+"Gregorian":"Masihi","Hijri":"Hijrah",
+"Record meetings, get the transcript and translation, and keep every set of minutes in one place.":"Rakam mesyuarat, dapatkan transkrip dan terjemahan, dan simpan setiap minit di satu tempat.",
 /* ---- settings dialog ---- */
 "Anthropic API key":"Kunci API Anthropic","Model":"Model","Save":"Simpan","Close":"Tutup","Remove key":"Buang kunci",
 "The key is needed only for":"Kunci ini diperlukan hanya untuk","and":"dan",
@@ -175,6 +177,7 @@ var R = [
  [/^(✓ |\d\. )(.+)$/, function(m){ return m[1] + core(m[2]); }],
  [/^due (\d{4}-\d{2}-\d{2})$/, "sebelum $1"],
  [/^overdue (\d{4}-\d{2}-\d{2})$/, "lewat $1"],
+ [/^Use your school email \(@(.*)\) to record meetings and write the minutes\.$/, "Guna e-mel sekolah anda (@$1) untuk merakam mesyuarat dan menulis minit."],
  [/^([\d,]+) words$/, function(m){ return m[1] + " perkataan"; }],
  [/^Hearing: (.+?) ⇄$/, function(m){ return "Mendengar: " + ({"Malay":"Melayu","English":"Inggeris"}[m[1]] || m[1]) + " ⇄"; }],
  [/^Opened “(.*)”\.$/, "Dibuka “$1”."],
@@ -283,12 +286,14 @@ function setLang(l){
   walk(document.body);
   document.title = lang === "ms" ? tx("SYSHHB IT Recorder") : "SYSHHB IT Recorder";
   Array.prototype.forEach.call(document.querySelectorAll("[data-lang]"), function(b){ b.classList.toggle("on", b.dataset.lang === lang); });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-lang-toggle]"), function(b){ b.textContent = lang === "ms" ? "EN" : "BM"; });
   try{ window.dispatchEvent(new Event("syshhb-lang")); }catch(e){}
 }
 api.set = setLang;
 var saved = null; try{ saved = localStorage.getItem(KEY); }catch(e){}
 if(!saved) saved = (navigator.language || "").toLowerCase().indexOf("ms") === 0 ? "ms" : "en";
 Array.prototype.forEach.call(document.querySelectorAll("[data-lang]"), function(b){ b.onclick = function(){ setLang(b.dataset.lang); }; });
+Array.prototype.forEach.call(document.querySelectorAll("[data-lang-toggle]"), function(b){ b.onclick = function(){ setLang(lang === "ms" ? "en" : "ms"); }; });
 setLang(saved);
 if(window.MutationObserver){
   new MutationObserver(function(muts){

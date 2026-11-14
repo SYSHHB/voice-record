@@ -13,6 +13,21 @@ ORDER OF WORK
 3. Phone (Chrome or Edge): open the address, sign in, tap "Install app" (or menu > Install app).
    Open it once while online so it can work offline.
 
+ACCURATE TRANSCRIPTION (important)
+- The live text while recording and the on-phone engines make many mistakes with Brunei Malay mixed with
+  English. Treat live text as a rough draft only.
+- For a correct transcript use the "Accurate (online)" engine: Settings > paste an OpenAI API key
+  (platform.openai.com), then in "Recordings on this device" choose Accurate and press Transcribe.
+- The recording is cut at pauses into parts of about 40 seconds and sent to OpenAI speech-to-text with
+  language hints (Malay + English) and your key words (attendee names and the "Keep these words" list).
+  Fill in Attendees and "Keep these words" BEFORE transcribing so names are spelled correctly.
+- Transcribing the recording of the current meeting replaces the live draft (markers are kept).
+  "Undo fix" brings the draft back.
+- The audio is sent to OpenAI. Check this is acceptable for confidential meetings. It costs a small amount
+  per minute of audio, charged to the OpenAI key.
+- Always check with "Read and play": tap a time, listen, and correct the text before generating the report.
+- Generate the report and translation again after the transcript is corrected.
+
 LOOK AND CALENDAR
 - Loading screen: dark green with the logo, app name, progress bar and percentage, shown when the app opens or reloads.
 - Sign-in page: today's Gregorian and Hijri date, greeting, live Brunei time (BNT), English / Bahasa Melayu
@@ -52,7 +67,7 @@ LANGUAGE AND DARK MODE
   separately on the Report and Translate screens.
 
 THE SCREENS (same look as the SYSHHB IT Asset Inventory)
-- Record    supports meetings, general voice notes, interviews, lectures/classes and other audio. Choose a recording type; meeting records keep the minutes workflow, while other types get a general summary. Big microphone button, live level meter, timer, pause/stop, language switch (Malay/English),
+- Record    big microphone button, live level meter, timer, pause/stop, language switch (Malay/English),
             quick markers (Decision, Action, Important, Question), Upload tab for audio or transcript files,
             "Recordings on this device" with offline transcription.
 - Report    choose the language, Generate report (summary, discussion, decisions, action table). Save, export.
@@ -67,7 +82,6 @@ BETTER RECORDING
 - Markers are time-stamped. After offline transcription the markers are merged into the transcript in time order,
   and the report puts decisions, actions and questions in the right sections.
 - Live text needs internet. Untick "Live text" (or be offline) to record audio only and transcribe later.
-- Offline Whisper transcription auto-detects language for Auto-detect and mixed Malay/English selections. Choose one spoken language to force recognition in that language. Live browser recognition still listens in one language at a time.
 - The screen stays on while recording. Keep the app open.
 
 BETTER TRANSLATION

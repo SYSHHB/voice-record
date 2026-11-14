@@ -406,7 +406,7 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
         <div><div class="lg-num" id="gHDay" data-noi18n>&nbsp;</div><div class="lg-mon" id="gHMon" data-noi18n>&nbsp;</div><div class="lg-lbl">Hijri</div></div>
       </div>
       <div class="lg-row"><span id="gGreet" data-noi18n>&nbsp;</span><span id="gClock" data-noi18n>&nbsp;</span></div>
-      <p class="lg-desc">Record meetings, voice notes, interviews and more. Transcribe, translate and keep every recording in one place.</p>
+      <p class="lg-desc">Record meetings, get the transcript and translation, and keep every set of minutes in one place.</p>
     </div>
     <div class="lg-right">
       <div class="auth-card" id="gateCard">
@@ -421,7 +421,7 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
         </div>
         <pre class="diag hidden" id="diagOut"></pre>
         <div class="lg-tiles">
-          <div class="lg-tile"><span class="lg-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg></span><span>Record anything</span></div>
+          <div class="lg-tile"><span class="lg-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg></span><span>Record meetings</span></div>
           <div class="lg-tile"><span class="lg-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg></span><span>Transcribe &amp; translate</span></div>
           <div class="lg-tile"><span class="lg-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg></span><span>Minutes &amp; reports</span></div>
         </div>
@@ -433,10 +433,10 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
 
 <div class="app hidden" id="appWrap">
   <aside class="sidebar" id="sidebar">
-    <div class="side-brand"><img src="logo.png" alt="SYSHHB logo"><div><b>SYSHHB IT Recorder</b><span>Record · Transcribe · Translate</span></div></div>
+    <div class="side-brand"><img src="logo.png" alt="SYSHHB logo"><div><b>SYSHHB IT Recorder</b><span>Meetings to minutes</span></div></div>
     <nav class="nav" id="nav">
       <button class="nav-item" data-view="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Overview</button>
-      <div class="nav-label">Recording</div>
+      <div class="nav-label">Meeting</div>
       <button class="nav-item" data-view="meeting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg>Record</button>
       <button class="nav-item" data-view="report"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg>Report</button>
       <button class="nav-item" data-view="translate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>Translate</button>
@@ -474,7 +474,7 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
     </header>
     <div class="page-head">
       <div><h1 id="viewTitle">Overview</h1><div class="sub" id="viewSub"></div></div>
-      <button class="btn gold" id="btnNew" aria-label="New recording"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span class="lbl">New recording</span></button>
+      <button class="btn gold" id="btnNew" aria-label="New meeting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span class="lbl">New meeting</span></button>
     </div>
     <div class="top-search hidden" id="topSearch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input id="q" type="search" placeholder="Search records…" aria-label="Search records"></div>
 
@@ -483,7 +483,7 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
 <!-- HOME -->
 <div class="view hidden" id="viewHome">
   <section class="hero-card">
-    <div><h2 id="greet">Welcome</h2><p class="meta">Record a meeting, voice note, interview, lecture or other audio.</p></div>
+    <div><h2 id="greet">Welcome</h2><p class="meta">Record a meeting, and the app writes the minutes.</p></div>
     <div class="quick">
       <button class="btn gold" id="qRecord"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg>Start recording</button>
       <button class="btn" id="qUpload">Upload a file</button>
@@ -491,7 +491,7 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
     </div>
   </section>
   <div class="kpis">
-    <button class="kpi" data-go="records"><b id="kMeet">0</b><i class="ki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></i><span>Recordings</span></button>
+    <button class="kpi" data-go="records"><b id="kMeet">0</b><i class="ki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></i><span>Meetings</span></button>
     <button class="kpi" data-go="records"><b id="kMonth">0</b><i class="ki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></i><span>This month</span></button>
     <button class="kpi" data-go="home"><b id="kOpen">0</b><i class="ki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></i><span>Open actions</span></button>
     <button class="kpi" data-go="records"><b id="kWait">0</b><i class="ki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 16l-4-4-4 4M12 12v9"/><path d="M20.4 18.6A5 5 0 0 0 18 9h-1.3A8 8 0 1 0 4 16.3"/></svg></i><span>Waiting to upload</span></button>
@@ -501,7 +501,7 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
     <div class="rec-list" id="homeActions" style="margin-top:0"></div>
   </section>
   <section class="card">
-    <h2>Recent recordings</h2>
+    <h2>Recent meetings</h2>
     <div class="rec-list" id="homeRecent" style="margin-top:0"></div>
   </section>
 </div>
@@ -514,7 +514,7 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
     <button class="tab" role="tab" id="tabUp" aria-selected="false">Upload file</button>
   </div>
   <div class="row" style="margin-bottom:6px">
-    <div class="field"><label for="spokenLang">Language spoken in the recording</label><select id="spokenLang"></select></div>
+    <div class="field"><label for="spokenLang">Language spoken in the meeting</label><select id="spokenLang"></select></div>
     <div class="field"><label for="speaker">Current speaker (optional)</label><input type="text" id="speaker" placeholder="e.g. Pengerusi / Chair"></div>
   </div>
 
@@ -556,7 +556,7 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
     <div id="fileAudioBox" class="hidden">
       <audio id="fileAudio" controls></audio>
       <div class="actions"><button class="btn primary" id="btnWhisper">Transcribe on this device</button></div>
-      <p class="hint">Works without internet once the speech model has been downloaded one time. For mixed Malay and English, Whisper automatically detects the language instead of forcing every word into Malay or English. Choose a specific language above to force it.</p>
+      <p class="hint">Works without internet once the speech model has been downloaded one time. It uses the language above and the quality chosen under “Recordings on this device”.</p>
       <details style="margin-top:8px"><summary class="meta" style="cursor:pointer">Other methods (use the browser’s online speech service)</summary>
         <div class="actions">
           <button class="btn" id="btnTranscribe">Transcribe (new Chrome only)</button>
@@ -573,14 +573,16 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
 <section class="card" id="secRecordings">
   <h2>Recordings on this device <span class="spacer"></span><span class="meta" style="font-weight:400" id="recStore"></span></h2>
   <div class="row" style="align-items:flex-end">
-    <div class="field"><label for="whisperModel">Offline transcription quality</label>
+    <div class="field"><label for="whisperModel">Transcription engine</label>
       <select id="whisperModel">
-        <option value="tiny">Fast (about 40 MB download)</option>
-        <option value="base" selected>Balanced (about 80 MB download)</option>
-        <option value="small">Best (about 250 MB download, slower)</option>
+        <option value="cloud">Accurate (online, recommended)</option>
+        <option value="small" selected>On this phone: best (about 250 MB download, slower)</option>
+        <option value="base">On this phone: balanced (about 80 MB download)</option>
+        <option value="tiny">On this phone: fast (about 40 MB download)</option>
       </select></div>
     <button class="btn hidden" id="btnWStop">Stop</button>
   </div>
+  <p class="hint" id="engHint" style="margin-top:6px">Accurate sends the audio to OpenAI for transcription and needs an OpenAI key in Settings. It is much more accurate for Brunei Malay mixed with English. The on-phone engines work offline but make more mistakes.</p>
   <progress id="wBar" class="hidden" max="100" value="0" style="width:100%;margin-top:8px"></progress>
   <div class="msg" id="wMsg" role="status"></div>
   <div class="rec-list" id="audioList"></div>
@@ -588,13 +590,12 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
 </section>
 
 <section class="card">
-  <h2>Recording details and transcript</h2>
-  <div class="field" style="margin-bottom:12px"><label for="recordType">Recording type</label><select id="recordType"><option value="voice">Voice note / General recording</option><option value="meeting">Meeting</option><option value="interview">Interview</option><option value="lecture">Lecture / Class</option><option value="other">Other</option></select></div>
+  <h2>Meeting details and transcript</h2>
   <div class="row" style="margin-bottom:12px">
-    <div class="field" style="flex:2 1 240px"><label for="title">Recording title</label><input type="text" id="title" placeholder="e.g. Project ideas, interview, lecture notes"></div>
+    <div class="field" style="flex:2 1 240px"><label for="title">Meeting title</label><input type="text" id="title" placeholder="e.g. Mesyuarat Panel IT Bil. 3/2026"></div>
     <div class="field"><label for="mdate">Date</label><input type="date" id="mdate"></div>
   </div>
-  <div class="field" style="margin-bottom:12px"><label for="people">People or notes (optional)</label><input type="text" id="people" placeholder="Names, topic, or other notes"></div>
+  <div class="field" style="margin-bottom:12px"><label for="people">Attendees</label><input type="text" id="people" placeholder="Names separated by commas"></div>
   <div class="tabs" style="margin-bottom:10px">
     <button class="tab" id="tabEdit" aria-selected="true">Edit</button>
     <button class="tab" id="tabRead" aria-selected="false">Read and play</button>
@@ -642,7 +643,7 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
 </section>
 
 <section class="card">
-  <h2 id="reportHeading">Meeting report</h2>
+  <h2>Meeting report</h2>
   <div class="row">
     <div class="field"><label for="outLang">Write the report in</label><select id="outLang"></select></div>
     <button class="btn primary" id="btnReport">Generate report</button>
@@ -700,7 +701,7 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
 <div class="view hidden" id="viewAsk">
 <section class="card">
   <div class="row" style="align-items:center;margin-bottom:10px">
-    <div class="tabs" style="margin:0"><button class="tab" id="askThis" aria-selected="true">This recording</button><button class="tab" id="askAll" aria-selected="false">All saved records</button></div>
+    <div class="tabs" style="margin:0"><button class="tab" id="askThis" aria-selected="true">This meeting</button><button class="tab" id="askAll" aria-selected="false">All saved meetings</button></div>
     <span class="spacer"></span>
     <button class="btn sm" id="askClear">Clear chat</button>
   </div>
@@ -863,6 +864,11 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
     <input type="text" id="modelName" placeholder="claude-sonnet-5-5"></div>
   <p>The key is needed only for <b>Generate report</b>, <b>Translate</b> and <b>Fix mixed-language transcript</b>. Recording, transcribing, saving and exporting do not use it. Get a key at console.anthropic.com.</p>
   <p>The key is stored only on this device and is sent only to Anthropic. Anyone who can use this device can read it, so use a key with a spending limit.</p>
+  <div class="field" style="margin-top:14px"><label for="sttKey" style="font-size:12px;color:var(--muted);font-weight:600">OpenAI API key (for accurate transcription)</label>
+    <input type="password" id="sttKey" placeholder="sk-…" autocomplete="off"></div>
+  <div class="field"><label for="sttModel" style="font-size:12px;color:var(--muted);font-weight:600">Transcription model</label>
+    <input type="text" id="sttModel" placeholder="gpt-transcribe"></div>
+  <p>Used only by the “Accurate” transcription engine. The meeting audio is sent to OpenAI to be turned into text. Get a key at platform.openai.com. It is stored only on this device.</p>
   <div class="actions" style="margin-top:14px">
     <button class="btn primary" id="btnSaveSet">Save</button>
     <button class="btn" id="btnCloseSet">Close</button>
@@ -897,7 +903,7 @@ function fillLang(sel, def){
   sel.value = def;
 }
 fillLang($("spokenLang"), "ms-MY");
-(function(){ var s = $("spokenLang"); [["auto","Auto-detect (recommended for mixed languages)"],["mix-en","Mixed English + Malay (mostly English)"],["mix-ms","Mixed Malay + English (mostly Malay)"]].forEach(function(p){ var o = document.createElement('option'); o.value = p[0]; o.textContent = p[1]; s.insertBefore(o, s.firstChild); }); s.value = 'mix-ms'; })();
+(function(){ var s = $("spokenLang"); [["mix-en","Mixed English + Malay (mostly English)"],["mix-ms","Mixed Malay + English (mostly Malay)"]].forEach(function(p){ var o = document.createElement('option'); o.value = p[0]; o.textContent = p[1]; s.insertBefore(o, s.firstChild); }); s.value = 'mix-ms'; })();
 fillLang($("outLang"), "en-US");
 (function(){ var f = $("tFrom"), o = document.createElement("option"); o.value = "auto"; o.textContent = "Detect automatically"; f.appendChild(o); fillLang(f, "auto"); fillLang($("tLang"), "en-US"); })();
 function langName(code){ var x = LANGS.filter(function(l){return l.code===code;})[0]; return x ? x.name : code; }
@@ -908,7 +914,7 @@ function setMsg(el, text, err){ el.textContent = text || ""; el.className = "msg
 function pad(n){ return (n<10?"0":"") + n; }
 function fmt(ms){ var s = Math.floor(ms/1000), h = Math.floor(s/3600), m = Math.floor(s%3600/60); s = s%60; return (h?pad(h)+":":"") + pad(m) + ":" + pad(s); }
 function today(){ var d = new Date(); return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
-function slug(s){ return (s||"recording").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,50) || "recording"; }
+function slug(s){ return (s||"meeting").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,50) || "meeting"; }
 function words(s){ var t = s.trim(); return t ? t.split(/\s+/).length : 0; }
 
 /* ---------- tiny markdown renderer ---------- */
@@ -969,7 +975,7 @@ $("tabTOnly").onclick = function(){ showTV("only"); };
 /* ---------- mixed-language helpers ---------- */
 var engineOverride = null, trackMode = false, srcTrack = null;
 function isMixed(){ var v = $("spokenLang").value; return v === "mix-ms" || v === "mix-en"; }
-function recLang(){ var v = $("spokenLang").value; if(v === "auto") return "ms-MY"; if(!isMixed()) return v; if(engineOverride) return engineOverride; return v === "mix-en" ? "en-US" : "ms-MY"; }
+function recLang(){ var v = $("spokenLang").value; if(!isMixed()) return v; if(engineOverride) return engineOverride; return v === "mix-en" ? "en-US" : "ms-MY"; }
 function updSwitch(){
   var b = $("btnSwitch"), mx = isMixed();
   b.classList.toggle("hidden", !mx); $("mixHint").classList.toggle("hidden", !mx);
@@ -1063,18 +1069,18 @@ function startRec(withAudio){
   timerId = setInterval(tick, 250);
   setMode("rec");
   if(withAudio && navigator.mediaDevices && window.MediaRecorder){
-    navigator.mediaDevices.getUserMedia({audio:true}).then(function(s){
+    navigator.mediaDevices.getUserMedia({audio:{channelCount:1, echoCancellation:true, noiseSuppression:true, autoGainControl:true}}).then(function(s){
       if(!want && mode === "idle"){ s.getTracks().forEach(function(t){t.stop();}); return; }
       micStream = s; chunks = []; startMeter(s); draftSid = "d" + Date.now().toString(36); draftStart = Date.now(); var mySid = draftSid;
       try{
-        mediaRec = new MediaRecorder(s);
+        try{ mediaRec = new MediaRecorder(s, {audioBitsPerSecond: 96000}); }catch(_){ mediaRec = new MediaRecorder(s); }
         mediaRec.ondataavailable = function(e){ if(e.data.size) chunks.push(e.data); };
         mediaRec.onstop = function(){
           if(chunks.length){
             audioBlob = new Blob(chunks, {type: mediaRec.mimeType || "audio/webm"});
             $("recAudio").src = URL.createObjectURL(audioBlob);
             $("audioBox").classList.remove("hidden");
-            saveRecording(audioBlob, lastDur, ($("title").value.trim() || "Recording") + " " + new Date().toLocaleString()).then(function(){ return IDB.del("draft-" + mySid).then(loadAudio); }).catch(function(){});
+            saveRecording(audioBlob, lastDur, ($("title").value.trim() || "Meeting") + " " + new Date().toLocaleString()).then(function(){ return IDB.del("draft-" + mySid).then(loadAudio); }).catch(function(){});
           }
         };
         mediaRec.start(1000);
@@ -1106,13 +1112,13 @@ function hardStop(){
 function stopRec(){
   lastDur = elapsed(); acc = lastDur; hardStop(); tick(); acc = 0;
   if(!liveOn) setMsg($("capMsg"), "Recording saved on this device. Press Transcribe next to it in the list below when you are ready.");
-  else if(words(tr.value)) setMsg($("capMsg"), "Recording stopped. Check the transcript below, then generate the report.");
+  else if(words(tr.value)) setMsg($("capMsg"), "Recording stopped. The live text is only a rough draft. For an accurate transcript, press Transcribe next to the recording below.");
 }
 $("btnStart").onclick = function(){ engineOverride = null; acc = 0; $("audioBox").classList.add("hidden"); audioBlob = null; tick(); startRec(true); };
 $("btnPause").onclick = pauseRec;
 $("btnStop").onclick = stopRec;
 $("btnSaveAudio").onclick = function(){
-  if(audioBlob) doDownload("recording-" + slug($("title").value) + "-" + ($("mdate").value || today()) + ".webm", audioBlob, $("capMsg"));
+  if(audioBlob) doDownload("meeting-" + slug($("title").value) + "-" + ($("mdate").value || today()) + ".webm", audioBlob, $("capMsg"));
 };
 
 /* ---------- upload ---------- */
@@ -1229,12 +1235,13 @@ async function runReport(){
   if(!needAI($("aiMsg"))) return;
   var text = tr.value.trim();
   if(!text){ setMsg($("aiMsg"), "The transcript is empty. Record, upload or paste something first.", true); return; }
-  var lang = langName($("outLang").value), target = $("outReport"), kind = $("recordType").value;
-  var meeting = kind === "meeting";
-  var prompt = (meeting ? "You are a professional meeting secretary. Write formal meeting minutes from the transcript below. " : "Create a useful, well-organised " + ({voice:"voice note summary",interview:"interview summary",lecture:"lecture or class notes",other:"recording summary"}[kind] || "recording summary") + " from the transcript below. ") + "Write the whole report in " + lang + ".\n\n" + mixNote()
+  var lang = langName($("outLang").value), target = $("outReport");
+  var prompt = "You are a professional meeting secretary. Write formal meeting minutes from the transcript below. Write the whole report in " + lang + ".\n\n" + mixNote()
     + "Use only what is in the transcript. Never invent names, numbers, dates or decisions. If something is not stated, write “Not stated”. If the transcript is in a different language from " + lang + ", translate faithfully. Speech recognition can make mistakes, so use judgement for obvious errors but do not guess names.\n\n"
-    + (meeting ? "Lines containing [DECISION], [ACTION], [IMPORTANT] or [QUESTION] are markers pressed during the meeting. Put decisions, actions, important points and questions in their matching sections.\n\nOutput Markdown with these sections, with headings translated into " + lang + ":\n# Meeting title\nA short line with date and attendees.\n## Summary\n## Key discussion points\n## Decisions made\n## Action items (table: Action, Person responsible, Deadline)\n## Issues and follow-up\n\n" : "Treat the transcript as " + ({voice:"a personal or work voice note",interview:"an interview; preserve interviewer and interviewee details when clear",lecture:"a lesson or lecture; organise the material as clear study notes",other:"a general audio recording"}[kind] || "a general audio recording") + ". Do not force meeting minutes format. Use a title, a concise summary, key points in a logical order, and any useful names, questions, reminders or next steps that are actually stated. For interviews, organise question and answer themes. For lectures, organise topics and explain key concepts briefly. Do not invent details.\n\n")
-    + "Output only the report, with no preface and no closing remarks.\n\nRECORDING DETAILS\n" + details() + "\n\nTRANSCRIPT\n" + text;
+    + "Lines containing [DECISION], [ACTION], [IMPORTANT] or [QUESTION] are markers the secretary pressed during the meeting. The speech right after a marker is what it refers to. Put DECISION items under decisions, ACTION items in the action table, IMPORTANT items in the summary or key points, and QUESTION items under issues and follow-up.\n\n"
+    + "Output Markdown with exactly these sections, with headings translated into " + lang + ":\n"
+    + "# (meeting title)\nA short line with date and attendees.\n## Summary (3 to 5 sentences)\n## Key discussion points (bullets grouped by topic)\n## Decisions made (bullets)\n## Action items (a Markdown table with columns: No., Action, Person responsible, Deadline)\n## Issues and follow-up (bullets, only if any)\n\n"
+    + "Output only the report, with no preface and no closing remarks.\n\nMEETING DETAILS\n" + details() + "\n\nTRANSCRIPT\n" + text;
   cancelCtl = new AbortController(); busy(true);
   setMsg($("aiMsg"), "Claude is writing the report. This can take up to a minute for a long meeting…");
   target.innerHTML = "";
@@ -1398,6 +1405,96 @@ function mergeByTime(text){
   return idx.map(function(i){ return lines[i]; }).join("\n") + "\n";
 }
 
+/* ---------- accurate online transcription (OpenAI speech-to-text), in short parts cut at pauses ---------- */
+var cloudCtl = null;
+function sttCfg(){ var c = (window.MVR && window.MVR.cfg && window.MVR.cfg()) || {}; return {key: c.sttKey || "", model: c.sttModel || "gpt-transcribe"}; }
+function sttLangs(){
+  var v = $("spokenLang").value;
+  if(v === "mix-en" || v === "en-US") return ["en", "ms"];
+  if(v === "mix-ms" || v === "ms-MY") return ["ms", "en"];
+  var m = {"id-ID": "id", "zh-CN": "zh", "ar-SA": "ar", "ta-IN": "ta", "fil-PH": "tl", "hi-IN": "hi", "ja-JP": "ja", "ko-KR": "ko", "fr-FR": "fr"}[v];
+  return m ? [m, "en"] : [];
+}
+function sttKeywords(){
+  var raw = ($("glossary").value + "," + $("people").value + "," + $("speaker").value + ",Yayasan,SYSHHB").split(/[,;\n]/), seen = {}, out = [];
+  raw.forEach(function(k){ k = k.replace(/[<>\r\n]/g, " ").trim(); var key = k.toLowerCase(); if(k && k.length < 60 && !seen[key]){ seen[key] = 1; out.push(k); } });
+  return out.slice(0, 40);
+}
+function wavBlob(a, rate){
+  var n = a.length, buf = new ArrayBuffer(44 + n * 2), v = new DataView(buf);
+  function w(o, t){ for(var i = 0; i < t.length; i++) v.setUint8(o + i, t.charCodeAt(i)); }
+  w(0, "RIFF"); v.setUint32(4, 36 + n * 2, true); w(8, "WAVE"); w(12, "fmt "); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+  v.setUint32(24, rate, true); v.setUint32(28, rate * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true); w(36, "data"); v.setUint32(40, n * 2, true);
+  for(var i = 0; i < n; i++){ var x = Math.max(-1, Math.min(1, a[i])); v.setInt16(44 + i * 2, x < 0 ? x * 0x8000 : x * 0x7fff, true); }
+  return new Blob([buf], {type: "audio/wav"});
+}
+function splitAtPauses(a, rate){
+  var target = 45 * rate, win = 7 * rate, hop = Math.floor(0.25 * rate), out = [], pos = 0, n = a.length;
+  while(n - pos > target + win){
+    var best = pos + target, bestE = Infinity;
+    for(var c = pos + target - win; c <= pos + target + win; c += hop){
+      var e = 0; for(var i = c; i < c + hop && i < n; i += 8) e += a[i] * a[i];
+      if(e < bestE){ bestE = e; best = c + (hop >> 1); }
+    }
+    out.push([pos, best]); pos = best;
+  }
+  out.push([pos, n]); return out;
+}
+function putTranscript(txt, recId){
+  var old = tr.value, replaced = false;
+  if(recId && recId === S.audioId && old.trim()){
+    var keep = old.split("\n").filter(function(l){ return /^\s*\[(?:\d{1,2}:)?\d{2}:\d{2}\]\s*\[(DECISION|ACTION|IMPORTANT|QUESTION)\]\s*$/.test(l); });
+    undoText = old; $("btnUndoFix").classList.remove("hidden");
+    tr.value = mergeByTime(keep.concat([txt]).join("\n") + "\n"); replaced = true;
+  } else tr.value = mergeByTime(old + (old && !/\n$/.test(old) ? "\n" : "") + txt + "\n");
+  tr.scrollTop = tr.scrollHeight; updWc(); try{ renderReader(); }catch(_){}
+  return replaced;
+}
+async function transcribeCloud(blob, recId){
+  var cfg = sttCfg();
+  if(!cfg.key){ setW("Add your OpenAI API key in Settings to use the Accurate engine, or choose an on-phone engine.", null); $("wMsg").className = "msg err"; if(window.MVR && window.MVR.openSettings) window.MVR.openSettings(); return; }
+  if(!navigator.onLine){ setW("You are offline. The Accurate engine needs internet. Choose an on-phone engine, or try again later.", null); $("wMsg").className = "msg err"; return; }
+  setWBusy(true); cloudCtl = new AbortController();
+  try{
+    setW("Preparing the audio…");
+    var a = await decodeAudio(blob), rate = 16000, peak = 0, i;
+    for(i = 0; i < a.length; i += 4){ var ab = Math.abs(a[i]); if(ab > peak) peak = ab; }
+    if(peak > 0.001 && peak < 0.6){ var g = Math.min(8, 0.9 / peak); for(i = 0; i < a.length; i++) a[i] *= g; }
+    var parts = splitAtPauses(a, rate), lines = [], prev = "", newModel = /^gpt-transcribe/.test(cfg.model), langs = sttLangs(), kws = sttKeywords();
+    for(var p = 0; p < parts.length; p++){
+      setW("Transcribing part " + (p + 1) + " of " + parts.length + "…", Math.round(p / parts.length * 100));
+      var seg = a.subarray(parts[p][0], parts[p][1]), e = 0;
+      for(i = 0; i < seg.length; i += 16) e += seg[i] * seg[i];
+      if(seg.length < rate * 0.4 || Math.sqrt(e / Math.max(1, seg.length / 16)) < 0.004) continue;
+      var fd = new FormData();
+      fd.append("file", wavBlob(seg, rate), "part" + (p + 1) + ".wav"); fd.append("model", cfg.model);
+      fd.append("prompt", "A meeting at Yayasan Sultan Haji Hassanal Bolkiah in Brunei. The speakers use Brunei Malay and English, often mixed in the same sentence. Write exactly what is said, each word in the language it was spoken, and do not translate." + (prev ? " The previous words were: " + prev : ""));
+      if(newModel){ kws.forEach(function(k){ fd.append("keywords[]", k); }); langs.forEach(function(l){ fd.append("languages[]", l); }); }
+      else if(langs.length && $("spokenLang").value.indexOf("mix") !== 0) fd.append("language", langs[0]);
+      var text = null;
+      for(var attempt = 0; attempt < 3 && text === null; attempt++){
+        var r = await fetch("https://api.openai.com/v1/audio/transcriptions", {method: "POST", headers: {Authorization: "Bearer " + cfg.key}, body: fd, signal: cloudCtl.signal});
+        if(r.ok){ var j = await r.json(); text = String(j.text || "").trim(); break; }
+        var em = "Error " + r.status; try{ var ej = await r.json(); if(ej && ej.error && ej.error.message) em = ej.error.message; }catch(_){}
+        if(r.status === 401){ if(window.MVR && window.MVR.openSettings) window.MVR.openSettings(); throw new Error("The OpenAI key was rejected. Check it in Settings."); }
+        if((r.status === 429 || r.status >= 500) && attempt < 2){ await new Promise(function(res){ setTimeout(res, 3000 * (attempt + 1)); }); continue; }
+        throw new Error(em);
+      }
+      if(text){ lines.push("[" + fmt(parts[p][0] / rate * 1000) + "] " + text.replace(/\s*\n+\s*/g, " ")); prev = text.slice(-200); }
+    }
+    if(!lines.length){ setW("No speech was found in this audio.", null); $("wMsg").className = "msg err"; }
+    else {
+      var txt = lines.join("\n"), rep = putTranscript(txt, recId);
+      Audit.log("transcribe", $("title").value.trim(), "accurate");
+      setW("Done. " + words(txt).toLocaleString() + " words were added to the transcript." + (rep ? " The live draft was replaced. Undo fix brings it back." : "") + " Use Read and play to check it against the recording.");
+    }
+  }catch(e){
+    var m = (e && e.message) || "error";
+    if(cloudCtl && cloudCtl.signal.aborted) setW("Stopped.", null);
+    else { setW(/Failed to fetch|NetworkError|Load failed/i.test(m) ? "Could not reach the transcription service. Check the internet connection and try again." : "Could not transcribe: " + m, null); $("wMsg").className = "msg err"; }
+  }finally{ cloudCtl = null; setWBusy(false); }
+}
+
 /* ---------- recordings on this device (IndexedDB) + offline transcription ---------- */
 var IDB = (function(){
   var dbp = null;
@@ -1454,7 +1551,7 @@ function renderAudio(){
     var d = document.createElement("div"); d.className = "rec-item";
     d.innerHTML = '<div class="t"><b>' + esc(r.name) + '</b><span class="meta">' + (r.ms ? fmt(r.ms) + " · " : "") + mb(r.size) + (r.draft ? " · unfinished recording, recovered" : "") + '</span></div>';
     function btn(label, cls, fn, act){ var b = document.createElement("button"); b.className = "btn " + (cls || ""); b.textContent = label; if(act) b.dataset.act = act; b.onclick = fn; d.appendChild(b); return b; }
-    var t = btn("Transcribe", "primary", function(){ if(!$("title").value.trim()) $("title").value = r.name.replace(/\s\d.*$/, "") || r.name; transcribeBlob(r.blob); }, "tr");
+    var t = btn("Transcribe", "primary", function(){ if(!$("title").value.trim()) $("title").value = r.name.replace(/\s\d.*$/, "") || r.name; transcribeBlob(r.blob, r.id); }, "tr");
     t.disabled = wBusy;
     btn("Play", "", function(){ var p = $("listPlayer"); p.src = URL.createObjectURL(r.blob); p.classList.remove("hidden"); p.play().catch(function(){}); });
     btn("Download", "", function(){ var ext = /mp4|aac|m4a/.test(r.type) ? "m4a" : /ogg/.test(r.type) ? "ogg" : /wav/.test(r.type) ? "wav" : /mpeg|mp3/.test(r.type) ? "mp3" : "webm"; doDownload(slug(r.name) + "." + ext, r.blob, $("capMsg")); });
@@ -1468,7 +1565,7 @@ function renderAudio(){
 }
 function whisperLang(){
   var v = $("spokenLang").value;
-  if(v === "auto" || v === "mix-ms" || v === "mix-en") return null;
+  if(v === "mix-ms") return "malay"; if(v === "mix-en") return "english";
   var x = LANGS.filter(function(l){ return l.code === v; })[0]; return x ? x.w : null;
 }
 async function decodeAudio(blob){
@@ -1487,8 +1584,10 @@ async function decodeAudio(blob){
   try{ ctx.close(); }catch(_){}
   return out;
 }
-async function transcribeBlob(blob){
+async function transcribeBlob(blob, recId){
   if(wBusy || !blob) return;
+  try{ localStorage.setItem("mvr:wmodel", $("whisperModel").value); }catch(_){}
+  if($("whisperModel").value === "cloud") return transcribeCloud(blob, recId);
   setWBusy(true);
   try{
     try{ localStorage.setItem("mvr:wmodel", $("whisperModel").value); }catch(_){}
@@ -1513,7 +1612,7 @@ async function transcribeBlob(blob){
     var txt = lines.join(NL);
     if(!txt){ setW("No speech was found in this audio.", null); $("wMsg").className = "msg err"; }
     else {
-      tr.value = mergeByTime(tr.value + (tr.value && !/\n$/.test(tr.value) ? "\n" : "") + txt + "\n"); tr.scrollTop = tr.scrollHeight; updWc();
+      putTranscript(txt, recId);
       setW("Done. " + words(txt).toLocaleString() + " words were added to the transcript. Please read through it. For mixed Malay and English, press “Fix mixed-language transcript”.");
     }
   }catch(e){
@@ -1523,8 +1622,8 @@ async function transcribeBlob(blob){
   }finally{ setWBusy(false); wReject = null; }
 }
 $("btnWhisper").onclick = function(){ if(pendingFile) transcribeBlob(pendingFile); else setW("Choose an audio file first.", null); };
-$("btnWStop").onclick = function(){ if(worker){ worker.terminate(); worker = null; } if(wReject) wReject(new Error("cancelled")); };
-try{ var wm = localStorage.getItem("mvr:wmodel"); if(wm) $("whisperModel").value = wm; }catch(_){}
+$("btnWStop").onclick = function(){ if(cloudCtl){ cloudCtl.abort(); return; } if(worker){ worker.terminate(); worker = null; } if(wReject) wReject(new Error("cancelled")); };
+try{ var wm = localStorage.getItem("mvr:wmodel"); $("whisperModel").value = wm || (sttCfg().key ? "cloud" : "small"); }catch(_){}
 loadAudio();
 try{ if(navigator.storage && navigator.storage.persist) navigator.storage.persist(); }catch(_){}
 function netState(){ if(!navigator.onLine) setSync("Offline: saved on this device", false, "offline"); }
@@ -1773,25 +1872,14 @@ $("btnGoTranslate").onclick = function(){ showView("translate"); };
 
 /* ----- meetings (cached on the device, synced to OneDrive) ----- */
 function current(){
-  return {recordType: $("recordType").value, title: $("title").value.trim(), date: $("mdate").value, people: $("people").value.trim(), spoken: $("spokenLang").value,
+  return {title: $("title").value.trim(), date: $("mdate").value, people: $("people").value.trim(), spoken: $("spokenLang").value,
     transcript: tr.value, report: S.report, reportLang: S.reportLang, translation: S.translation, transLang: S.transLang, transSrc: S.transSrc, transFrom: S.transFrom, actions: S.actions, insights: S.insights, audioId: S.audioId};
 }
-function updateRecordType(){
-  var kind = $("recordType").value, meeting = kind === "meeting";
-  var txUi = function(s){ return window.MVR_LANG ? window.MVR_LANG.tx(s) : s; };
-  $("secInsights").classList.toggle("hidden", !meeting);
-  $("reportHeading").textContent = txUi(meeting ? "Meeting report" : "Recording summary");
-  $("btnAnalyse").textContent = txUi("Analyse meeting");
-  $("title").placeholder = txUi(meeting ? "e.g. Mesyuarat Panel IT Bil. 3/2026" : "e.g. Project ideas, interview, lecture notes");
-  $("people").previousElementSibling.textContent = txUi(meeting ? "Attendees" : "People or notes (optional)");
-  $("people").placeholder = txUi(meeting ? "Names separated by commas" : "Names, topic, or other notes");
-}
-$("recordType").addEventListener("change", updateRecordType);
 function newId(){ return "m" + Date.now().toString(36) + Math.random().toString(36).slice(2, 5); }
 $("btnSave").onclick = function(){
   if(!can("write")){ setMsg($("saveMsg"), "Your role is read-only.", true); return; }
   var r = current();
-  if(!r.title) r.title = (r.recordType === "meeting" ? "Untitled meeting " : "Untitled recording ") + (r.date || today());
+  if(!r.title) r.title = "Untitled meeting " + (r.date || today());
   if(!r.transcript.trim() && !r.report){ setMsg($("saveMsg"), "There is nothing to save yet.", true); return; }
   var isNew = !S.id || !cache.recs[S.id];
   if(!S.id) S.id = newId();
@@ -1852,7 +1940,7 @@ async function syncNow(){
 }
 function newMeeting(){
   S = {id: null, report: "", translation: "", transLang: "", reportLang: "", transSrc: "", transFrom: "", tview: "side", actions: [], insights: null, audioId: null};
-  tr.value = ""; $("recordType").value = "voice"; $("title").value = ""; $("people").value = ""; $("mdate").value = today(); updateRecordType();
+  tr.value = ""; $("title").value = ""; $("people").value = ""; $("mdate").value = today();
   $("outReport").innerHTML = ""; $("outTrans").innerHTML = ""; $("timer").textContent = "00:00"; acc = 0;
   $("audioBox").classList.add("hidden"); audioBlob = null;
   setMsg($("capMsg"), ""); setMsg($("aiMsg"), ""); setMsg($("saveMsg"), ""); updWc(); showOut("report"); smartReset();
@@ -1861,7 +1949,6 @@ $("btnNew").onclick = function(){ if(mode !== "idle") hardStop(); newMeeting(); 
 function openRecord(r){
   if(mode !== "idle") hardStop();
   S = {id: r.id, report: r.report || "", translation: r.translation || "", transLang: r.transLang || "", reportLang: r.reportLang || "", transSrc: r.transSrc || "transcript", transFrom: r.transFrom || "", tview: "side", actions: JSON.parse(JSON.stringify(r.actions || [])), insights: r.insights || null, audioId: r.audioId || null};
-  $("recordType").value = r.recordType || "meeting"; updateRecordType();
   $("title").value = r.title || ""; $("mdate").value = r.date || today(); $("people").value = r.people || "";
   if(r.spoken) $("spokenLang").value = r.spoken;
   tr.value = r.transcript || ""; updWc();
@@ -2001,7 +2088,7 @@ $("btnCheck").onclick = async function(){
 /* ----- audit log (admin) ----- */
 var ACTIONS = {login: "Sign in", login_denied: "Sign-in denied", logout: "Sign out", user_add: "User added", user_edit: "User changed", user_remove: "User removed",
   folder_share: "Folder shared", folder_unshare: "Folder access removed", record_create: "Record created", record_update: "Record edited", record_delete: "Record deleted",
-  record_open: "Record opened", record_export: "Record exported", audio_upload: "Audio uploaded", action_update: "Action item updated", ai_ask: "Assistant question", ai_analysis: "Meeting analysed"};
+  record_open: "Record opened", record_export: "Record exported", audio_upload: "Audio uploaded", transcribe: "Recording transcribed", action_update: "Action item updated", ai_ask: "Assistant question", ai_analysis: "Meeting analysed"};
 var auditRows = [];
 function isoDay(d){ return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
 function initAudit(){
@@ -2372,7 +2459,7 @@ $("outBtn").onclick = function(){
 
 /* ---------- init ---------- */
 if(!SR) setMsg($("capMsg"), "Live speech recognition is not supported in this browser. Use Chrome or Edge for live text. You can still record audio, upload files and paste a transcript.", true);
-updateRecordType(); setMode("idle"); updWc(); renderList();
+setMode("idle"); updWc(); renderList();
 (async function(){
   try{ sample = await claude.use("sample"); }catch(_){ sample = null; }
   if(window.MVR_SPLASH) window.MVR_SPLASH.to(55);
@@ -2389,7 +2476,7 @@ updateRecordType(); setMode("idle"); updWc(); renderList();
   var $ = function(id){ return document.getElementById(id); };
   var dlg = $("dlg");
   function openSettings(){
-    var c = MVR.cfg(); $("apiKey").value = c.apiKey || ""; $("modelName").value = c.model || ""; $("setMsg").textContent = "";
+    var c = MVR.cfg(); $("apiKey").value = c.apiKey || ""; $("modelName").value = c.model || ""; $("sttKey").value = c.sttKey || ""; $("sttModel").value = c.sttModel || ""; $("setMsg").textContent = "";
     if(dlg.showModal) dlg.showModal(); else dlg.setAttribute("open","");
   }
   MVR.openSettings = openSettings;
@@ -2397,12 +2484,12 @@ updateRecordType(); setMode("idle"); updWc(); renderList();
   $("btnCloseSet").onclick = function(){ dlg.close(); };
   $("btnSaveSet").onclick = function(){
     var k = $("apiKey").value.trim(), m = $("modelName").value.trim();
-    var ok = MVR.save({apiKey:k, model:m});
+    var ok = MVR.save({apiKey:k, model:m, sttKey:$("sttKey").value.trim(), sttModel:$("sttModel").value.trim()});
     $("setMsg").className = "msg" + (ok ? "" : " err");
     $("setMsg").textContent = ok ? "Saved." : "This browser would not store the settings.";
     if(ok){ var a = $("aiMsg"); if(k && a.textContent.indexOf("Settings") > -1){ a.textContent = ""; a.className = "msg"; } setTimeout(function(){ dlg.close(); }, 600); }
   };
-  $("btnClearKey").onclick = function(){ MVR.save({model:$("modelName").value.trim()}); $("apiKey").value = ""; $("setMsg").className = "msg"; $("setMsg").textContent = "Key removed from this device."; };
+  $("btnClearKey").onclick = function(){ var c0 = MVR.cfg(); MVR.save({model:$("modelName").value.trim(), sttKey:c0.sttKey || "", sttModel:c0.sttModel || ""}); $("apiKey").value = ""; $("setMsg").className = "msg"; $("setMsg").textContent = "Key removed from this device."; };
   if(!MVR.cfg().apiKey){
     setTimeout(function(){ var a = $("aiMsg"); if(!a.textContent){ a.className = "msg"; a.textContent = "To use Generate report, Translate and Fix, add your API key in Settings. Recording and transcribing work without it."; } }, 400);
   }

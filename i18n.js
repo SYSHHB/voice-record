@@ -90,6 +90,8 @@ var D = {
 "Action item updated":"Item tindakan dikemas kini","Assistant question":"Soalan kepada pembantu","Meeting analysed":"Mesyuarat dianalisis",
 "Gregorian":"Masihi","Hijri":"Hijrah",
 "Record meetings, get the transcript and translation, and keep every set of minutes in one place.":"Rakam mesyuarat, dapatkan transkrip dan terjemahan, dan simpan setiap minit di satu tempat.",
+"Sign in to continue":"Log masuk untuk meneruskan","Record meetings":"Rakam mesyuarat","Transcribe & translate":"Transkrip & terjemah","Minutes & reports":"Minit & laporan",
+"Secure sign-in with your school Microsoft account":"Log masuk selamat dengan akaun Microsoft sekolah anda",
 /* ---- settings dialog ---- */
 "Anthropic API key":"Kunci API Anthropic","Model":"Model","Save":"Simpan","Close":"Tutup","Remove key":"Buang kunci",
 "The key is needed only for":"Kunci ini diperlukan hanya untuk","and":"dan",

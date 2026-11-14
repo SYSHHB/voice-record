@@ -52,7 +52,7 @@ LANGUAGE AND DARK MODE
   separately on the Report and Translate screens.
 
 THE SCREENS (same look as the SYSHHB IT Asset Inventory)
-- Record    big microphone button, live level meter, timer, pause/stop, language switch (Malay/English),
+- Record    supports meetings, general voice notes, interviews, lectures/classes and other audio. Choose a recording type; meeting records keep the minutes workflow, while other types get a general summary. Big microphone button, live level meter, timer, pause/stop, language switch (Malay/English),
             quick markers (Decision, Action, Important, Question), Upload tab for audio or transcript files,
             "Recordings on this device" with offline transcription.
 - Report    choose the language, Generate report (summary, discussion, decisions, action table). Save, export.
@@ -67,6 +67,7 @@ BETTER RECORDING
 - Markers are time-stamped. After offline transcription the markers are merged into the transcript in time order,
   and the report puts decisions, actions and questions in the right sections.
 - Live text needs internet. Untick "Live text" (or be offline) to record audio only and transcribe later.
+- Offline Whisper transcription auto-detects language for Auto-detect and mixed Malay/English selections. Choose one spoken language to force recognition in that language. Live browser recognition still listens in one language at a time.
 - The screen stays on while recording. Keep the app open.
 
 BETTER TRANSLATION

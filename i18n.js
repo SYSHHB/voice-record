@@ -5,7 +5,7 @@
 var KEY = "syshhb_lang";
 var D = {
 /* ---- name and navigation ---- */
-"SYSHHB IT Recorder":"SYSHHB IT Perakam","Meetings to minutes":"Dari mesyuarat kepada minit","Meeting":"Mesyuarat","Record":"Rakam","Report":"Laporan",
+"SYSHHB IT Recorder":"SYSHHB IT Perakam","Meetings to minutes":"Dari mesyuarat kepada minit","Record · Transcribe · Translate":"Rakam · Transkripsikan · Terjemahkan","Meeting":"Mesyuarat","Recording":"Rakaman","Record":"Rakam","Report":"Laporan","New recording":"Rakaman baharu","Recordings":"Rakaman","Recent recordings":"Rakaman terkini","This recording":"Rakaman ini","All saved records":"Semua rekod tersimpan",
 "Translate":"Terjemah","Saved Records":"Rekod Tersimpan","Saved records":"Rekod tersimpan","Records":"Rekod","More":"Lagi","Admin":"Pentadbir",
 "Manage Access":"Urus Akses","Manage access":"Urus akses","Audit Logs":"Log Audit","Audit logs":"Log audit","Main":"Utama",
 "Not signed in":"Belum log masuk","Offline":"Luar talian","Settings":"Tetapan","Install app":"Pasang aplikasi","Refresh":"Muat semula",
@@ -13,10 +13,13 @@ var D = {
 "Open menu":"Buka menu","New meeting":"Mesyuarat baharu","Search records…":"Cari rekod…","Search records":"Cari rekod","Loading…":"Memuatkan…",
 "SYSHHB logo":"Logo SYSHHB","Yayasan Sultan Haji Hassanal Bolkiah logo":"Logo Yayasan Sultan Haji Hassanal Bolkiah",
 "Record or upload a meeting":"Rakam atau muat naik mesyuarat","Minutes of the meeting":"Minit mesyuarat",
+"Record meetings, voice notes, interviews and more. Transcribe, translate and keep every recording in one place.":"Rakam mesyuarat, nota suara, temu bual dan banyak lagi. Transkripsikan, terjemahkan dan simpan setiap rakaman di satu tempat.","Record anything":"Rakam apa sahaja","Record a meeting, voice note, interview, lecture or other audio.":"Rakam mesyuarat, nota suara, temu bual, kuliah atau audio lain.",
 "Translate the transcript or the report":"Terjemah transkrip atau laporan","Meetings saved to OneDrive":"Mesyuarat disimpan ke OneDrive",
 "Who can use this app":"Siapa boleh menggunakan aplikasi ini","Sign-ins and changes":"Log masuk dan perubahan",
 /* ---- record ---- */
-"Record live":"Rakam secara langsung","Upload file":"Muat naik fail","Language spoken in the meeting":"Bahasa yang dituturkan dalam mesyuarat",
+"Record live":"Rakam secara langsung","Upload file":"Muat naik fail","Language spoken in the meeting":"Bahasa yang dituturkan dalam mesyuarat","Language spoken in the recording":"Bahasa yang dituturkan dalam rakaman",
+"Auto-detect (recommended for mixed languages)":"Kesan automatik (disyorkan untuk bahasa campuran)",
+"Recording details and transcript":"Butiran rakaman dan transkrip","Recording type":"Jenis rakaman","Voice note / General recording":"Nota suara / Rakaman umum","Interview":"Temu bual","Lecture / Class":"Kuliah / Kelas","Other":"Lain-lain","Recording title":"Tajuk rakaman","e.g. Project ideas, interview, lecture notes":"cth. Idea projek, temu bual, nota kuliah","People or notes (optional)":"Orang atau nota (pilihan)","Names, topic, or other notes":"Nama, topik atau nota lain","Recording summary":"Ringkasan rakaman",
 "Current speaker (optional)":"Penutur semasa (pilihan)","e.g. Pengerusi / Chair":"cth. Pengerusi","Tap the microphone to start":"Ketik mikrofon untuk mula",
 "Pause":"Jeda","Resume":"Sambung","Stop":"Henti","Mark the minutes as you go:":"Tanda minit sambil mesyuarat berjalan:",
 "✔ Decision":"✔ Keputusan","➜ Action":"➜ Tindakan","★ Important":"★ Penting","? Question":"? Soalan",

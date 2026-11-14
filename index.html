@@ -406,7 +406,7 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
         <div><div class="lg-num" id="gHDay" data-noi18n>&nbsp;</div><div class="lg-mon" id="gHMon" data-noi18n>&nbsp;</div><div class="lg-lbl">Hijri</div></div>
       </div>
       <div class="lg-row"><span id="gGreet" data-noi18n>&nbsp;</span><span id="gClock" data-noi18n>&nbsp;</span></div>
-      <p class="lg-desc">Record meetings, get the transcript and translation, and keep every set of minutes in one place.</p>
+      <p class="lg-desc">Record meetings, voice notes, interviews and more. Transcribe, translate and keep every recording in one place.</p>
     </div>
     <div class="lg-right">
       <div class="auth-card" id="gateCard">
@@ -421,7 +421,7 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
         </div>
         <pre class="diag hidden" id="diagOut"></pre>
         <div class="lg-tiles">
-          <div class="lg-tile"><span class="lg-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg></span><span>Record meetings</span></div>
+          <div class="lg-tile"><span class="lg-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg></span><span>Record anything</span></div>
           <div class="lg-tile"><span class="lg-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg></span><span>Transcribe &amp; translate</span></div>
           <div class="lg-tile"><span class="lg-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg></span><span>Minutes &amp; reports</span></div>
         </div>
@@ -433,10 +433,10 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
 
 <div class="app hidden" id="appWrap">
   <aside class="sidebar" id="sidebar">
-    <div class="side-brand"><img src="logo.png" alt="SYSHHB logo"><div><b>SYSHHB IT Recorder</b><span>Meetings to minutes</span></div></div>
+    <div class="side-brand"><img src="logo.png" alt="SYSHHB logo"><div><b>SYSHHB IT Recorder</b><span>Record · Transcribe · Translate</span></div></div>
     <nav class="nav" id="nav">
       <button class="nav-item" data-view="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Overview</button>
-      <div class="nav-label">Meeting</div>
+      <div class="nav-label">Recording</div>
       <button class="nav-item" data-view="meeting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg>Record</button>
       <button class="nav-item" data-view="report"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg>Report</button>
       <button class="nav-item" data-view="translate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>Translate</button>
@@ -474,7 +474,7 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
     </header>
     <div class="page-head">
       <div><h1 id="viewTitle">Overview</h1><div class="sub" id="viewSub"></div></div>
-      <button class="btn gold" id="btnNew" aria-label="New meeting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span class="lbl">New meeting</span></button>
+      <button class="btn gold" id="btnNew" aria-label="New recording"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span class="lbl">New recording</span></button>
     </div>
     <div class="top-search hidden" id="topSearch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input id="q" type="search" placeholder="Search records…" aria-label="Search records"></div>
 
@@ -483,7 +483,7 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
 <!-- HOME -->
 <div class="view hidden" id="viewHome">
   <section class="hero-card">
-    <div><h2 id="greet">Welcome</h2><p class="meta">Record a meeting, and the app writes the minutes.</p></div>
+    <div><h2 id="greet">Welcome</h2><p class="meta">Record a meeting, voice note, interview, lecture or other audio.</p></div>
     <div class="quick">
       <button class="btn gold" id="qRecord"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg>Start recording</button>
       <button class="btn" id="qUpload">Upload a file</button>
@@ -491,7 +491,7 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
     </div>
   </section>
   <div class="kpis">
-    <button class="kpi" data-go="records"><b id="kMeet">0</b><i class="ki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></i><span>Meetings</span></button>
+    <button class="kpi" data-go="records"><b id="kMeet">0</b><i class="ki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></i><span>Recordings</span></button>
     <button class="kpi" data-go="records"><b id="kMonth">0</b><i class="ki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></i><span>This month</span></button>
     <button class="kpi" data-go="home"><b id="kOpen">0</b><i class="ki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></i><span>Open actions</span></button>
     <button class="kpi" data-go="records"><b id="kWait">0</b><i class="ki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 16l-4-4-4 4M12 12v9"/><path d="M20.4 18.6A5 5 0 0 0 18 9h-1.3A8 8 0 1 0 4 16.3"/></svg></i><span>Waiting to upload</span></button>
@@ -501,7 +501,7 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
     <div class="rec-list" id="homeActions" style="margin-top:0"></div>
   </section>
   <section class="card">
-    <h2>Recent meetings</h2>
+    <h2>Recent recordings</h2>
     <div class="rec-list" id="homeRecent" style="margin-top:0"></div>
   </section>
 </div>
@@ -514,7 +514,7 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
     <button class="tab" role="tab" id="tabUp" aria-selected="false">Upload file</button>
   </div>
   <div class="row" style="margin-bottom:6px">
-    <div class="field"><label for="spokenLang">Language spoken in the meeting</label><select id="spokenLang"></select></div>
+    <div class="field"><label for="spokenLang">Language spoken in the recording</label><select id="spokenLang"></select></div>
     <div class="field"><label for="speaker">Current speaker (optional)</label><input type="text" id="speaker" placeholder="e.g. Pengerusi / Chair"></div>
   </div>
 
@@ -556,7 +556,7 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
     <div id="fileAudioBox" class="hidden">
       <audio id="fileAudio" controls></audio>
       <div class="actions"><button class="btn primary" id="btnWhisper">Transcribe on this device</button></div>
-      <p class="hint">Works without internet once the speech model has been downloaded one time. It uses the language above and the quality chosen under “Recordings on this device”.</p>
+      <p class="hint">Works without internet once the speech model has been downloaded one time. For mixed Malay and English, Whisper automatically detects the language instead of forcing every word into Malay or English. Choose a specific language above to force it.</p>
       <details style="margin-top:8px"><summary class="meta" style="cursor:pointer">Other methods (use the browser’s online speech service)</summary>
         <div class="actions">
           <button class="btn" id="btnTranscribe">Transcribe (new Chrome only)</button>
@@ -588,12 +588,13 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
 </section>
 
 <section class="card">
-  <h2>Meeting details and transcript</h2>
+  <h2>Recording details and transcript</h2>
+  <div class="field" style="margin-bottom:12px"><label for="recordType">Recording type</label><select id="recordType"><option value="voice">Voice note / General recording</option><option value="meeting">Meeting</option><option value="interview">Interview</option><option value="lecture">Lecture / Class</option><option value="other">Other</option></select></div>
   <div class="row" style="margin-bottom:12px">
-    <div class="field" style="flex:2 1 240px"><label for="title">Meeting title</label><input type="text" id="title" placeholder="e.g. Mesyuarat Panel IT Bil. 3/2026"></div>
+    <div class="field" style="flex:2 1 240px"><label for="title">Recording title</label><input type="text" id="title" placeholder="e.g. Project ideas, interview, lecture notes"></div>
     <div class="field"><label for="mdate">Date</label><input type="date" id="mdate"></div>
   </div>
-  <div class="field" style="margin-bottom:12px"><label for="people">Attendees</label><input type="text" id="people" placeholder="Names separated by commas"></div>
+  <div class="field" style="margin-bottom:12px"><label for="people">People or notes (optional)</label><input type="text" id="people" placeholder="Names, topic, or other notes"></div>
   <div class="tabs" style="margin-bottom:10px">
     <button class="tab" id="tabEdit" aria-selected="true">Edit</button>
     <button class="tab" id="tabRead" aria-selected="false">Read and play</button>
@@ -641,7 +642,7 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
 </section>
 
 <section class="card">
-  <h2>Meeting report</h2>
+  <h2 id="reportHeading">Meeting report</h2>
   <div class="row">
     <div class="field"><label for="outLang">Write the report in</label><select id="outLang"></select></div>
     <button class="btn primary" id="btnReport">Generate report</button>
@@ -699,7 +700,7 @@ html.gate-on,html.gate-on body{overflow:hidden;height:100%}
 <div class="view hidden" id="viewAsk">
 <section class="card">
   <div class="row" style="align-items:center;margin-bottom:10px">
-    <div class="tabs" style="margin:0"><button class="tab" id="askThis" aria-selected="true">This meeting</button><button class="tab" id="askAll" aria-selected="false">All saved meetings</button></div>
+    <div class="tabs" style="margin:0"><button class="tab" id="askThis" aria-selected="true">This recording</button><button class="tab" id="askAll" aria-selected="false">All saved records</button></div>
     <span class="spacer"></span>
     <button class="btn sm" id="askClear">Clear chat</button>
   </div>
@@ -896,7 +897,7 @@ function fillLang(sel, def){
   sel.value = def;
 }
 fillLang($("spokenLang"), "ms-MY");
-(function(){ var s = $("spokenLang"); [["mix-en","Mixed English + Malay (mostly English)"],["mix-ms","Mixed Malay + English (mostly Malay)"]].forEach(function(p){ var o = document.createElement('option'); o.value = p[0]; o.textContent = p[1]; s.insertBefore(o, s.firstChild); }); s.value = 'mix-ms'; })();
+(function(){ var s = $("spokenLang"); [["auto","Auto-detect (recommended for mixed languages)"],["mix-en","Mixed English + Malay (mostly English)"],["mix-ms","Mixed Malay + English (mostly Malay)"]].forEach(function(p){ var o = document.createElement('option'); o.value = p[0]; o.textContent = p[1]; s.insertBefore(o, s.firstChild); }); s.value = 'mix-ms'; })();
 fillLang($("outLang"), "en-US");
 (function(){ var f = $("tFrom"), o = document.createElement("option"); o.value = "auto"; o.textContent = "Detect automatically"; f.appendChild(o); fillLang(f, "auto"); fillLang($("tLang"), "en-US"); })();
 function langName(code){ var x = LANGS.filter(function(l){return l.code===code;})[0]; return x ? x.name : code; }
@@ -907,7 +908,7 @@ function setMsg(el, text, err){ el.textContent = text || ""; el.className = "msg
 function pad(n){ return (n<10?"0":"") + n; }
 function fmt(ms){ var s = Math.floor(ms/1000), h = Math.floor(s/3600), m = Math.floor(s%3600/60); s = s%60; return (h?pad(h)+":":"") + pad(m) + ":" + pad(s); }
 function today(){ var d = new Date(); return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
-function slug(s){ return (s||"meeting").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,50) || "meeting"; }
+function slug(s){ return (s||"recording").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,50) || "recording"; }
 function words(s){ var t = s.trim(); return t ? t.split(/\s+/).length : 0; }
 
 /* ---------- tiny markdown renderer ---------- */
@@ -968,7 +969,7 @@ $("tabTOnly").onclick = function(){ showTV("only"); };
 /* ---------- mixed-language helpers ---------- */
 var engineOverride = null, trackMode = false, srcTrack = null;
 function isMixed(){ var v = $("spokenLang").value; return v === "mix-ms" || v === "mix-en"; }
-function recLang(){ var v = $("spokenLang").value; if(!isMixed()) return v; if(engineOverride) return engineOverride; return v === "mix-en" ? "en-US" : "ms-MY"; }
+function recLang(){ var v = $("spokenLang").value; if(v === "auto") return "ms-MY"; if(!isMixed()) return v; if(engineOverride) return engineOverride; return v === "mix-en" ? "en-US" : "ms-MY"; }
 function updSwitch(){
   var b = $("btnSwitch"), mx = isMixed();
   b.classList.toggle("hidden", !mx); $("mixHint").classList.toggle("hidden", !mx);
@@ -1073,7 +1074,7 @@ function startRec(withAudio){
             audioBlob = new Blob(chunks, {type: mediaRec.mimeType || "audio/webm"});
             $("recAudio").src = URL.createObjectURL(audioBlob);
             $("audioBox").classList.remove("hidden");
-            saveRecording(audioBlob, lastDur, ($("title").value.trim() || "Meeting") + " " + new Date().toLocaleString()).then(function(){ return IDB.del("draft-" + mySid).then(loadAudio); }).catch(function(){});
+            saveRecording(audioBlob, lastDur, ($("title").value.trim() || "Recording") + " " + new Date().toLocaleString()).then(function(){ return IDB.del("draft-" + mySid).then(loadAudio); }).catch(function(){});
           }
         };
         mediaRec.start(1000);
@@ -1111,7 +1112,7 @@ $("btnStart").onclick = function(){ engineOverride = null; acc = 0; $("audioBox"
 $("btnPause").onclick = pauseRec;
 $("btnStop").onclick = stopRec;
 $("btnSaveAudio").onclick = function(){
-  if(audioBlob) doDownload("meeting-" + slug($("title").value) + "-" + ($("mdate").value || today()) + ".webm", audioBlob, $("capMsg"));
+  if(audioBlob) doDownload("recording-" + slug($("title").value) + "-" + ($("mdate").value || today()) + ".webm", audioBlob, $("capMsg"));
 };
 
 /* ---------- upload ---------- */
@@ -1228,13 +1229,12 @@ async function runReport(){
   if(!needAI($("aiMsg"))) return;
   var text = tr.value.trim();
   if(!text){ setMsg($("aiMsg"), "The transcript is empty. Record, upload or paste something first.", true); return; }
-  var lang = langName($("outLang").value), target = $("outReport");
-  var prompt = "You are a professional meeting secretary. Write formal meeting minutes from the transcript below. Write the whole report in " + lang + ".\n\n" + mixNote()
+  var lang = langName($("outLang").value), target = $("outReport"), kind = $("recordType").value;
+  var meeting = kind === "meeting";
+  var prompt = (meeting ? "You are a professional meeting secretary. Write formal meeting minutes from the transcript below. " : "Create a useful, well-organised " + ({voice:"voice note summary",interview:"interview summary",lecture:"lecture or class notes",other:"recording summary"}[kind] || "recording summary") + " from the transcript below. ") + "Write the whole report in " + lang + ".\n\n" + mixNote()
     + "Use only what is in the transcript. Never invent names, numbers, dates or decisions. If something is not stated, write “Not stated”. If the transcript is in a different language from " + lang + ", translate faithfully. Speech recognition can make mistakes, so use judgement for obvious errors but do not guess names.\n\n"
-    + "Lines containing [DECISION], [ACTION], [IMPORTANT] or [QUESTION] are markers the secretary pressed during the meeting. The speech right after a marker is what it refers to. Put DECISION items under decisions, ACTION items in the action table, IMPORTANT items in the summary or key points, and QUESTION items under issues and follow-up.\n\n"
-    + "Output Markdown with exactly these sections, with headings translated into " + lang + ":\n"
-    + "# (meeting title)\nA short line with date and attendees.\n## Summary (3 to 5 sentences)\n## Key discussion points (bullets grouped by topic)\n## Decisions made (bullets)\n## Action items (a Markdown table with columns: No., Action, Person responsible, Deadline)\n## Issues and follow-up (bullets, only if any)\n\n"
-    + "Output only the report, with no preface and no closing remarks.\n\nMEETING DETAILS\n" + details() + "\n\nTRANSCRIPT\n" + text;
+    + (meeting ? "Lines containing [DECISION], [ACTION], [IMPORTANT] or [QUESTION] are markers pressed during the meeting. Put decisions, actions, important points and questions in their matching sections.\n\nOutput Markdown with these sections, with headings translated into " + lang + ":\n# Meeting title\nA short line with date and attendees.\n## Summary\n## Key discussion points\n## Decisions made\n## Action items (table: Action, Person responsible, Deadline)\n## Issues and follow-up\n\n" : "Treat the transcript as " + ({voice:"a personal or work voice note",interview:"an interview; preserve interviewer and interviewee details when clear",lecture:"a lesson or lecture; organise the material as clear study notes",other:"a general audio recording"}[kind] || "a general audio recording") + ". Do not force meeting minutes format. Use a title, a concise summary, key points in a logical order, and any useful names, questions, reminders or next steps that are actually stated. For interviews, organise question and answer themes. For lectures, organise topics and explain key concepts briefly. Do not invent details.\n\n")
+    + "Output only the report, with no preface and no closing remarks.\n\nRECORDING DETAILS\n" + details() + "\n\nTRANSCRIPT\n" + text;
   cancelCtl = new AbortController(); busy(true);
   setMsg($("aiMsg"), "Claude is writing the report. This can take up to a minute for a long meeting…");
   target.innerHTML = "";
@@ -1468,7 +1468,7 @@ function renderAudio(){
 }
 function whisperLang(){
   var v = $("spokenLang").value;
-  if(v === "mix-ms") return "malay"; if(v === "mix-en") return "english";
+  if(v === "auto" || v === "mix-ms" || v === "mix-en") return null;
   var x = LANGS.filter(function(l){ return l.code === v; })[0]; return x ? x.w : null;
 }
 async function decodeAudio(blob){
@@ -1773,14 +1773,25 @@ $("btnGoTranslate").onclick = function(){ showView("translate"); };
 
 /* ----- meetings (cached on the device, synced to OneDrive) ----- */
 function current(){
-  return {title: $("title").value.trim(), date: $("mdate").value, people: $("people").value.trim(), spoken: $("spokenLang").value,
+  return {recordType: $("recordType").value, title: $("title").value.trim(), date: $("mdate").value, people: $("people").value.trim(), spoken: $("spokenLang").value,
     transcript: tr.value, report: S.report, reportLang: S.reportLang, translation: S.translation, transLang: S.transLang, transSrc: S.transSrc, transFrom: S.transFrom, actions: S.actions, insights: S.insights, audioId: S.audioId};
 }
+function updateRecordType(){
+  var kind = $("recordType").value, meeting = kind === "meeting";
+  var txUi = function(s){ return window.MVR_LANG ? window.MVR_LANG.tx(s) : s; };
+  $("secInsights").classList.toggle("hidden", !meeting);
+  $("reportHeading").textContent = txUi(meeting ? "Meeting report" : "Recording summary");
+  $("btnAnalyse").textContent = txUi("Analyse meeting");
+  $("title").placeholder = txUi(meeting ? "e.g. Mesyuarat Panel IT Bil. 3/2026" : "e.g. Project ideas, interview, lecture notes");
+  $("people").previousElementSibling.textContent = txUi(meeting ? "Attendees" : "People or notes (optional)");
+  $("people").placeholder = txUi(meeting ? "Names separated by commas" : "Names, topic, or other notes");
+}
+$("recordType").addEventListener("change", updateRecordType);
 function newId(){ return "m" + Date.now().toString(36) + Math.random().toString(36).slice(2, 5); }
 $("btnSave").onclick = function(){
   if(!can("write")){ setMsg($("saveMsg"), "Your role is read-only.", true); return; }
   var r = current();
-  if(!r.title) r.title = "Untitled meeting " + (r.date || today());
+  if(!r.title) r.title = (r.recordType === "meeting" ? "Untitled meeting " : "Untitled recording ") + (r.date || today());
   if(!r.transcript.trim() && !r.report){ setMsg($("saveMsg"), "There is nothing to save yet.", true); return; }
   var isNew = !S.id || !cache.recs[S.id];
   if(!S.id) S.id = newId();
@@ -1841,7 +1852,7 @@ async function syncNow(){
 }
 function newMeeting(){
   S = {id: null, report: "", translation: "", transLang: "", reportLang: "", transSrc: "", transFrom: "", tview: "side", actions: [], insights: null, audioId: null};
-  tr.value = ""; $("title").value = ""; $("people").value = ""; $("mdate").value = today();
+  tr.value = ""; $("recordType").value = "voice"; $("title").value = ""; $("people").value = ""; $("mdate").value = today(); updateRecordType();
   $("outReport").innerHTML = ""; $("outTrans").innerHTML = ""; $("timer").textContent = "00:00"; acc = 0;
   $("audioBox").classList.add("hidden"); audioBlob = null;
   setMsg($("capMsg"), ""); setMsg($("aiMsg"), ""); setMsg($("saveMsg"), ""); updWc(); showOut("report"); smartReset();
@@ -1850,6 +1861,7 @@ $("btnNew").onclick = function(){ if(mode !== "idle") hardStop(); newMeeting(); 
 function openRecord(r){
   if(mode !== "idle") hardStop();
   S = {id: r.id, report: r.report || "", translation: r.translation || "", transLang: r.transLang || "", reportLang: r.reportLang || "", transSrc: r.transSrc || "transcript", transFrom: r.transFrom || "", tview: "side", actions: JSON.parse(JSON.stringify(r.actions || [])), insights: r.insights || null, audioId: r.audioId || null};
+  $("recordType").value = r.recordType || "meeting"; updateRecordType();
   $("title").value = r.title || ""; $("mdate").value = r.date || today(); $("people").value = r.people || "";
   if(r.spoken) $("spokenLang").value = r.spoken;
   tr.value = r.transcript || ""; updWc();
@@ -2360,7 +2372,7 @@ $("outBtn").onclick = function(){
 
 /* ---------- init ---------- */
 if(!SR) setMsg($("capMsg"), "Live speech recognition is not supported in this browser. Use Chrome or Edge for live text. You can still record audio, upload files and paste a transcript.", true);
-setMode("idle"); updWc(); renderList();
+updateRecordType(); setMode("idle"); updWc(); renderList();
 (async function(){
   try{ sample = await claude.use("sample"); }catch(_){ sample = null; }
   if(window.MVR_SPLASH) window.MVR_SPLASH.to(55);
